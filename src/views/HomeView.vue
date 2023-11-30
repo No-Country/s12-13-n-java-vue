@@ -19,23 +19,28 @@
       
       <img src="@/assets/images/principal.svg" alt="principal">
       
-      <section class="conteiner-description">
+      <div class="conteiner-section1">
         <h3>CONECTAMOS GENERACIONES</h3>
         <P> Nuestra aplicación te ayuda a crear posiciones de trabajo personalizadas y conectar con personas comprometidas y listas para trabajar</P>
-        <button class="description-btn"> Ofrece empleo </button>
+        <button class="section1-btn"> Ofrece empleo </button>
         <p class="div">___________________ ó ___________________</p>
-      </section>
+      </div>
 
-      <section class="container-description2">
+      <div class="container-description">
         <p>Nuestra aplicación te ayuda a crear posiciones de trabajo personalizadas y conectar con personas comprometidas y listas para trabajar.</p>
-        <button style="background-color: #1D3D8F;" class="description2-btn">Busca oportunidades</button>
-      </section>
+        <button style="background-color: #1D3D8F;" class="description-btn">Busca oportunidades</button>
+      </div>
+
+    </section>
+
+    <section class="section-blog">
+      <!-- contenido de la segunda tarjeta -->
     </section>
   </main>
 </template>
 
 <style scoped>
-  .conteiner, .conteiner-description, .container-description2 {
+  .conteiner, .conteiner-section1, .container-description {
     display: flex;
     padding: 0px 32px;
     justify-content: center;
@@ -43,21 +48,21 @@
     gap: 10px;
     flex-direction: column;
   }
-  .conteiner-description {
+  .conteiner-section1 {
     padding: 10px;
   }
 
-  .conteiner-description h3 {
+  .conteiner-section1 h3 {
     font-size: 17px;
     font-weight: bold;
     margin: 0;
   }
-  .conteiner-description p, .container-description2 p {
+  .conteiner-section1 p, .container-description p {
     text-align: center;
     margin: 0;
     margin-bottom: 15px;
   }
-  .description-btn, .description2-btn {
+  .section1-btn, .description-btn {
     width: 328px;
     height: 51px;
     padding: 10px;
@@ -66,7 +71,7 @@
     color: white;
     font-size: 20px;
   }
-  .conteiner-description .div {
+  .conteiner-section1 .div {
     margin-top: 20px;
   }
  
