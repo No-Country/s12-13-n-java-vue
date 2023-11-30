@@ -12,12 +12,29 @@
 
   //para el color de la respuesta del back
   const hasError = false
-  const hasSuccess = false
+  const hasSuccess = true
 
   //para ver la contraseña
   let eyes = ref(true)
   let type = ref('password')
   
+  //control del switch
+  let activeCont = true
+  let activeTrab = false
+  let activeTab = ref('contratador')
+
+  const setActiveTab = (tab) => {
+    activeTab.value = tab;
+    
+    if(activeTab.value =='contratador'){
+       activeCont = true
+       activeTrab = false
+    }
+    if (activeTab.value == 'trabajador') {
+       activeCont = false
+       activeTrab = true
+    }
+  };
 
   watch(email, (newEmail)=>{
     isEmailValid.value = emailRegex.test(newEmail);
@@ -27,7 +44,8 @@
   })
 
   const logged_in = async ()=> {
-   await store.login(email.value, password.value)
+    
+   await store.login(email.value, password.value, activeTab.value)
   }
 
   const handleEyes = ()=> {
@@ -55,23 +73,42 @@
     </div>
     <div class="login-head">
       <div style="width: 85%;">
-        <label  for="email">Email o Usuario</label>
+        <label style=" font-size: 20px; "  for="email">Email o Usuario</label>
       </div>
       <input id="email" v-model="email" type="text">
-      <span v-if="!isEmailValid" class="error response ">Formato Incorrecto</span>
-
+      
       <div style="width: 85%; margin-top: 30px">
-        <label for="password">Contraseña</label>
+        <label style=" font-size: 20px; " for="password">Contraseña</label>
       </div>
+      
       <input id="password" v-model="password" :type="type" >
       <v-icon @click="handleEyes" v-if="eyes" class="icon" name="fa-regular-eye-slash" scale="2"/>
       <v-icon @click="handleEyes" v-if="!eyes" class="icon" name="fa-regular-eye" scale="2"/>
+      <span v-if="!isEmailValid" class="error response ">Formato de Mail Incorrecto</span>
       <span class="response" :class="{'error': hasError, 'success': hasSuccess }">{{store.feedback}}</span>
 
-      
+      <div class="switch-button">
+        <span :class="{ active: activeTab.value === 'contratador' }"></span>
+        <button class="switch-button-case contratador " :class="{ 'active-case':  activeCont }"
+          @click="setActiveTab('contratador')"
+          style="border-radius: 6px 0px 0px 6px;">
+          CONTRATADOR
+        </button>
+        <button class="switch-button-case trabajador" :class="{ 'active-case': activeTrab }"
+          @click="setActiveTab('trabajador')"
+          style="border-radius: 0px 6px 6px 0px;">
+          TRABAJADOR
+        </button>
+      </div>
 
       <button @click.prevent="logged_in" class="head-btn">Iniciar Sesión</button>
       
+    </div>
+    <div class="footer">
+      <hr style=" margin-top: 46px">
+      <label style="position: relative; left: 52px;" >¿No tienes cuenta? <b>Regístrate</b></label>
+      <hr>
+      <label>¿Olvidasgte tu contraseña? <b>Restáurala</b></label>
     </div>
   </main>
 </template>
@@ -89,7 +126,7 @@
     text-align: center
   }
   .login-logo img {
-    margin-top: 150px;
+    margin-top: 76px;
     width: 150px;
     height: 150px;
   }
@@ -97,19 +134,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 75vh;
+    
     padding: 10px;
     justify-content: center;
-    border: solid 2px rgb(187, 255, 0);
-    border-radius: 15px;
-  }
-  .login-head div label {
-    font-size: 20px; 
+    
+   
   }
   .login .login-head input{
     margin-top: 5px;
-    border: solid 2px;
-    background-color: #D9D9D9;
+    border: solid 1px;
+    border-radius: 6px;
+    background-color: #D2D8EE;
     padding: 5px;
     width: 85%;
     height: 40px;
@@ -118,27 +153,26 @@
 
   .login-head .icon {
     position: absolute;
-    right: 18%;
-    top:56%;
+    right: 14%;
+    top:47%;
     cursor: pointer;
   }
 
   .login .login-head .head-btn {
+    border-radius: 6px;
     background-color:#1D3D8F;
     color: #fff;
-    margin-top: 60px;
-    padding: 10px 20px;
+    margin-top: 20px;
+    padding: 10px;
     display: inline-block;
-    border-radius: 15px;
-    width: 50%;
-    cursor: pointer;
+    width: 85%;
     font-size: 16px;
     border: 2px solid #1D3D8F;
     transition: background-color 0.3s;
   }
 
   .login .login-head .head-btn:hover {
-    background-color: #3498db;
+    background-color: #149ED7;
     color: #fff;
   }
 
@@ -156,6 +190,46 @@
 
   .success{
     background-color: #2ecc71;  
+  }
+
+  .footer label {
+    position: relative;
+    left: 20px;
+    font-size: 20px;
+  }
+
+  .footer label b{
+    cursor: pointer;
+    color:#149ED7 ;
+  }
+
+  .footer hr {
+    width:  207.022px;
+    border: solid 1px #149ED7;
+    margin-top: 14px;
+    margin-bottom: 14px;
+  }
+
+  .switch-button {
+    /* Estilos para el contenedor del interruptor */
+    margin-top: 46px;
+    display: flex;
+    align-self: auto;
+  }
+
+  .switch-button-case {
+    /* Estilos para los casos del interruptor */
+    width: 148px;
+    height: 40px;
+    background-color: #D2D8EE;
+  }
+
+  .active-case {
+    /* Estilos para el caso del interruptor activo */
+    color: #1D3D8Fed;
+    border: solid 2px #1D3D8Fed;
+    background-color: #fff;
+     transition: background-color 0.3s;
   }
 
 </style>
