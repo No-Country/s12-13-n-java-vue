@@ -5,16 +5,20 @@ import java.util.Optional;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.latam.unamano.dto.auth.AuthResponseDto;
 import com.latam.unamano.dto.auth.LoginRequestDto;
 import com.latam.unamano.dto.auth.LoginResponseDto;
+import com.latam.unamano.dto.exceptions.UsernameOrPasswordIncorretException;
 import com.latam.unamano.exceptions.IncorretRoleException;
-import com.latam.unamano.persistence.entities.Login;
+import com.latam.unamano.persistence.entities.login.Login;
 import com.latam.unamano.persistence.repositories.login.LoginRepository;
 import com.latam.unamano.service.jwt.JwtService;
 
@@ -29,12 +33,20 @@ public class AuthService {
 	private final AuthenticationManager authenticationManager;
 	
 	public AuthResponseDto login(LoginRequestDto loginRequestDto) {
-		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDto.username(), loginRequestDto.password()));
+		try {
+	        authenticationManager.authenticate(
+	                new UsernamePasswordAuthenticationToken(loginRequestDto.username(), loginRequestDto.password())
+	        );
+	    } catch (AuthenticationException e) {
+	        throw new UsernameOrPasswordIncorretException("Usuario o contraseña incorrecto");
+	    }
 		UserDetails user = loginRepository.findByUsername(loginRequestDto.username()).orElseThrow();
+		
 		if (!user.getAuthorities().stream()
 		        .anyMatch(authority -> authority.getAuthority().equals(loginRequestDto.role().toString()))) {
 		    throw new IncorretRoleException("Rol incorrecto para este usuario");
 		}
+		
 		String token = jwtService.getToken(user);
 		return new AuthResponseDto(token);
 	}

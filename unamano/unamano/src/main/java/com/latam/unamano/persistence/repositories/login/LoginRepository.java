@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.latam.unamano.persistence.entities.Login;
+import com.latam.unamano.persistence.entities.login.Login;
 
 
 public interface LoginRepository extends JpaRepository<Login, Long> {
