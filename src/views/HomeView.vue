@@ -1,5 +1,8 @@
 <script setup>
-  
+  import { ref } from 'vue'
+
+
+
 
   //pasar props
   // defineProps({
@@ -14,8 +17,10 @@
 
 <template>
   <main>
+
     <header>ESPACIO PARA EL NAVBAR</header>
-    <section class="conteiner">
+
+    <section id="conocenos" class="conteiner">
       
       <img src="@/assets/images/principal.svg" alt="principal">
       
@@ -33,14 +38,14 @@
 
     </section>
 
-    <section class="section-blog">
-      <!-- contenido de la segunda tarjeta -->
-    </section>
+    <!-- seccion blog -->
+
+   
   </main>
 </template>
 
 <style scoped>
-  .conteiner, .conteiner-section1, .container-description {
+  .conteiner, .conteiner-section1, .container-description, .section-blog {
     display: flex;
     padding: 0px 32px;
     justify-content: center;
@@ -62,7 +67,7 @@
     margin: 0;
     margin-bottom: 15px;
   }
-  .section1-btn, .description-btn {
+  .section1-btn, .description-btn,.blog-btn {
     width: 328px;
     height: 51px;
     padding: 10px;
@@ -74,7 +79,7 @@
   .conteiner-section1 .div {
     margin-top: 20px;
   }
+
+ /* Seccion Blog */
  
-
-
 </style>

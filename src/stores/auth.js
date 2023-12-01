@@ -1,4 +1,4 @@
-//import axios from '@plugins/axios'
+import axios from '@/plugins/axios'
 import { defineStore } from 'pinia'
 
 const useAuth = defineStore('auth', {
@@ -6,39 +6,38 @@ const useAuth = defineStore('auth', {
     return {
       token: null,
       rol: null,
-      statusUser: false,
-      user: '',
       feedback: ''
     }
   },
 
   actions:{
 
-    async login(email, password, tipo){
+    async login(username, password, tipo){
+
       this.reset()
-      let rol = 0
+
+      let role = 0
+
       if(tipo == 'contratador'){
-        rol = 0
+        role = 0
       }
 
       if(tipo =='trabajador'){
-        rol = 1
+        role = 1
       }
-      console.log('desde el store', email, password, rol)
-      alert('iniciando sesion', email, password, rol)
-      this.notification('inicio correcto') //BORRAR solo de test
 
+      await axios.post('auth/login',{
+        username,
+        password,
+        role
+      })
       
-      // await axios.post('login',{
-      //   email,
-      //   password
-      // })
-      // .then (response =>{
-
-      // })
-      // .catch((error)=>{
-      //   console.log('Error en login', error)
-      // })
+      .then (response =>{
+        console.log('respuesta del back',response)
+      })
+      .catch((error)=>{
+        console.log('Error en login', error)
+      })
 
     },
 
@@ -53,9 +52,7 @@ const useAuth = defineStore('auth', {
  
 
     reset() {
-      this.token = null,
-      this.statusUser = false,
-      this.user = '',
+      this.token = null
       this.rol = null
       this.feedback=''
     },

@@ -1,11 +1,8 @@
 <script setup>
-  import { ref, watch } from 'vue'
+  import { ref } from 'vue'
   import useAuth from '@/stores/auth'
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const store = useAuth()
-
-  const isEmailValid = ref(true)
 
   const password = ref('') 
   const email = ref('')
@@ -35,13 +32,6 @@
        activeTrab = true
     }
   };
-
-  watch(email, (newEmail)=>{
-    isEmailValid.value = emailRegex.test(newEmail);
-    if(email.value == ""){
-      isEmailValid.value= true
-    }
-  })
 
   const logged_in = async ()=> {
     
@@ -75,7 +65,7 @@
       <div style="width: 85%;">
         <label style=" font-size: 20px; "  for="email">Email o Usuario</label>
       </div>
-      <input id="email" v-model="email" type="text">
+      <input autocomplete="none" id="email" v-model="email" type="text">
       
       <div style="width: 85%; margin-top: 30px">
         <label style=" font-size: 20px; " for="password">Contraseña</label>
@@ -84,7 +74,6 @@
       <input id="password" v-model="password" :type="type" >
       <v-icon @click="handleEyes" v-if="eyes" class="icon" name="fa-regular-eye-slash" scale="2"/>
       <v-icon @click="handleEyes" v-if="!eyes" class="icon" name="fa-regular-eye" scale="2"/>
-      <span v-if="!isEmailValid" class="error response ">Formato de Mail Incorrecto</span>
       <span class="response" :class="{'error': hasError, 'success': hasSuccess }">{{store.feedback}}</span>
 
       <div class="switch-button">
@@ -148,7 +137,7 @@
     padding: 5px;
     width: 85%;
     height: 40px;
-   
+    font-size: 20px;
   }
 
   .login-head .icon {
