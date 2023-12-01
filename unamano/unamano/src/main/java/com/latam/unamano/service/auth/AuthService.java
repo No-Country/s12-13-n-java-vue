@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.latam.unamano.dto.auth.AuthResponseDto;
 import com.latam.unamano.dto.auth.LoginRequestDto;
 import com.latam.unamano.dto.auth.LoginResponseDto;
+import com.latam.unamano.exceptions.IncorretRoleException;
 import com.latam.unamano.persistence.entities.Login;
 import com.latam.unamano.persistence.repositories.login.LoginRepository;
 import com.latam.unamano.service.jwt.JwtService;
@@ -30,6 +31,10 @@ public class AuthService {
 	public AuthResponseDto login(LoginRequestDto loginRequestDto) {
 		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDto.username(), loginRequestDto.password()));
 		UserDetails user = loginRepository.findByUsername(loginRequestDto.username()).orElseThrow();
+		if (!user.getAuthorities().stream()
+		        .anyMatch(authority -> authority.getAuthority().equals(loginRequestDto.role().toString()))) {
+		    throw new IncorretRoleException("Rol incorrecto para este usuario");
+		}
 		String token = jwtService.getToken(user);
 		return new AuthResponseDto(token);
 	}

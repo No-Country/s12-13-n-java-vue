@@ -12,6 +12,7 @@ import com.latam.unamano.dto.auth.LoginRequestDto;
 import com.latam.unamano.dto.auth.LoginResponseDto;
 import com.latam.unamano.service.auth.AuthService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -22,7 +23,7 @@ public class AuthController {
 	private final AuthService authService;
 	
 	@PostMapping(value = "login")
-	public ResponseEntity<AuthResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
+	public ResponseEntity<AuthResponseDto> login(@RequestBody @Valid LoginRequestDto loginRequestDto) {
 		
 		return ResponseEntity.ok(authService.login(loginRequestDto))
 		;

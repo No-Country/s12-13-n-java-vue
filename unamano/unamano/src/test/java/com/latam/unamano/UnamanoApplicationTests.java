@@ -1,4 +1,4 @@
-package com.unamano.unamano;
+package com.latam.unamano;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
