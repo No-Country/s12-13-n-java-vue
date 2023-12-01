@@ -14,9 +14,10 @@ public class CorsFilterConfiguration {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
+                	.allowedHeaders("*")
                     .allowedOrigins("*")
                     .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                    .allowCredentials(false);
+                    .maxAge(3600);
             }
         };
     }
