@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.latam.unamano.dto.auth.AuthResponseDto;
 import com.latam.unamano.dto.auth.LoginRequestDto;
-import com.latam.unamano.dto.auth.LoginResponseDto;
+import com.latam.unamano.dto.auth.UserResponseDto;
 import com.latam.unamano.service.auth.AuthService;
 
 import jakarta.validation.Valid;
@@ -30,7 +30,7 @@ public class AuthController {
 	}
 	
 	@GetMapping(value= "details")
-	public ResponseEntity<LoginResponseDto> details(){
+	public ResponseEntity<UserResponseDto> details(){
 		return ResponseEntity.ok(authService.getUserDetails());
 	}
 

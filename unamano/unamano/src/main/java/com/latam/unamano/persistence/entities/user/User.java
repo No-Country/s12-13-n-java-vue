@@ -1,4 +1,4 @@
-package com.latam.unamano.persistence.entities.login;
+package com.latam.unamano.persistence.entities.user;
 
 import java.util.Collection;
 import java.util.List;
@@ -23,19 +23,24 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-
 @Table
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Login implements UserDetails {
+public class User implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String username;
 	private String password;
+	private String email;
+	private String firstName;
+	private String LastName;
+	private String phoneNumber;
+//	private Address addressId;
+	private String profilePicture;
 	@Enumerated(EnumType.STRING)
 	private Role role;
 

@@ -1,4 +1,4 @@
-package com.latam.unamano.dto.exceptions;
+package com.latam.unamano.exceptions;
 
 public class UsernameOrPasswordIncorretException extends RuntimeException {
 	public UsernameOrPasswordIncorretException(String message) {

@@ -9,17 +9,15 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.latam.unamano.dto.auth.AuthResponseDto;
 import com.latam.unamano.dto.auth.LoginRequestDto;
-import com.latam.unamano.dto.auth.LoginResponseDto;
-import com.latam.unamano.dto.exceptions.UsernameOrPasswordIncorretException;
+import com.latam.unamano.dto.auth.UserResponseDto;
 import com.latam.unamano.exceptions.IncorretRoleException;
-import com.latam.unamano.persistence.entities.login.Login;
-import com.latam.unamano.persistence.repositories.login.LoginRepository;
+import com.latam.unamano.exceptions.UsernameOrPasswordIncorretException;
+import com.latam.unamano.persistence.entities.user.User;
+import com.latam.unamano.persistence.repositories.login.UserRepository;
 import com.latam.unamano.service.jwt.JwtService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthService {
 		
-	private final LoginRepository loginRepository;
+	private final UserRepository userRepository;
 	private final JwtService jwtService;
 	private final AuthenticationManager authenticationManager;
 	
@@ -40,7 +38,7 @@ public class AuthService {
 	    } catch (AuthenticationException e) {
 	        throw new UsernameOrPasswordIncorretException("Usuario o contraseña incorrecto");
 	    }
-		UserDetails user = loginRepository.findByUsername(loginRequestDto.username()).orElseThrow();
+		UserDetails user = userRepository.findByUsername(loginRequestDto.username()).orElseThrow();
 		
 		if (!user.getAuthorities().stream()
 		        .anyMatch(authority -> authority.getAuthority().equals(loginRequestDto.role().toString()))) {
@@ -51,15 +49,15 @@ public class AuthService {
 		return new AuthResponseDto(token);
 	}
 
-	public LoginResponseDto getUserDetails() {
+	public UserResponseDto getUserDetails() {
 		String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Optional<UserDetails> userOptional = loginRepository.findByUsername(username);
+		Optional<UserDetails> userOptional = userRepository.findByUsername(username);
 		if (!userOptional.isPresent()) {
 
 			throw new UsernameNotFoundException("user not found");
 		}
-		Login user = (Login) userOptional.get();
-		return new LoginResponseDto(user);
+		User user = (User) userOptional.get();
+		return new UserResponseDto(user);
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.latam.unamano.persistence.entities.client;
 
+import com.latam.unamano.persistence.entities.user.User;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,22 +14,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table
+
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(of = "id")
 @Builder
-public class Client {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String name;
-	private String lastname;
-	private String email;
-	private String phoneNumber;
-	private String profilePicture;
+public class Client extends User {
+	
 	
 }
