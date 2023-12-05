@@ -1,4 +1,4 @@
-package com.latam.unamano.persistence.repositories.login;
+package com.latam.unamano.persistence.repositories.user;
 
 import java.util.Optional;
 
