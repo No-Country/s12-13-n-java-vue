@@ -17,7 +17,7 @@ import com.latam.unamano.dto.auth.UserResponseDto;
 import com.latam.unamano.exceptions.IncorretRoleException;
 import com.latam.unamano.exceptions.UsernameOrPasswordIncorretException;
 import com.latam.unamano.persistence.entities.user.User;
-import com.latam.unamano.persistence.repositories.login.UserRepository;
+import com.latam.unamano.persistence.repositories.user.UserRepository;
 import com.latam.unamano.service.jwt.JwtService;
 
 import lombok.RequiredArgsConstructor;
