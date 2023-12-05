@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default axios.create({
-  baseURL:'https://unamanoapi.onrender.com/api/', //Colocar endpoint de la API
+  baseURL:'https://s12-13-n-java-vue-production.up.railway.app/api/',
   headers: {
     'Content-Type': 'application/json'
   }

@@ -6,7 +6,8 @@ const useAuth = defineStore('auth', {
     return {
       token: null,
       rol: null,
-      feedback: ''
+      feedback: '',
+      feedbackError:''
     }
   },
 
@@ -17,7 +18,7 @@ const useAuth = defineStore('auth', {
       this.reset()
 
       let role = 0
-
+      
       if(tipo == 'contratador'){
         role = 0
       }
@@ -33,10 +34,13 @@ const useAuth = defineStore('auth', {
       })
       
       .then (response =>{
-        console.log('respuesta del back',response)
+       this.token = response.data.token
+       this.notification('Acceso correcto')
       })
       .catch((error)=>{
+  
         console.log('Error en login', error)
+        this.notificationError(error.response.data.error)
       })
 
     },
@@ -49,16 +53,20 @@ const useAuth = defineStore('auth', {
       return
     },
 
- 
+    notificationError(messaje) {
+      this.feedbackError = messaje
+      setTimeout(() => {
+        this.feedbackError = ''
+      }, 4000)
+      return
+    },
 
     reset() {
       this.token = null
       this.rol = null
-      this.feedback=''
+      this.feedback =''
+      this.feedbackError = ''
     },
-
-
-
 
   }
 
