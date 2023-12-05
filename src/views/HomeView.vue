@@ -1,6 +1,9 @@
 <script setup>
   import SectionInfo from '@/components/SectionInfo.vue'
   import SectionTutorial from '@/components/SectionTutorial.vue'
+  import SectionBlog from '@/components/SectionBlog.vue'
+  import SectionSoporte from '@/components/SectionSoporte.vue'
+
 
 
   //pasar props
@@ -19,6 +22,8 @@
     
     <SectionInfo />
     <SectionTutorial />
+    <SectionBlog />
+    <SectionSoporte />
    
   </main>
 </template>

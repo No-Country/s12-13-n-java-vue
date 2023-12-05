@@ -1,41 +1,42 @@
 <script setup>
-  import { ref } from 'vue'
+  import Carrousel from '@/components/CarrouselTutorial.vue'
 </script>
 
 <template>
 
   <section class="conteiner">
+    <div class="row gx-0">
+      <div class="col-sm-12 col-md-6">
+        <Carrousel />
+      </div>
 
-    <!-- TODO CAROUSEL -->
-    <div class="carrousel">
-      <h1>Caroousel</h1>
+      <div class="col-sm-12 col-md-6">
+        <div class="container-description">
+          <h3>CUBRE TUS NECESIDADES</h3>
+          <button class="description-btn">Comienza a contratar</button>
+        </div>
+      </div>
     </div>
-
-    <div class="container-description">
-      <h3>CUBRE TUS NECESIDADES</h3>
-      <button class="description-btn">Inicia</button>
-    </div>
-
   </section>
-
 </template>
 
 <style scoped>
-  .carrousel {
-    margin-top: 10px;
-  }
   .container-description h3 {
     color: #fff;
+    margin-top: 48px;
   }
   .conteiner,
   .container-description {
+    margin-top: 30px;
     display: flex;
     padding: 0px 32px;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 26px;
     flex-direction: column;
-    background-color: #F40909;
+  }
+  .container-description {
+    background-color: #149ED7;
   }
 
   .description-btn,
@@ -48,6 +49,7 @@
     background-color: transparent;
     color: white;
     font-size: 20px;
+    margin-bottom: 48px;
   }
 
 </style>
