@@ -1,6 +1,10 @@
 package com.latam.unamano.persistence.entities.task;
 
 
+import com.latam.unamano.persistence.entities.addressEntity.Address;
+import com.latam.unamano.persistence.entities.client.Client;
+import com.latam.unamano.persistence.entities.ocupationEntity.Occupation;
+import com.latam.unamano.persistence.entities.user.User;
 import com.latam.unamano.utils.TaskStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,7 +35,7 @@ public class Task {
     private BigDecimal price;
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
-    /*@ManyToMany(
+    @ManyToMany(
             fetch = FetchType.LAZY
     )
     @JoinTable(
@@ -39,10 +43,15 @@ public class Task {
             joinColumns = @JoinColumn(name="task_id"),
             inverseJoinColumns = @JoinColumn(name="occupation_id")
     )
-
     private List<Occupation> occupations;
-    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)*/
+    //@OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
     private LocalDateTime taskDate;
+    @ManyToOne
+    @JoinColumn(name = "id_client")
+    private User client;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private Address address;
 
 
     //TODO Relaciones entre clases

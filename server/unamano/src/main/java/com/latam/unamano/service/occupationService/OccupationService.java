@@ -1,6 +1,7 @@
 package com.latam.unamano.service.occupationService;
 
 
+import com.latam.unamano.dto.occupationDto.OccupationDTO;
 import com.latam.unamano.persistence.entities.ocupationEntity.Occupation;
 import com.latam.unamano.persistence.repositories.occupationRepository.OccupationRepository;
 import org.springframework.stereotype.Component;
@@ -49,4 +50,9 @@ public class OccupationService implements OccupationServiceInterface{
     public void delete(Long id) {
         occupationRepository.deleteById(id);
     }
+
+    public Occupation findByOccupationName(Occupation occupation){
+        return occupationRepository.findByOccupationName(occupation.getOccupationName());
+    }
+
 }

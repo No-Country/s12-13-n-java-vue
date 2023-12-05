@@ -3,10 +3,14 @@ package com.latam.unamano.service.task;
 import com.latam.unamano.dto.task.TaskDTO;
 import com.latam.unamano.exceptions.BadDataEntryException;
 import com.latam.unamano.dto.task.TaskMapper;
+import com.latam.unamano.persistence.repositories.addressRespository.AddressRepository;
+import com.latam.unamano.persistence.repositories.user.UserRepository;
+import com.latam.unamano.service.occupationService.OccupationService;
 import com.latam.unamano.utils.TaskStatus;
 import com.latam.unamano.persistence.entities.task.Task;
 import com.latam.unamano.persistence.repositories.task.TaskRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,11 +21,15 @@ import java.time.LocalDateTime;
 @Service
 public class TaskService {
     private final TaskRepository taskRepository;
-    //private final OccupationService occupationService;
+    private final UserRepository userRepository;
+    private final OccupationService occupationService;
+    private final AddressRepository addressRepository;
 
-    public TaskService(TaskRepository taskRepository/*, OccupationService occupationService*/){
+    public TaskService(TaskRepository taskRepository, OccupationService occupationService, UserRepository userRepository, AddressRepository addressRepository){
         this.taskRepository = taskRepository;
-        //this.occupationService= occupationService;
+        this.occupationService= occupationService;
+        this.userRepository=userRepository;
+        this.addressRepository=addressRepository;
 
 
     }
@@ -31,21 +39,25 @@ public class TaskService {
     public Page<Task> findTasks(Pageable pageable) {
         return taskRepository.findAll(pageable);
     }
-
+    @Transactional
     public TaskDTO createTask(TaskDTO taskDTO) {
         validateTaskData(taskDTO);
         taskDTO.setDateCreated(LocalDateTime.now());
         taskDTO.setDateUpdated(LocalDateTime.now());
         taskDTO.setStatus(TaskStatus.PUBLISHED);
         Task task = TaskMapper.taskDTOToTask(taskDTO);
-        /*
+
         task.setOccupations(task
                 .getOccupations()
                 .stream()
                 .map(occupationService::findByOccupationName)
                 .toList());
 
-         */
+
+
+        //task.setClient(userRepository.findById(taskDTO.getClient().getId()).get());
+        task.setAddress(addressRepository.save(taskDTO.getAddress()));
+
         task = taskRepository.save(task);
         return TaskMapper.taskToTaskDTO(task);
     }
@@ -64,6 +76,7 @@ public class TaskService {
 
     //TODO Completar
     //TODO Separar Validaciones
+    @Transactional
     public TaskDTO updateTask(TaskDTO taskDTO) {
         if(!taskRepository.existsById(taskDTO.getId())){
             throw new EntityNotFoundException("No existe una tarea con el id ingresado");
@@ -141,11 +154,11 @@ public class TaskService {
     public Page<Task> findTaskByStatusPUBLISHED(Pageable pageable) {
         return taskRepository.findByStatusPUBLISHED(pageable);
     }
-/*
+
     public Page<Task> findTasksByOccupation(Pageable pageable, String occupationName) {
 
         return taskRepository.findByOccupationOccupationName(pageable, occupationName);
     }
 
-*/
+
 }

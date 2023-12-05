@@ -1,5 +1,6 @@
 package com.latam.unamano.dto.task;
 
+import com.latam.unamano.dto.occupationDto.OccupationMapper;
 import com.latam.unamano.persistence.entities.task.Task;
 import lombok.experimental.UtilityClass;
 
@@ -14,8 +15,10 @@ public class TaskMapper {
                 dateUpdated(task.getDateUpdated()).
                 price(task.getPrice()).
                 status(task.getStatus())
-                //.occupations(task.getOccupations().stream().map(OccupationMapper::occupationToDto).toList())
+                .occupations(task.getOccupations().stream().map(OccupationMapper::occupationToDto).toList())
                 .taskDate(task.getTaskDate())
+                //.client(task.getClient())
+                .address(task.getAddress())
                 .build();
     }
     public Task taskDTOToTask(TaskDTO taskDTO){
@@ -26,8 +29,10 @@ public class TaskMapper {
                 .dateUpdated(taskDTO.getDateUpdated())
                 .price(taskDTO.getPrice())
                 .status(taskDTO.getStatus())
-                //.occupations(taskDTO.getOccupations().stream().map(OccupationMapper::DtoToOccupation).toList())
+                .occupations(taskDTO.getOccupations().stream().map(OccupationMapper::DtoToOccupation).toList())
                 .taskDate(taskDTO.getTaskDate())
+                .client(taskDTO.getClient())
+                .address(taskDTO.getAddress())
                 .build();
     }
 }

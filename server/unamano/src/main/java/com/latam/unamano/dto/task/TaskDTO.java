@@ -1,6 +1,10 @@
 package com.latam.unamano.dto.task;
 
 
+import com.latam.unamano.dto.occupationDto.OccupationDTO;
+import com.latam.unamano.persistence.entities.addressEntity.Address;
+import com.latam.unamano.persistence.entities.client.Client;
+import com.latam.unamano.persistence.entities.user.User;
 import com.latam.unamano.utils.TaskStatus;
 import lombok.*;
 
@@ -21,8 +25,10 @@ public class TaskDTO {
     private LocalDateTime dateUpdated;
     private BigDecimal price;
     private TaskStatus status;
-    //private List<OccupationDTO> occupations;
+    private List<OccupationDTO> occupations;
     private LocalDateTime taskDate;
+    private User client;
+    private Address address;
 
     //TODO Relaciones entre clases
     /*
