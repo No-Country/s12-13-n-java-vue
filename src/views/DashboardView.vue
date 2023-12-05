@@ -61,6 +61,7 @@ li {
   list-style: none;
 }
 .nav {
+  padding: 15px 42px;
   height: 42px;
   display: flex;
   align-items: center;
@@ -73,6 +74,8 @@ li {
 }
 .nav__item {
   display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .nav__item-image {
   width: 30px;
@@ -98,5 +101,8 @@ li {
   color: var(--blue1, #1d3d8f);
 }
 .nav__item-underline {
+  border-bottom: solid 9px #1d3d8f;
+  width: 130px;
+  border-radius: 20px;
 }
 </style>
