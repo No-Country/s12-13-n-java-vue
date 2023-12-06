@@ -66,7 +66,7 @@ import SectionHeader from '../components/SectionHeader.vue'
               type="select"
               id="eventName"
               name="eventName"
-              value="Selección"
+              value="Categorias"
               onChange="{handleInputChange}"
               required
             >
@@ -100,8 +100,10 @@ detalles de tu trabajo"
           </div>
           <div class="form__labelBox">
             <label htmlFor="eventName" class="form__labelText"> Elige el tipo de servicio </label>
+            <img src="../assets/images/location-icon.svg" alt="" class="location-img" />
+
             <input
-              class="form__input"
+              class="form__input input-location"
               type="select"
               id="eventName"
               name="eventName"
@@ -110,6 +112,7 @@ detalles de tu trabajo"
               required
             />
           </div>
+          <button class="form__submit-button link">Publicar</button>
         </form>
       </div>
     </modal>
@@ -315,6 +318,10 @@ li {
   padding-top: 5px;
   padding-bottom: 5px;
   border: 1px solid var(--gray1, #4f4f4f);
+  background-color: #eee;
+}
+.form__select {
+  appearance: none;
 }
 
 .form__labelText,
@@ -328,5 +335,33 @@ li {
   border-radius: 6px;
   border: 1px solid var(--gray1, #4f4f4f);
   padding: 12px 17px;
+  background-color: #eee;
+  height: 115px;
+}
+
+.form__submit-button {
+  height: 51px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  color: var(--white, #fff);
+  border: none;
+  background: var(--blue1, #1d3d8f);
+  font-family: 'Baloo 2';
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.input-location {
+  position: relative;
+}
+.location-img {
+  position: absolute;
+  width: 16px;
+  height: 21px;
+  right: 36px;
+  margin-top: 38px;
+  z-index: 10;
 }
 </style>
