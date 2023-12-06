@@ -58,6 +58,59 @@ import SectionHeader from '../components/SectionHeader.vue'
             <img src="../assets/images/close-button-icon.svg" alt="Button Image" />
           </button>
         </div>
+        <form class="form">
+          <div class="form__labelBox">
+            <label htmlFor="eventName" class="form__labelText"> Elige el tipo de servicio </label>
+            <select
+              class="form__select"
+              type="select"
+              id="eventName"
+              name="eventName"
+              value="Selección"
+              onChange="{handleInputChange}"
+              required
+            >
+              <option class="form__optionText">Categorias</option>
+            </select>
+          </div>
+          <div class="form__labelBox">
+            <label htmlFor="eventName" class="form__labelText"> Elige el tipo de servicio </label>
+            <input
+              class="form__input"
+              type="select"
+              id="eventName"
+              name="eventName"
+              onChange="{handleInputChange}"
+              placeholder="Escribe un título"
+              required
+            />
+          </div>
+          <div class="form__labelBox">
+            <label htmlFor="eventName" class="form__labelText"> Elige el tipo de servicio </label>
+            <textarea
+              class="form__textarea"
+              type="select"
+              id="eventName"
+              name="eventName"
+              onChange="{handleInputChange}"
+              placeholder="Agrega una descripción con los
+detalles de tu trabajo"
+              required
+            />
+          </div>
+          <div class="form__labelBox">
+            <label htmlFor="eventName" class="form__labelText"> Elige el tipo de servicio </label>
+            <input
+              class="form__input"
+              type="select"
+              id="eventName"
+              name="eventName"
+              onChange="{handleInputChange}"
+              placeholder="Ingresa tu dirección"
+              required
+            />
+          </div>
+        </form>
       </div>
     </modal>
     <footer>ESPACIO PARA EL FOOTER</footer>
@@ -224,6 +277,12 @@ li {
 
 .popup__container {
   display: flex;
+  flex-direction: column;
+  gap: 19px;
+}
+.popup__header {
+  display: flex;
+  justify-content: space-between;
 }
 .popup__close {
   border: none;
@@ -231,5 +290,43 @@ li {
   width: 27px;
   height: 27px;
   background-color: transparent;
+}
+.popup__title {
+  color: var(--black1, #2f2f2f);
+  font-family: 'Baloo 2';
+  font-size: 22px;
+  font-weight: 600;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+}
+
+.form__labelBox {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__select,
+.form__input {
+  border-radius: 6px;
+  padding-left: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border: 1px solid var(--gray1, #4f4f4f);
+}
+
+.form__labelText,
+.form__optionText {
+  font-family: 'Baloo 2';
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.form__textarea {
+  border-radius: 6px;
+  border: 1px solid var(--gray1, #4f4f4f);
+  padding: 12px 17px;
 }
 </style>
