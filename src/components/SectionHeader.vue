@@ -19,7 +19,7 @@
       <img class="sidebar-logo" src="../assets/logo.svg" />
       <ul class="nav__list">
         <li class="nav__item">
-          <a class="nav__item nav__item-link">
+          <a class="nav__item item-link">
             <div class="nav__item-picture">
               <img class="nav__item-icon" src="../assets/images/page-icon.svg" alt="page-icon" />
             </div>
@@ -27,7 +27,7 @@
           </a>
         </li>
         <li class="nav__item">
-          <a class="nav__item nav__item-link">
+          <a class="nav__item item-link">
             <div class="nav__item-picture">
               <img class="nav__item-icon" src="../assets/images/blog-icon.svg" alt="blog-icon" />
             </div>
@@ -35,7 +35,7 @@
           </a>
         </li>
         <li class="nav__item">
-          <a class="nav__item nav__item-link">
+          <a class="nav__item item-link">
             <div class="nav__item-picture">
               <img
                 class="nav__item-icon"
@@ -47,7 +47,7 @@
           </a>
         </li>
         <li class="nav__item">
-          <a class="nav__item nav__item-link">
+          <a class="nav__item item-link">
             <div class="nav__item-picture">
               <img
                 class="nav__item-icon"
@@ -59,37 +59,46 @@
           </a>
         </li>
       </ul>
-      <section class="sidebar__social">
-        <div class="sidebar__line"></div>
-        <h3 class="social-title">REDES</h3>
-        <ul class="social-list">
-          <li class="social-item">
-            <a class="social-link"
-              ><img src="../assets/images/facebook-icon.svg" alt="facebook" class="social-image"
-            /></a>
-          </li>
-          <li class="social-item">
-            <a class="social-link"
-              ><img src="../assets/images/instagram-icon.svg" alt="instagram" class="social-image"
-            /></a>
-          </li>
-          <li class="social-item">
-            <a class="social-link"
-              ><img src="../assets/images/tiktok-icon.svg" alt="tiktok" class="social-image"
-            /></a>
-          </li>
-          <li class="social-item">
-            <a class="social-link"
-              ><img src="../assets/images/twitter-icon.svg" alt="twitter" class="social-image"
-            /></a>
-          </li>
-        </ul>
-      </section>
-      <section class="sidebar-size">
-        <h3 class="social-title">REDES</h3>
-      </section>
-      <div class="sidebar__line"></div>
-      <div class="sidebar__line"></div>
+      <div>
+        <section class="sidebar__social">
+          <div class="sidebar__line"></div>
+          <h3 class="social-title sidebar-title">REDES</h3>
+          <ul class="social-list">
+            <li class="social-item">
+              <a class="social-link item-link"
+                ><img src="../assets/images/facebook-icon.svg" alt="facebook" class="social-image"
+              /></a>
+            </li>
+            <li class="social-item">
+              <a class="social-link item-link"
+                ><img
+                  src="../assets/images/instagram-icon.svg"
+                  alt="instagram"
+                  class="social-image"
+              /></a>
+            </li>
+            <li class="social-item">
+              <a class="social-link item-link"
+                ><img src="../assets/images/tiktok-icon.svg" alt="tiktok" class="social-image"
+              /></a>
+            </li>
+            <li class="social-item">
+              <a class="social-link item-link"
+                ><img src="../assets/images/twitter-icon.svg" alt="twitter" class="social-image"
+              /></a>
+            </li>
+          </ul>
+        </section>
+        <section class="sidebar-config">
+          <h3 class="config-title sidebar-title">TAMAÑO</h3>
+          <img
+            src="../assets/images/size-config.svg"
+            alt="size configuration"
+            class="config-image"
+          />
+        </section>
+      </div>
+      <button class="sidebar__button">Iniciar sesión</button>
     </section>
   </section>
 </template>
@@ -220,11 +229,11 @@ li {
   gap: 10px;
 }
 
-.nav__item-link {
+.item-link {
   text-decoration: none;
 }
 
-.nav__item-link:hover {
+.item-link:hover {
   cursor: pointer;
 }
 .nav__item-picture {
@@ -249,7 +258,7 @@ li {
 .sidebar__social {
 }
 
-.social-title {
+.sidebar-title {
   margin-top: 36px;
   margin-bottom: 19px;
   color: var(--black1, #2f2f2f);
@@ -264,87 +273,28 @@ li {
   align-items: center;
 }
 
-.button-search {
-  width: 180px;
-  border: 2px solid var(--hint, #acacac);
-  height: 50px;
-  border-radius: 10px;
-  margin: 42px;
-  margin-bottom: 0;
-  font-family: Rubik;
-  font-size: 18px;
-  font-style: normal;
+.sidebar-config {
+  margin-top: 28px;
+}
+.config-title {
+  margin-top: 0;
+  margin-bottom: 9px;
+}
+
+.sidebar__button {
+  color: var(--white, #fff);
+  font-family: 'Baloo 2';
+  font-size: 20px;
   font-weight: 700;
-}
-
-.button-find {
-  width: 97px;
-  height: 50px;
-  border: 2px solid var(--hint, #acacac);
-  border-radius: 10px;
-  margin-left: 22px;
-  font-family: Rubik;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 700;
-}
-
-.button-close {
-  background-image: url('../../images/button-close.svg');
-  background-repeat: no-repeat;
-  width: 26px;
-  height: 26px;
-  border: none;
-  background-color: transparent;
-  position: absolute;
-  right: 45px;
-}
-
-.form-search {
   display: flex;
-  margin-top: calc(118px - 45px);
-  justify-content: space-between;
-}
-
-.search-input {
-  width: 250px;
-  height: 50px;
-  border-radius: 10px;
-  border: 2px solid var(--hint, #acacac);
-  background: var(--panel-light, #fff);
-  padding-left: 44px;
-}
-
-.search-input:focus {
-  outline-color: #acacac;
-}
-
-.icon-search {
-  position: absolute;
-  margin-top: 14px;
-  margin-left: 17px;
-}
-
-.weather-icon {
-  margin-top: 24px;
-  background-image: url('/src/images/wheather-icon-snow.svg');
-  background-repeat: no-repeat;
-  background-size: contain;
-  width: 200px;
-  height: 200px;
-}
-
-.weather-date-exact {
-  margin: 0;
-}
-
-.icon-location {
-  width: 40px;
-  height: 40px;
-}
-
-.location-name {
-  margin: 0;
+  height: 51px;
+  padding: 10px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  background: var(--blue1, #1d3d8f);
+  border: none;
 }
 
 @media screen and (max-width: 833px) {
