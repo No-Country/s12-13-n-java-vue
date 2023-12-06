@@ -1,7 +1,10 @@
 package com.latam.unamano.controller.exceptions;
 
+import com.latam.unamano.exceptions.BadDataEntryException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -28,5 +31,18 @@ public class RestResponseEntityExceptionHandler {
     public ResponseEntity<Object> handlerResourceNotFoundException(UsernameOrPasswordIncorretException ex, WebRequest request) {
         return new ResponseEntity<>(new ErrorResponse("Username or password", ex.getMessage()),
                 HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<String> err404(EntityNotFoundException e){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+
+    @ExceptionHandler(BadDataEntryException.class)
+    public ResponseEntity<String> badDataEntry(BadDataEntryException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<String> badDataEntry(HttpMessageNotReadableException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getLocalizedMessage());
     }
 }

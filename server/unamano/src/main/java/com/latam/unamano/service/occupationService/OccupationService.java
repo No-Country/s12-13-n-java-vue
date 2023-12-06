@@ -55,5 +55,8 @@ public class OccupationService implements OccupationServiceInterface{
     public Occupation findByOccupationName(Occupation occupation){
         return occupationRepository.findByOccupationName(occupation.getOccupationName());
     }
+    public Occupation findByOccupationName(OccupationDTO occupation){
+        return occupationRepository.findByOccupationName(occupation.getOccupationName());
+    }
 
 }
