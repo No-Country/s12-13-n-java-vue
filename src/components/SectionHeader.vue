@@ -5,7 +5,7 @@
   <section class="container">
     <header>
       <nav class="menu">
-        <li class="menu__item">
+        <li class="menu__item" :class="{ hidden: isVisible }">
           <img class="menu__item-logo" src="../assets/logo.svg" />
         </li>
         <li class="menu__item">
@@ -15,7 +15,7 @@
         </li>
       </nav>
     </header>
-    <section class="sidebar visible" :class="{ visible: isVisible }">
+    <section class="sidebar" :class="{ visible: isVisible }">
       <img class="sidebar-logo" src="../assets/logo.svg" />
       <ul class="nav__list">
         <li class="nav__item">
@@ -200,7 +200,8 @@ li {
   height: 720px;
   overflow-x: visible;
   overflow-y: visible;
-  position: absolute;
+  position: fixed;
+  top: 0;
   right: 0;
   transform: translateX(100%);
   transition: transform 0.3s ease;
@@ -209,10 +210,16 @@ li {
   align-items: center;
   justify-content: space-between;
   gap: 61px;
+  border-radius: 6px 0px 0px 6px;
+  box-shadow: 0px 4px 20.8px 0px rgba(16, 96, 217, 0.25);
 }
 
 .visible {
   transform: translateX(0);
+}
+
+.hidden {
+  display: none;
 }
 
 .sidebar-logo {
