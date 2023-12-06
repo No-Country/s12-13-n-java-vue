@@ -1,8 +1,9 @@
 <script setup>
   import SectionInfo from '@/components/SectionInfo.vue'
-  import SectionTutorial from '@/components/SectionTutorial.vue'
-  import SectionBlog from '@/components/SectionBlog.vue'
+/*   import SectionTutorial from '@/components/SectionTutorial.vue'
+  import SectionBlog from '@/components/SectionBlog.vue' */
   import SectionSoporte from '@/components/SectionSoporte.vue'
+  import SectionNosotros from '@/components/SectionNosotros.vue'
 
 
 
@@ -21,9 +22,10 @@
   <main>
     
     <SectionInfo />
-    <SectionTutorial />
-    <SectionBlog />
+    <!-- <SectionTutorial />
+    <SectionBlog /> -->
     <SectionSoporte />
+    <SectionNosotros />
    
   </main>
 </template>

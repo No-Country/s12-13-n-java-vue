@@ -1,13 +1,13 @@
 <script setup>
-  import Carrousel from '@/components/CarrouselBlog.vue'
+  /* import Carrousel from '@/components/CarrouselBlog.vue' */
 </script>
 <template>
-  <section class="container">
+  <section class="conteiner">
     <div class="row gx-0">
-      <div class="col-sm-12 col-md-6">
-        <Carrousel />
+      <div class="col-sm-12 col-md-12">
+     <!--    <Carrousel /> -->
       </div>
-      <div class="col-sm-12 col-md-6">
+      <div class="col-sm-12 col-md-12">
         <div class="container-description">
           <h3>TRABAJA CUIDANDO</h3>
           <button class="description-btn">Comienza a trabajar</button>
@@ -22,7 +22,6 @@
     color: #fff;
     margin-top: 48px;
   }
-  .conteiner,
   .container-description {
     margin-top: 30px;
     display: flex;
@@ -36,8 +35,7 @@
     background-color: #1D3D8F;
   }
 
-  .description-btn,
-  .blog-btn {
+  .description-btn{
     width: 328px;
     height: 51px;
     padding: 10px;

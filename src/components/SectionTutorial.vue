@@ -1,16 +1,16 @@
 <script setup>
-  import Carrousel from '@/components/CarrouselTutorial.vue'
+ /*  import Carrousel from '@/components/CarrouselTutorial.vue' */
 </script>
 
 <template>
 
   <section class="conteiner">
     <div class="row gx-0">
-      <div class="col-sm-12 col-md-6">
-        <Carrousel />
+      <div class="col-sm-12 col-md-12">
+        <!-- <Carrousel /> -->
       </div>
 
-      <div class="col-sm-12 col-md-6">
+      <div class="col-sm-12 col-md-12">
         <div class="container-description">
           <h3>CUBRE TUS NECESIDADES</h3>
           <button class="description-btn">Comienza a contratar</button>
@@ -25,7 +25,7 @@
     color: #fff;
     margin-top: 48px;
   }
-  .conteiner,
+  
   .container-description {
     margin-top: 30px;
     display: flex;
