@@ -39,29 +39,7 @@ import SectionHeader from '../components/SectionHeader.vue'
         </li>
       </ul>
     </nav>
-    <section class="conteiner">
-      <img src="@/assets/images/principal.svg" alt="principal" />
-
-      <div class="conteiner-section1">
-        <h3>CONECTAMOS GENERACIONES</h3>
-        <P>
-          Nuestra aplicación te ayuda a crear posiciones de trabajo personalizadas y conectar con
-          personas comprometidas y listas para trabajar</P
-        >
-        <button class="section1-btn">Ofrece empleo</button>
-        <p class="div">___________________ ó ___________________</p>
-      </div>
-
-      <div class="container-description">
-        <p>
-          Nuestra aplicación te ayuda a crear posiciones de trabajo personalizadas y conectar con
-          personas comprometidas y listas para trabajar.
-        </p>
-        <button style="background-color: #1d3d8f" class="description-btn">
-          Busca oportunidades
-        </button>
-      </div>
-    </section>
+    <section class="container"></section>
 
     <section class="section-blog">
       <!-- contenido de la segunda tarjeta -->
@@ -144,5 +122,10 @@ li {
 }
 .nav__item-text_home {
   color: var(--blue1, #3960c2);
+}
+.container {
+  background-color: #a9b8de;
+  width: 100%;
+  height: 530px;
 }
 </style>
