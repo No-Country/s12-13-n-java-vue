@@ -19,54 +19,77 @@
       <img class="sidebar-logo" src="../assets/logo.svg" />
       <ul class="nav__list">
         <li class="nav__item">
-          <div class="nav__item-picture">
-            <img class="nav__item-icon" src="../assets/images/page-icon.svg" alt="page-icon" />
-          </div>
-          <p class="nav__item-text">Categorías</p>
+          <a class="nav__item nav__item-link">
+            <div class="nav__item-picture">
+              <img class="nav__item-icon" src="../assets/images/page-icon.svg" alt="page-icon" />
+            </div>
+            <p class="nav__item-text">Categorías</p>
+          </a>
         </li>
         <li class="nav__item">
-          <div class="nav__item-picture">
-            <img class="nav__item-icon" src="../assets/images/blog-icon.svg" alt="blog-icon" />
-          </div>
-          <p class="nav__item-text">Blog</p>
+          <a class="nav__item nav__item-link">
+            <div class="nav__item-picture">
+              <img class="nav__item-icon" src="../assets/images/blog-icon.svg" alt="blog-icon" />
+            </div>
+            <p class="nav__item-text">Blog</p>
+          </a>
         </li>
         <li class="nav__item">
-          <div class="nav__item-picture">
-            <img
-              class="nav__item-icon"
-              src="../assets/images/support-icon.svg"
-              alt="support-icon"
-            />
-          </div>
-          <p class="nav__item-text">Soporte</p>
+          <a class="nav__item nav__item-link">
+            <div class="nav__item-picture">
+              <img
+                class="nav__item-icon"
+                src="../assets/images/support-icon.svg"
+                alt="support-icon"
+              />
+            </div>
+            <p class="nav__item-text">Soporte</p>
+          </a>
         </li>
         <li class="nav__item">
-          <div class="nav__item-picture">
-            <img class="nav__item-icon" src="../assets/images/people-icon.svg" alt="people-icon" />
-          </div>
-          <p class="nav__item-text">Nosotros</p>
+          <a class="nav__item nav__item-link">
+            <div class="nav__item-picture">
+              <img
+                class="nav__item-icon"
+                src="../assets/images/people-icon.svg"
+                alt="people-icon"
+              />
+            </div>
+            <p class="nav__item-text">Nosotros</p>
+          </a>
         </li>
       </ul>
-      <button class="button button-search">Поиск города</button>
-      <div class="sidebar-background"></div>
-      <div class="weather-content">
-        <div class="weather-icon"></div>
-        <p class="weather-title">1 <span class="title-celcium">°C</span></p>
-        <h2 class="weather-subtitle">Cнег</h2>
-        <p class="weather-description">Ощущается как -3 °C</p>
-        <div class="weather-date">
-          <p class="weather-day">Сегодня</p>
-          <p class="weather-date-exact">Вс, 13 мар</p>
-        </div>
-        <div class="weather-location">
-          <img
-            class="icon-location"
-            src="src/images/icon-location.svg"
-            alt="иконка местоположения"
-          />
-          <p class="location-name">Москва</p>
-        </div>
-      </div>
+      <section class="sidebar__social">
+        <div class="sidebar__line"></div>
+        <h3 class="social-title">REDES</h3>
+        <ul class="social-list">
+          <li class="social-item">
+            <a class="social-link"
+              ><img src="../assets/images/facebook-icon.svg" alt="facebook" class="social-image"
+            /></a>
+          </li>
+          <li class="social-item">
+            <a class="social-link"
+              ><img src="../assets/images/instagram-icon.svg" alt="instagram" class="social-image"
+            /></a>
+          </li>
+          <li class="social-item">
+            <a class="social-link"
+              ><img src="../assets/images/tiktok-icon.svg" alt="tiktok" class="social-image"
+            /></a>
+          </li>
+          <li class="social-item">
+            <a class="social-link"
+              ><img src="../assets/images/twitter-icon.svg" alt="twitter" class="social-image"
+            /></a>
+          </li>
+        </ul>
+      </section>
+      <section class="sidebar-size">
+        <h3 class="social-title">REDES</h3>
+      </section>
+      <div class="sidebar__line"></div>
+      <div class="sidebar__line"></div>
     </section>
   </section>
 </template>
@@ -189,11 +212,20 @@ li {
   flex-direction: column;
   align-items: flex-start;
   gap: 20px;
+  align-self: flex-start;
 }
 
 .nav__item {
   display: flex;
   gap: 10px;
+}
+
+.nav__item-link {
+  text-decoration: none;
+}
+
+.nav__item-link:hover {
+  cursor: pointer;
 }
 .nav__item-picture {
   width: 28px;
@@ -209,6 +241,29 @@ li {
   font-weight: 400;
   line-height: normal;
 }
+.sidebar__line {
+  width: 207.022px;
+  border-bottom: solid 1px #149ed7;
+}
+
+.sidebar__social {
+}
+
+.social-title {
+  margin-top: 36px;
+  margin-bottom: 19px;
+  color: var(--black1, #2f2f2f);
+  font-family: 'Baloo 2';
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.social-list {
+  display: flex;
+  gap: 27px;
+  align-items: center;
+}
+
 .button-search {
   width: 180px;
   border: 2px solid var(--hint, #acacac);
@@ -300,8 +355,8 @@ li {
   }
   .sidebar {
     /* width: 289px; */
-    height: 667px;
-    padding: 30px 31px 35px;
+    height: 802px;
+    padding: 60.39px 40.5px;
   }
   .weather-icon {
     margin-top: 20px;
