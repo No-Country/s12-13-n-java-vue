@@ -1,8 +1,10 @@
-<script setup></script>
+<script setup>
+import SectionHeader from '../components/SectionHeader.vue'
+</script>
 
 <template>
   <main>
-    <header>ESPACIO PARA EL NAVBAR</header>
+    <SectionHeader/>
     <nav class="nav">
       <ul class="nav__list">
         <li class="nav__item">
