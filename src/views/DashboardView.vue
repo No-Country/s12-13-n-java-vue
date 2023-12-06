@@ -136,7 +136,7 @@ export default {
   data() {
     return {
       activeItems: [false, false, false],
-      isOpen: true
+      isOpen: false
     }
   },
   methods: {
