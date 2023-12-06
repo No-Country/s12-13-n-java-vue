@@ -1,5 +1,10 @@
 <script setup>
 import SectionHeader from '../components/SectionHeader.vue'
+import { ref } from 'vue'
+import Datepicker from '@vuepic/vue-datepicker'
+import '@vuepic/vue-datepicker/dist/main.css'
+
+const date = ref()
 </script>
 
 <template>
@@ -74,7 +79,7 @@ import SectionHeader from '../components/SectionHeader.vue'
             </select>
           </div>
           <div class="form__labelBox">
-            <label htmlFor="eventName" class="form__labelText"> Elige el tipo de servicio </label>
+            <label htmlFor="eventName" class="form__labelText">Título</label>
             <input
               class="form__input"
               type="select"
@@ -86,7 +91,7 @@ import SectionHeader from '../components/SectionHeader.vue'
             />
           </div>
           <div class="form__labelBox">
-            <label htmlFor="eventName" class="form__labelText"> Elige el tipo de servicio </label>
+            <label htmlFor="eventName" class="form__labelText">Descripción</label>
             <textarea
               class="form__textarea"
               type="select"
@@ -99,7 +104,7 @@ detalles de tu trabajo"
             />
           </div>
           <div class="form__labelBox">
-            <label htmlFor="eventName" class="form__labelText"> Elige el tipo de servicio </label>
+            <label htmlFor="eventName" class="form__labelText">Ubicación</label>
             <img src="../assets/images/location-icon.svg" alt="" class="location-img" />
 
             <input
@@ -112,6 +117,11 @@ detalles de tu trabajo"
               required
             />
           </div>
+          <div class="form__labelBox">
+            <label htmlFor="eventName" class="form__labelText">Fecha de la tarea</label>
+            <Datepicker v-model="date" class="date-picker" />
+          </div>
+
           <button class="form__submit-button link">Publicar</button>
         </form>
       </div>
@@ -121,6 +131,7 @@ detalles de tu trabajo"
 </template>
 
 <script>
+
 export default {
   data() {
     return {
@@ -363,5 +374,11 @@ li {
   right: 36px;
   margin-top: 38px;
   z-index: 10;
+}
+.date-picker {
+  border-radius: 6px;
+  border: 1px solid var(--gray1, #4f4f4f);
+  background-color: #eee;
+  background: var(--blue1, #1d3d8f);
 }
 </style>
