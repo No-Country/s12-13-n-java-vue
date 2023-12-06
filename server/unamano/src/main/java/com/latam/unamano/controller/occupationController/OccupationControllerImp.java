@@ -2,6 +2,7 @@ package com.latam.unamano.controller.occupationController;
 
 import com.latam.unamano.commons.controller.GenericRestController;
 import com.latam.unamano.commons.dto.response.CustomResponse;
+import com.latam.unamano.dto.occupationDto.OccupationMapper;
 import com.latam.unamano.persistence.entities.ocupationEntity.Occupation;
 
 import com.latam.unamano.service.occupationService.OccupationServiceInterface;
@@ -32,7 +33,8 @@ public class OccupationControllerImp extends GenericRestController implements Oc
 
     @Override
     public ResponseEntity<CustomResponse> getAllOccupation() {
-        return ok(occupationServiceInterface.getAll(),null,REQUEST_OCCUPATION);
+        return ok(occupationServiceInterface.getAll()
+                ,null,REQUEST_OCCUPATION);
     }
 
     @Override
@@ -41,7 +43,7 @@ public class OccupationControllerImp extends GenericRestController implements Oc
         if (occupation.isEmpty()){
             return notFound(null,NOT_FOUND,REQUEST_OCCUPATION);
         }
-        return ok(occupation,null,REQUEST_OCCUPATION);
+        return ok(OccupationMapper.occupationToDto(occupation.get()),null,REQUEST_OCCUPATION);
     }
 
     @Override

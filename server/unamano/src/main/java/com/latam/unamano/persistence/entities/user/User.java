@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.latam.unamano.persistence.entities.addressEntity.Address;
+import com.latam.unamano.persistence.entities.task.Task;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -39,6 +40,8 @@ public class User implements UserDetails {
 	private String profilePicture;
 	@Enumerated(EnumType.STRING)
 	private Role role;
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Task> requestedTasks;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
