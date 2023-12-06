@@ -1,7 +1,8 @@
 <script setup></script>
 
 <template>
-  <section>
+  <div class="placeholder"></div>
+  <section class="container">
     <header>
       <nav>
         <ul class="nav__list">
@@ -14,10 +15,15 @@
         </ul>
       </nav>
     </header>
-    <!-- <section class="side-bar">
+    <section class="side-bar">
       <button class="button button-search">Поиск города</button>
       <div class="side-bar-background"></div>
       <div class="weather-content">
+        <!-- <img
+              class="weather-icon"
+              src="src/images/wheather-icon-snow.svg"
+              alt="иконка погоды, снег"
+            /> -->
         <div class="weather-icon"></div>
         <p class="weather-title">1 <span class="title-celcium">°C</span></p>
         <h2 class="weather-subtitle">Cнег</h2>
@@ -35,7 +41,7 @@
           <p class="location-name">Москва</p>
         </div>
       </div>
-    </section> -->
+    </section>
   </section>
 </template>
 
@@ -47,13 +53,27 @@ li {
   padding: 0;
   list-style: none;
 }
+
+.placeholder {
+  height: 70px;
+  width: 393px;
+  background: #fff;
+}
+.container {
+  position: fixed;
+  z-index: 100;
+}
 .nav__list {
+  z-index: 100;
+  width: 393px;
+  margin-top: -70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-left: 32px;
   padding-right: 32px;
   height: 53px;
+  background: #fff;
 }
 .nav__item-logo {
   height: 46.672px;
@@ -123,25 +143,14 @@ li {
   right: 45px;
 }
 
-.side-bar-search {
-  position: absolute;
-  background-color: white;
-  width: 461px;
-  height: 720px;
-  top: 0;
-  transition: 0.5s;
-  padding: 45px;
-  transform: translateX(-100%);
-  overflow-x: auto;
-  overflow-y: hidden;
-}
-
 .side-bar {
-  width: 461px;
+  width: 200px;
   background-color: white;
   height: 720px;
   overflow-x: auto;
   overflow-y: hidden;
+  position: absolute;
+  right: 0;
 }
 
 .side-bar-background {
@@ -200,70 +209,6 @@ li {
   height: 200px;
 }
 
-.weather-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.weather-location {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--hint, #acacac);
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  padding-right: 50px;
-}
-
-.weather-title {
-  font-size: 96px;
-  font-style: normal;
-  font-weight: 900;
-  margin: 0;
-}
-
-.title-celcium {
-  font-size: 50px;
-  font-style: normal;
-  font-weight: 500;
-}
-
-.weather-subtitle {
-  margin-top: 17px;
-  margin-bottom: 17px;
-  font-size: 36px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 100%; /* 36px */
-}
-
-.weather-description {
-  margin: 0;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-.weather-date {
-  margin-top: 78px;
-  margin-bottom: 25px;
-  display: flex;
-  gap: 98px;
-  color: var(--hint, #acacac);
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-.weather-day {
-  margin: 0;
-}
-
 .weather-date-exact {
   margin: 0;
 }
@@ -277,76 +222,14 @@ li {
   margin: 0;
 }
 
-@media screen and (max-width: 1439px) {
-  .side-bar-search {
-    width: 329px;
-    height: 1194px;
-    overflow-x: visible;
-    overflow-y: visible;
-    padding: 59px 28px;
-  }
-  .side-bar {
-    width: 329px;
-    height: 1194px;
-    overflow-x: visible;
-    overflow-y: visible;
-    padding: 53px 27px;
-  }
-  .weather-icon {
-    margin-top: 250px;
-    margin-bottom: 237px;
-  }
-  .button-search {
-    margin: 0;
-  }
-  .button-close {
-    right: 27px;
-  }
-  .button-find {
-    margin-left: 0;
-  }
-  .icon-search {
-    margin-top: -72px;
-    margin-right: 212px;
-    margin-left: -6px;
-  }
-  .form-search {
-    margin-top: calc(122px - 59px);
-    gap: 20px;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-  }
-  .search-input {
-    width: 275px;
-  }
-  .side-bar-background {
-    opacity: 0.05000000074505806;
-    background-image: url('/src/images/background-clouds.png');
-    background-blend-mode: difference;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-color: lightgray;
-    width: 551px;
-    height: 377px;
-    margin-left: auto;
-    margin-right: auto;
-    position: absolute;
-    top: 307px;
-    left: -112px;
-    overflow: hidden;
-    clip-path: inset(0 110px 0 0);
-  }
-}
-
 @media screen and (max-width: 833px) {
   .side-bar-search {
-    width: 375px;
+    /* width: 289px; */
     height: 667px;
     padding: 40px 50px 0 27px;
   }
   .side-bar {
-    width: 375px;
+    /* width: 289px; */
     height: 667px;
     padding: 30px 31px 35px;
   }
@@ -356,7 +239,7 @@ li {
     margin-bottom: -17px;
     overflow: hidden;
     height: 180px;
-    width: 200px;
+    /* width: 200px; */
     /* width: 100%; */
     width: 67%;
     background-position: center;
@@ -373,8 +256,8 @@ li {
   }
   .side-bar-background {
     top: 67px;
-    width: 573px;
-    left: -89px;
+    /* width: 273px; */
+    /* left: -89px; */
   }
   .button-close {
     right: 50px;

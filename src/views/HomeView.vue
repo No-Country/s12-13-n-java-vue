@@ -18,6 +18,7 @@ import SectionHeader from '../components/SectionHeader.vue'
 <template>
   <main>
     <SectionHeader />
+    
     <SectionInfo />
     <SectionTutorial />
     <SectionBlog />
