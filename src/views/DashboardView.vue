@@ -77,6 +77,7 @@ const date = ref()
             >
               <option class="form__optionText">Categorias</option>
             </select>
+            <img src="../assets/images/shevron.svg" alt="shevron" class="shevron" />
           </div>
           <div class="form__labelBox">
             <label htmlFor="eventName" class="form__labelText">Título</label>
@@ -131,7 +132,6 @@ detalles de tu trabajo"
 </template>
 
 <script>
-
 export default {
   data() {
     return {
@@ -380,5 +380,13 @@ li {
   border: 1px solid var(--gray1, #4f4f4f);
   background-color: #eee;
   background: var(--blue1, #1d3d8f);
+}
+
+.shevron {
+  width: 23.2px;
+  height: 24px;
+  position: absolute;
+  right: 36px;
+  margin-top: 38px;
 }
 </style>
