@@ -1,5 +1,5 @@
 <script setup>
-  import Footer from '@/components/Footer.vue'
+  import FooterPage from '@/components/Footer.vue'
 </script>
 
 <template>
@@ -117,7 +117,7 @@
     <div class="row gx-0">
     
       <div class="col">
-        <Footer />
+        <FooterPage />
       </div>
     </div>
     
