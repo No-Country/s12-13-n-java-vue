@@ -27,12 +27,12 @@ public class TaskController {
     public ResponseEntity<Page<TaskDTO>> getTasks(@PageableDefault(size = 9) Pageable pageable){
         return ResponseEntity.ok(taskService.findTasks(pageable).map(TaskMapper::taskToTaskDTO));
     }
-/*
+
     @GetMapping("/on/{occupation_name}")
     public ResponseEntity<Page<TaskDTO>> getTasksByOccupation(@PageableDefault(size = 9) Pageable pageable, @PathVariable String occupation_name){
         return ResponseEntity.ok(taskService.findTasksByOccupation(pageable, occupation_name).map(TaskMapper::taskToTaskDTO));
     }
-*/
+
     @GetMapping("/{id}")
     public ResponseEntity<TaskDTO> findTaskById(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.FOUND).body(taskService.findTaskById(id));

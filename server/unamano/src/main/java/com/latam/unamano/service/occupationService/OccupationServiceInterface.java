@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface OccupationServiceInterface {
 
     Occupation save(Occupation occupation);
-    List<Occupation> getAll();
+    List<?> getAll();
     Optional<Occupation> getById(Long id);
     Optional<Occupation> update(Occupation occupation);
     void delete(Long id);

@@ -2,6 +2,7 @@ package com.latam.unamano.service.occupationService;
 
 
 import com.latam.unamano.dto.occupationDto.OccupationDTO;
+import com.latam.unamano.dto.occupationDto.OccupationMapper;
 import com.latam.unamano.persistence.entities.ocupationEntity.Occupation;
 import com.latam.unamano.persistence.repositories.occupationRepository.OccupationRepository;
 import org.springframework.stereotype.Component;
@@ -24,8 +25,8 @@ public class OccupationService implements OccupationServiceInterface{
     }
 
     @Override
-    public List<Occupation> getAll() {
-        return occupationRepository.findAll();
+    public List<OccupationDTO> getAll() {
+        return occupationRepository.findAll().stream().map(OccupationMapper::occupationToDto).toList();
     }
 
     @Override
