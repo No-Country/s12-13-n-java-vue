@@ -4,28 +4,52 @@
   <div class="placeholder"></div>
   <section class="container">
     <header>
-      <nav>
-        <ul class="nav__list">
-          <li class="nav__item">
-            <img class="nav__item-logo" src="../assets/logo.svg" />
-          </li>
-          <li class="nav__item">
-            <button class="nav__itme-button" @click="toggleSidebar">
-              <img class="nav__item-image" src="../assets/images/menu-icon.svg" />
-            </button>
-          </li>
-        </ul>
+      <nav class="menu">
+        <li class="menu__item">
+          <img class="menu__item-logo" src="../assets/logo.svg" />
+        </li>
+        <li class="menu__item">
+          <button class="menu__item-button" @click="toggleSidebar">
+            <img class="menu__item-image" src="../assets/images/menu-icon.svg" />
+          </button>
+        </li>
       </nav>
     </header>
-    <section class="side-bar" :class="{ visible: isVisible }">
+    <section class="sidebar visible" :class="{ visible: isVisible }">
+      <img class="sidebar-logo" src="../assets/logo.svg" />
+      <ul class="nav__list">
+        <li class="nav__item">
+          <div class="nav__item-picture">
+            <img class="nav__item-icon" src="../assets/images/page-icon.svg" alt="page-icon" />
+          </div>
+          <p class="nav__item-text">Categorías</p>
+        </li>
+        <li class="nav__item">
+          <div class="nav__item-picture">
+            <img class="nav__item-icon" src="../assets/images/blog-icon.svg" alt="blog-icon" />
+          </div>
+          <p class="nav__item-text">Blog</p>
+        </li>
+        <li class="nav__item">
+          <div class="nav__item-picture">
+            <img
+              class="nav__item-icon"
+              src="../assets/images/support-icon.svg"
+              alt="support-icon"
+            />
+          </div>
+          <p class="nav__item-text">Soporte</p>
+        </li>
+        <li class="nav__item">
+          <div class="nav__item-picture">
+            <img class="nav__item-icon" src="../assets/images/people-icon.svg" alt="people-icon" />
+          </div>
+          <p class="nav__item-text">Nosotros</p>
+        </li>
+      </ul>
       <button class="button button-search">Поиск города</button>
-      <div class="side-bar-background"></div>
+      <div class="sidebar-background"></div>
       <div class="weather-content">
-        <!-- <img
-              class="weather-icon"
-              src="src/images/wheather-icon-snow.svg"
-              alt="иконка погоды, снег"
-            /> -->
         <div class="weather-icon"></div>
         <p class="weather-title">1 <span class="title-celcium">°C</span></p>
         <h2 class="weather-subtitle">Cнег</h2>
@@ -56,7 +80,7 @@ export default {
   },
   methods: {
     toggleSidebar() {
-      const sideBar = document.querySelector('.side-bar')
+      const sideBar = document.querySelector('.sidebar')
       console.log('sideBar:', sideBar)
 
       console.log('isVisible:', this.isVisible)
@@ -67,6 +91,7 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2&display=swap');
 ul,
 p,
 li {
@@ -84,7 +109,7 @@ li {
   position: fixed;
   z-index: 100;
 }
-.nav__list {
+.menu {
   z-index: 100;
   width: 393px;
   margin-top: -70px;
@@ -93,31 +118,31 @@ li {
   align-items: center;
   padding-left: 32px;
   padding-right: 32px;
-  height: 53px;
+  height: 70px;
   background: #fff;
 }
-.nav__item-logo {
+.menu__item-logo {
   height: 46.672px;
 }
 
-.nav__itme-button {
+.menu__item-button {
   background: none;
   border: none;
   margin: 0;
   padding: 0;
 }
-.nav__item-image {
+.menu__item-image {
   width: 38px;
   height: 38px;
 }
 
-.nav__item-container {
+.menu__item-container {
   display: flex;
   align-items: baseline;
   gap: 13px;
 }
 
-.nav__item-text {
+.menu__item-text {
   color: var(--blue2, #149ed7);
   font-family: 'Yaldevi';
   font-size: 27.683px;
@@ -126,13 +151,63 @@ li {
   line-height: 67%; /* 18.548px */
   letter-spacing: 2.215px;
 }
-.nav__item-text_home {
+.menu__item-text_home {
   color: var(--blue1, #1d3d8f);
 }
-.nav__item-underline {
+.menu__item-underline {
   border-bottom: solid 9px #1d3d8f;
   width: 130px;
   border-radius: 20px;
+}
+.sidebar {
+  width: 289px;
+  background-color: white;
+  height: 720px;
+  overflow-x: visible;
+  overflow-y: visible;
+  position: absolute;
+  right: 0;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 61px;
+}
+
+.visible {
+  transform: translateX(0);
+}
+
+.sidebar-logo {
+  width: 171px;
+}
+
+.nav__list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.nav__item {
+  display: flex;
+  gap: 10px;
+}
+.nav__item-picture {
+  width: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav__item-text {
+  color: #000;
+  font-family: 'Baloo 2';
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 .button-search {
   width: 180px;
@@ -168,22 +243,6 @@ li {
   background-color: transparent;
   position: absolute;
   right: 45px;
-}
-
-.side-bar {
-  width: 200px;
-  background-color: white;
-  height: 720px;
-  overflow-x: visible;
-  overflow-y: visible;
-  position: absolute;
-  right: 0;
-  transform: translateX(100%);
-  transition: transform 0.3s ease;
-}
-
-.visible {
-  transform: translateX(0);
 }
 
 .form-search {
@@ -234,12 +293,12 @@ li {
 }
 
 @media screen and (max-width: 833px) {
-  .side-bar-search {
+  .sidebar-search {
     /* width: 289px; */
     height: 667px;
     padding: 40px 50px 0 27px;
   }
-  .side-bar {
+  .sidebar {
     /* width: 289px; */
     height: 667px;
     padding: 30px 31px 35px;
@@ -265,7 +324,7 @@ li {
   .weather-location {
     padding-bottom: 35px;
   }
-  .side-bar-background {
+  .sidebar-background {
     top: 67px;
     /* width: 273px; */
     /* left: -89px; */
