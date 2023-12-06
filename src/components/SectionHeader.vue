@@ -1,8 +1,7 @@
-<script setup></script>
 
 <template>
   <div class="placeholder"></div>
-  <section class="container">
+  <section class="container gx-0">
     <header>
       <nav class="menu">
         <li class="menu__item" :class="{ hidden: isVisible }">
