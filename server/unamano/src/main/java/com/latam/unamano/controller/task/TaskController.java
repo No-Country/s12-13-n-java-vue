@@ -3,6 +3,7 @@ package com.latam.unamano.controller.task;
 import com.latam.unamano.dto.task.TaskDTO;
 import com.latam.unamano.dto.task.TaskMapper;
 import com.latam.unamano.service.task.TaskService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("api/task")
+@SecurityRequirement(name = "bearer-key")
 public class TaskController {
     private final TaskService taskService;
     public TaskController(TaskService taskService){
