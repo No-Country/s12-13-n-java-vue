@@ -10,12 +10,14 @@
             <img class="nav__item-logo" src="../assets/logo.svg" />
           </li>
           <li class="nav__item">
-            <img class="nav__item-image" src="../assets/images/menu-icon.svg" />
+            <button class="nav__itme-button" @click="toggleSidebar">
+              <img class="nav__item-image" src="../assets/images/menu-icon.svg" />
+            </button>
           </li>
         </ul>
       </nav>
     </header>
-    <section class="side-bar">
+    <section class="side-bar" :class="{ visible: isVisible }">
       <button class="button button-search">Поиск города</button>
       <div class="side-bar-background"></div>
       <div class="weather-content">
@@ -44,6 +46,25 @@
     </section>
   </section>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      isVisible: false
+    }
+  },
+  methods: {
+    toggleSidebar() {
+      const sideBar = document.querySelector('.side-bar')
+      console.log('sideBar:', sideBar)
+
+      console.log('isVisible:', this.isVisible)
+      this.isVisible = !this.isVisible
+    }
+  }
+}
+</script>
 
 <style scoped>
 ul,
@@ -79,6 +100,12 @@ li {
   height: 46.672px;
 }
 
+.nav__itme-button {
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
 .nav__item-image {
   width: 38px;
   height: 38px;
@@ -147,28 +174,12 @@ li {
   width: 200px;
   background-color: white;
   height: 720px;
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow-x: visible;
+  overflow-y: visible;
   position: absolute;
   right: 0;
-}
-
-.side-bar-background {
-  opacity: 0.05000000074505806;
-  background-image: url('/src/images/background-clouds.png');
-  background-blend-mode: difference;
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-color: lightgray;
-  width: 683px;
-  height: 377px;
-  margin-left: auto;
-  margin-right: auto;
-  position: absolute;
-  top: 110px;
-  left: -112px;
-  overflow: hidden;
-  clip-path: inset(0 110px 0 0);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
 }
 
 .visible {
