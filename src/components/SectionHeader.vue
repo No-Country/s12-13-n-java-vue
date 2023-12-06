@@ -19,7 +19,7 @@
       <img class="sidebar-logo" src="../assets/logo.svg" />
       <ul class="nav__list">
         <li class="nav__item">
-          <a class="nav__item item-link">
+          <a class="nav__item link">
             <div class="nav__item-picture">
               <img class="nav__item-icon" src="../assets/images/page-icon.svg" alt="page-icon" />
             </div>
@@ -27,7 +27,7 @@
           </a>
         </li>
         <li class="nav__item">
-          <a class="nav__item item-link">
+          <a class="nav__item link">
             <div class="nav__item-picture">
               <img class="nav__item-icon" src="../assets/images/blog-icon.svg" alt="blog-icon" />
             </div>
@@ -35,7 +35,7 @@
           </a>
         </li>
         <li class="nav__item">
-          <a class="nav__item item-link">
+          <a class="nav__item link">
             <div class="nav__item-picture">
               <img
                 class="nav__item-icon"
@@ -47,7 +47,7 @@
           </a>
         </li>
         <li class="nav__item">
-          <a class="nav__item item-link">
+          <a class="nav__item link">
             <div class="nav__item-picture">
               <img
                 class="nav__item-icon"
@@ -65,12 +65,12 @@
           <h3 class="social-title sidebar-title">REDES</h3>
           <ul class="social-list">
             <li class="social-item">
-              <a class="social-link item-link"
+              <a class="social-link link"
                 ><img src="../assets/images/facebook-icon.svg" alt="facebook" class="social-image"
               /></a>
             </li>
             <li class="social-item">
-              <a class="social-link item-link"
+              <a class="social-link link"
                 ><img
                   src="../assets/images/instagram-icon.svg"
                   alt="instagram"
@@ -78,12 +78,12 @@
               /></a>
             </li>
             <li class="social-item">
-              <a class="social-link item-link"
+              <a class="social-link link"
                 ><img src="../assets/images/tiktok-icon.svg" alt="tiktok" class="social-image"
               /></a>
             </li>
             <li class="social-item">
-              <a class="social-link item-link"
+              <a class="social-link link"
                 ><img src="../assets/images/twitter-icon.svg" alt="twitter" class="social-image"
               /></a>
             </li>
@@ -98,7 +98,7 @@
           />
         </section>
       </div>
-      <button class="sidebar__button">Iniciar sesión</button>
+      <a href="/login" class="sidebar__button link" @onclick="navigateToLogin">Iniciar sesión</a>
     </section>
   </section>
 </template>
@@ -117,6 +117,9 @@ export default {
 
       console.log('isVisible:', this.isVisible)
       this.isVisible = !this.isVisible
+    },
+    navigateToLogin() {
+      this.$router.push('/login')
     }
   }
 }
@@ -229,11 +232,11 @@ li {
   gap: 10px;
 }
 
-.item-link {
+.link {
   text-decoration: none;
 }
 
-.item-link:hover {
+.link:hover {
   cursor: pointer;
 }
 .nav__item-picture {
@@ -298,53 +301,10 @@ li {
 }
 
 @media screen and (max-width: 833px) {
-  .sidebar-search {
-    /* width: 289px; */
-    height: 667px;
-    padding: 40px 50px 0 27px;
-  }
   .sidebar {
     /* width: 289px; */
     height: 802px;
     padding: 60.39px 40.5px;
-  }
-  .weather-icon {
-    margin-top: 20px;
-    padding-top: 16px;
-    margin-bottom: -17px;
-    overflow: hidden;
-    height: 180px;
-    /* width: 200px; */
-    /* width: 100%; */
-    width: 67%;
-    background-position: center;
-    background-size: cover;
-    object-fit: cover;
-    /* padding-bottom: -2px; */
-    /* clip-path: inset(50px 50px 0 0); */
-  }
-  .button-search {
-    margin: 0px;
-  }
-  .weather-location {
-    padding-bottom: 35px;
-  }
-  .sidebar-background {
-    top: 67px;
-    /* width: 273px; */
-    /* left: -89px; */
-  }
-  .button-close {
-    right: 50px;
-  }
-  .search-input {
-    width: 298px;
-  }
-  .icon-search {
-    margin-left: -32px;
-  }
-  .button-find {
-    margin-left: 22px;
   }
 }
 </style>
