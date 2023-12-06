@@ -112,10 +112,6 @@ export default {
   },
   methods: {
     toggleSidebar() {
-      const sideBar = document.querySelector('.sidebar')
-      console.log('sideBar:', sideBar)
-
-      console.log('isVisible:', this.isVisible)
       this.isVisible = !this.isVisible
     },
     navigateToLogin() {
