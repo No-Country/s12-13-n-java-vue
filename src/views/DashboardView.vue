@@ -40,7 +40,13 @@ import SectionHeader from '../components/SectionHeader.vue'
       </ul>
     </nav>
     <section class="container"></section>
-
+    <section class="modal-info">
+      <p class="modal-info__text">
+        Crea tu primera publicación y <br />
+        conecta con trabajadores
+      </p>
+      <button class="modal-info__button link" @onclick="openPopup">Crear publicación</button>
+    </section>
     <section class="section-blog">
       <!-- contenido de la segunda tarjeta -->
     </section>
@@ -127,5 +133,47 @@ li {
   background-color: #a9b8de;
   width: 100%;
   height: 530px;
+}
+.modal-info {
+  width: 361px;
+  left: 0;
+  right: 0;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  position: absolute;
+  top: 500px;
+  display: flex;
+  padding: 15px 10px;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 25px;
+  align-self: stretch;
+  border-radius: 6px;
+  background: var(--white, #fff);
+}
+.modal-info__button {
+  color: var(--white, #fff);
+  font-family: 'Baloo 2';
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  height: 51px;
+  padding: 10px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  background: var(--blue1, #1d3d8f);
+  border: none;
+}
+
+.modal-info__text {
+  text-align: center;
+  font-family: 'Baloo 2';
+  font-size: 20px;
+  font-weight: 600;
 }
 </style>
