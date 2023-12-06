@@ -45,11 +45,21 @@ import SectionHeader from '../components/SectionHeader.vue'
         Crea tu primera publicación y <br />
         conecta con trabajadores
       </p>
-      <button class="modal-info__button link" @onclick="openPopup">Crear publicación</button>
+      <button class="modal-info__button link" @click="openPopup">Crear publicación</button>
     </section>
     <section class="section-blog">
       <!-- contenido de la segunda tarjeta -->
     </section>
+    <modal class="popup" v-if="isOpen">
+      <div class="popup__container">
+        <div class="popup__header">
+          <h3 class="popup__title">Crear nueva publicación</h3>
+          <button class="popup__close button" @click="closePopup">
+            <img src="../assets/images/close-button-icon.svg" alt="Button Image" />
+          </button>
+        </div>
+      </div>
+    </modal>
     <footer>ESPACIO PARA EL FOOTER</footer>
   </main>
 </template>
@@ -58,12 +68,20 @@ import SectionHeader from '../components/SectionHeader.vue'
 export default {
   data() {
     return {
-      activeItems: [false, false, false]
+      activeItems: [false, false, false],
+      isOpen: true
     }
   },
   methods: {
     toggleNavItem(index) {
       this.$set(this.activeItems, index, !this.activeItems[index])
+    },
+    openPopup() {
+      console.log('isOpen:')
+      this.isOpen = true
+    },
+    closePopup() {
+      this.isOpen = false
     }
   }
 }
@@ -80,6 +98,10 @@ li {
 }
 
 .link:hover {
+  cursor: pointer;
+}
+
+.button:hover {
   cursor: pointer;
 }
 
@@ -175,5 +197,39 @@ li {
   font-family: 'Baloo 2';
   font-size: 20px;
   font-weight: 600;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 391px;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  height: 100vh;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.popup__container {
+  border-radius: 12px;
+  background: var(--white, #fff);
+  padding: 26px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.popup__container {
+  display: flex;
+}
+.popup__close {
+  border: none;
+  vertical-align: middle;
+  width: 27px;
+  height: 27px;
+  background-color: transparent;
 }
 </style>
