@@ -1,7 +1,7 @@
 package com.latam.unamano.utils;
 
 public enum Role {
-	CLIENT,
-	WORKER
+	ROLE_CLIENT,
+	ROLE_WORKER
 	
 }

@@ -6,6 +6,7 @@ import com.latam.unamano.service.task.TaskService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.data.domain.Page;
@@ -41,6 +42,7 @@ public class TaskController {
     }
 
     @PostMapping
+    @Secured("ROLE_CLIENT")
     public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO taskDTO,
                                               UriComponentsBuilder uriComponentsBuilder){
         TaskDTO task = taskService.createTask(taskDTO);
@@ -49,15 +51,18 @@ public class TaskController {
     }
 
     @PutMapping
+    @Secured("ROLE_CLIENT")
     public ResponseEntity<TaskDTO> updateTask(@RequestBody TaskDTO taskDTO){
         return ResponseEntity.ok(taskService.updateTask(taskDTO));
     }
 
     @DeleteMapping("{id}")
+    @Secured("ROLE_CLIENT")
     public ResponseEntity<String> deleteTaskById(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(taskService.deleteTaskById(id));
     }
     @DeleteMapping("delete/{id}")
+    @Secured("ROLE_CLIENT")
     public ResponseEntity<String> hideTaskById(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(taskService.hideTaskById(id));
     }
