@@ -75,6 +75,8 @@ public class TaskService {
         //price
         if(taskDTO.getPrice()==null||taskDTO.getPrice().compareTo(BigDecimal.ZERO)<0)
             throw new BadDataEntryException("El precio por la tarea no puede estar vacío o ser menor a 0");
+        if(taskDTO.getCurrencyType()==null||taskDTO.getCurrencyType().isBlank())
+            throw new BadDataEntryException("El tipo de moneda no puede estar vacío");
         if(taskDTO.getAddress()==null)
             throw new BadDataEntryException("La dirección en la que se va a realizar la tarea no puede estar vacía");
         if(taskDTO.getClient()==null|| taskDTO.getClient().getId()==null)

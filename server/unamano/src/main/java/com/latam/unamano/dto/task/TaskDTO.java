@@ -24,6 +24,7 @@ public class TaskDTO {
     private LocalDateTime dateCreated;
     private LocalDateTime dateUpdated;
     private BigDecimal price;
+    private String currencyType;
     private TaskStatus status;
     private List<OccupationDTO> occupations;
     private LocalDateTime taskDate;

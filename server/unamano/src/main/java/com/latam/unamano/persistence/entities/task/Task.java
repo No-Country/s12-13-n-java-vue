@@ -33,6 +33,8 @@ public class Task {
     @Column(name = "date_updated")
     private LocalDateTime dateUpdated;
     private BigDecimal price;
+    @Column(name = "currency_type")
+    private String currencyType;
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
     @ManyToMany(
