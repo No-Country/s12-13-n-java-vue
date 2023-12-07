@@ -1,5 +1,6 @@
 <script setup>
 import SectionHeader from '../components/SectionHeader.vue'
+import Footer from '../components/Footer.vue'
 import { ref } from 'vue'
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
@@ -159,8 +160,7 @@ detalles de tu trabajo"
         </div>
       </modal>
     </Transition>
-
-    <footer>ESPACIO PARA EL FOOTER</footer>
+    <Footer />
   </main>
 </template>
 
