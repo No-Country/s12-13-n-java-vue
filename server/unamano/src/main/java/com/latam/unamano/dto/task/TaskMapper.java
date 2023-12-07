@@ -13,8 +13,9 @@ public class TaskMapper {
                 description(task.getDescription()).
                 dateCreated(task.getDateCreated()).
                 dateUpdated(task.getDateUpdated()).
-                price(task.getPrice()).
-                status(task.getStatus())
+                price(task.getPrice())
+                .currencyType(task.getCurrencyType())
+                .status(task.getStatus())
                 .occupations(task.getOccupations().stream().map(OccupationMapper::occupationToDto).toList())
                 .taskDate(task.getTaskDate())
                 //.client(task.getClient())
@@ -28,6 +29,7 @@ public class TaskMapper {
                 .dateCreated(taskDTO.getDateCreated())
                 .dateUpdated(taskDTO.getDateUpdated())
                 .price(taskDTO.getPrice())
+                .currencyType(taskDTO.getCurrencyType())
                 .status(taskDTO.getStatus())
                 .occupations(taskDTO.getOccupations().stream().map(OccupationMapper::DtoToOccupation).toList())
                 .taskDate(taskDTO.getTaskDate())
