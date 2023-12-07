@@ -105,6 +105,36 @@ detalles de tu trabajo"
                 required
               />
             </div>
+            <div class="labelBox-container">
+              <div class="form__labelBox">
+                <label htmlFor="eventName" class="form__labelText">Precio</label>
+                <input
+                  class="form__input"
+                  type="select"
+                  id="eventName"
+                  name="eventName"
+                  onChange="{handleInputChange}"
+                  placeholder="$"
+                  required
+                />
+              </div>
+              <div class="form__labelBox">
+                <label htmlFor="eventName" class="form__labelText">Moneda</label>
+                <select
+                  class="form__select select-currency"
+                  type="select"
+                  id="eventName"
+                  name="eventName"
+                  value="USD"
+                  onChange="{handleInputChange}"
+                  required
+                >
+                  <option class="form__optionText">USD</option>
+                </select>
+                <img src="../assets/images/shevron.svg" alt="shevron" class="shevron" />
+              </div>
+            </div>
+
             <div class="form__labelBox">
               <label htmlFor="eventName" class="form__labelText">Ubicación</label>
               <img src="../assets/images/location-icon.svg" alt="" class="location-img" />
@@ -274,7 +304,7 @@ li {
   top: 0;
   left: 0;
   width: 391px;
-  height: 100vh;
+  height: 736px;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 100;
   display: flex;
@@ -337,9 +367,14 @@ li {
   padding-bottom: 5px;
   border: 1px solid var(--gray1, #4f4f4f);
   background-color: #eee;
+  width: 100%;
 }
 .form__select {
   appearance: none;
+}
+
+.select-currency {
+  width: 97.714px;
 }
 
 .form__labelText,
@@ -396,19 +431,12 @@ li {
   right: 36px;
   margin-top: 38px;
 }
-/* we will explain what these classes do next! */
-/* .v-enter-active,
-.v-leave-active {
-  transition: opacity 0.5s ease;
-}
 
-.v-enter-from {
-  opacity: 0;
+.labelBox-container {
+  display: flex;
+  gap: 34px;
+  justify-content: space-between;
 }
-
-.v-leave-to {
-  opacity: 1;
-} */
 .v-enter-active,
 .v-leave-active {
   transition: transform 0.3s ease-in-out;
