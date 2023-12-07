@@ -5,7 +5,7 @@
 <template>
   <section>
 
-    <div class="conteiner ">
+    <div class="conteiner " id="about-us">
       
       <div class="row gx-2">
 

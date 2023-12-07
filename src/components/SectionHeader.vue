@@ -1,4 +1,3 @@
-
 <template>
   <div class="placeholder"></div>
   <section class="container gx-0">
@@ -18,23 +17,23 @@
       <img class="sidebar-logo" src="../assets/logo.svg" />
       <ul class="nav__list">
         <li class="nav__item">
-          <a class="nav__item link">
+          <a class="nav__item link"  @click="handleClickScrollNeeds">
             <div class="nav__item-picture">
               <img class="nav__item-icon" src="../assets/images/page-icon.svg" alt="page-icon" />
             </div>
-            <p class="nav__item-text">Categorías</p>
+            <p class="nav__item-text">Necesidades</p>
           </a>
         </li>
-        <li class="nav__item">
+        <li class="nav__item"  @click="handleClickScrollJobs">
           <a class="nav__item link">
             <div class="nav__item-picture">
               <img class="nav__item-icon" src="../assets/images/blog-icon.svg" alt="blog-icon" />
             </div>
-            <p class="nav__item-text">Blog</p>
+            <p class="nav__item-text">Trabajos</p>
           </a>
         </li>
         <li class="nav__item">
-          <a class="nav__item link">
+          <a class="nav__item link"  @click="handleClickScrollSupport">
             <div class="nav__item-picture">
               <img
                 class="nav__item-icon"
@@ -46,7 +45,7 @@
           </a>
         </li>
         <li class="nav__item">
-          <a class="nav__item link">
+          <a class="nav__item link" @click="handleClickScrollAboutUs">
             <div class="nav__item-picture">
               <img
                 class="nav__item-icon"
@@ -112,6 +111,30 @@ export default {
   methods: {
     toggleSidebar() {
       this.isVisible = !this.isVisible
+    },
+    handleClickScrollAboutUs() {
+      const element = document.getElementById('about-us')
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+      }
+    },
+    handleClickScrollSupport() {
+      const element = document.getElementById('support')
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+      }
+    },
+    handleClickScrollJobs() {
+      const element = document.getElementById('jobs')
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+      }
+    },
+    handleClickScrollNeeds() {
+      const element = document.getElementById('needs')
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+      }
     },
     navigateToLogin() {
       this.$router.push('/login')
