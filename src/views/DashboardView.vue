@@ -3,6 +3,7 @@ import SectionHeader from '../components/SectionHeader.vue'
 import { ref } from 'vue'
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
+import FooterPage from '@/components/Footer.vue'
 
 const date = ref()
 </script>
@@ -127,7 +128,7 @@ detalles de tu trabajo"
         </form>
       </div>
     </modal>
-    <footer>ESPACIO PARA EL FOOTER</footer>
+    <FooterPage />
   </main>
 </template>
 

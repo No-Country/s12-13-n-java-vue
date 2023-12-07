@@ -103,21 +103,24 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      isVisible: false
-    }
-  },
-  methods: {
-    toggleSidebar() {
-      this.isVisible = !this.isVisible
+  import router from '@/router';
+  export default {
+    data() {
+      return {
+        isVisible: false
+      }
     },
-    navigateToLogin() {
-      this.$router.push('/login')
+    methods: {
+      toggleSidebar() {
+        this.isVisible = !this.isVisible
+      },
+      navigateToLogin() {
+        // this.$router.push('/login')
+        router.push({name:'login'})
+      }
     }
   }
-}
+  
 </script>
 
 <style scoped>

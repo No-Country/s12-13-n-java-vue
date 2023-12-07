@@ -1,6 +1,7 @@
 <script setup>
   import { ref } from 'vue'
   import useAuth from '@/stores/auth'
+  import router from '@/router'
 
   const store = useAuth()
 
@@ -27,11 +28,16 @@
       activeCont = false
       activeTrab = true
     }
+
   };
 
   const logged_in = async () => {
-
     await store.login(email.value, password.value, activeTab.value)
+
+     //Acceso ok
+     if(store.token != null){
+       router.push({ name: 'dashboard' })
+     }
   }
 
   const handleEyes = () => {
@@ -70,8 +76,8 @@
       <input id="password" v-model="password" :type="type">
       <v-icon @click="handleEyes" v-if="eyes" class="icon" name="fa-regular-eye-slash" scale="2" />
       <v-icon @click="handleEyes" v-if="!eyes" class="icon" name="fa-regular-eye" scale="2" />
-      <span class="response, success">{{store.feedback}}</span>
-      <span class="response, error">{{store.feedbackError}}</span>
+      <span class="response, success mt-2">{{store.feedback}}</span>
+      <span class="response, error mt-2">{{store.feedbackError}}</span>
 
       <div class="switch-button">
         <span :class="{ active: activeTab.value === 'contratador' }"></span>
