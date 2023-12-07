@@ -1,19 +1,16 @@
-package com.latam.unamano.persistence.entities.workerEntity;
+/*package com.latam.unamano.persistence.entities.workerEntity;
 
 import com.latam.unamano.persistence.entities.addressEntity.Address;
 import com.latam.unamano.persistence.entities.ocupationEntity.Occupation;
 import com.latam.unamano.persistence.entities.user.User;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Entity
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -78,3 +75,5 @@ public class Worker extends User {
         }
     }
 }
+
+ */
