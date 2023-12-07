@@ -55,78 +55,81 @@ const date = ref()
     <section class="section-blog">
       <!-- contenido de la segunda tarjeta -->
     </section>
-    <modal class="popup" v-if="isOpen">
-      <div class="popup__container">
-        <div class="popup__header">
-          <h3 class="popup__title">Crear nueva publicación</h3>
-          <button class="popup__close button" @click="closePopup">
-            <img src="../assets/images/close-button-icon.svg" alt="Button Image" />
-          </button>
-        </div>
-        <form class="form">
-          <div class="form__labelBox">
-            <label htmlFor="eventName" class="form__labelText"> Elige el tipo de servicio </label>
-            <select
-              class="form__select"
-              type="select"
-              id="eventName"
-              name="eventName"
-              value="Categorias"
-              onChange="{handleInputChange}"
-              required
-            >
-              <option class="form__optionText">Categorias</option>
-            </select>
-            <img src="../assets/images/shevron.svg" alt="shevron" class="shevron" />
+    <Transition>
+      <modal class="popup" v-if="isOpen" :class="{ open: isOpen }">
+        <div class="popup__container">
+          <div class="popup__header">
+            <h3 class="popup__title">Crear nueva publicación</h3>
+            <button class="popup__close button" @click="closePopup">
+              <img src="../assets/images/close-button-icon.svg" alt="Button Image" />
+            </button>
           </div>
-          <div class="form__labelBox">
-            <label htmlFor="eventName" class="form__labelText">Título</label>
-            <input
-              class="form__input"
-              type="select"
-              id="eventName"
-              name="eventName"
-              onChange="{handleInputChange}"
-              placeholder="Escribe un título"
-              required
-            />
-          </div>
-          <div class="form__labelBox">
-            <label htmlFor="eventName" class="form__labelText">Descripción</label>
-            <textarea
-              class="form__textarea"
-              type="select"
-              id="eventName"
-              name="eventName"
-              onChange="{handleInputChange}"
-              placeholder="Agrega una descripción con los
+          <form class="form">
+            <div class="form__labelBox">
+              <label htmlFor="eventName" class="form__labelText"> Elige el tipo de servicio </label>
+              <select
+                class="form__select"
+                type="select"
+                id="eventName"
+                name="eventName"
+                value="Categorias"
+                onChange="{handleInputChange}"
+                required
+              >
+                <option class="form__optionText">Categorias</option>
+              </select>
+              <img src="../assets/images/shevron.svg" alt="shevron" class="shevron" />
+            </div>
+            <div class="form__labelBox">
+              <label htmlFor="eventName" class="form__labelText">Título</label>
+              <input
+                class="form__input"
+                type="select"
+                id="eventName"
+                name="eventName"
+                onChange="{handleInputChange}"
+                placeholder="Escribe un título"
+                required
+              />
+            </div>
+            <div class="form__labelBox">
+              <label htmlFor="eventName" class="form__labelText">Descripción</label>
+              <textarea
+                class="form__textarea"
+                type="select"
+                id="eventName"
+                name="eventName"
+                onChange="{handleInputChange}"
+                placeholder="Agrega una descripción con los
 detalles de tu trabajo"
-              required
-            />
-          </div>
-          <div class="form__labelBox">
-            <label htmlFor="eventName" class="form__labelText">Ubicación</label>
-            <img src="../assets/images/location-icon.svg" alt="" class="location-img" />
+                required
+              />
+            </div>
+            <div class="form__labelBox">
+              <label htmlFor="eventName" class="form__labelText">Ubicación</label>
+              <img src="../assets/images/location-icon.svg" alt="" class="location-img" />
 
-            <input
-              class="form__input input-location"
-              type="select"
-              id="eventName"
-              name="eventName"
-              onChange="{handleInputChange}"
-              placeholder="Ingresa tu dirección"
-              required
-            />
-          </div>
-          <div class="form__labelBox">
-            <label htmlFor="eventName" class="form__labelText">Fecha de la tarea</label>
-            <Datepicker v-model="date" class="date-picker" />
-          </div>
+              <input
+                class="form__input input-location"
+                type="select"
+                id="eventName"
+                name="eventName"
+                onChange="{handleInputChange}"
+                placeholder="Ingresa tu dirección"
+                required
+              />
+            </div>
+            <div class="form__labelBox">
+              <label htmlFor="eventName" class="form__labelText">Fecha de la tarea</label>
+              <Datepicker v-model="date" class="date-picker" />
+            </div>
 
-          <button class="form__submit-button link">Publicar</button>
-        </form>
-      </div>
-    </modal>
+            <button class="form__submit-button link">Publicar</button>
+          </form>
+        </div>
+      </modal>
+    </Transition>
+
     <footer>ESPACIO PARA EL FOOTER</footer>
   </main>
 </template>
@@ -272,13 +275,17 @@ li {
   left: 0;
   width: 391px;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 100;
   display: flex;
   justify-content: center;
   align-items: center;
+  /* overflow-x: visible;
+  overflow-y: visible;
+  transform: translateX(100%);
+  transition: transform 0.3s ease; Include transform in the transition property */
 }
+
 .popup__container {
   border-radius: 12px;
   background: var(--white, #fff);
@@ -388,5 +395,27 @@ li {
   position: absolute;
   right: 36px;
   margin-top: 38px;
+}
+/* we will explain what these classes do next! */
+/* .v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from {
+  opacity: 0;
+}
+
+.v-leave-to {
+  opacity: 1;
+} */
+.v-enter-active,
+.v-leave-active {
+  transition: transform 0.3s ease-in-out;
+}
+
+.v-enter-from,
+.v-leave-to {
+  transform: translateY(100%);
 }
 </style>
