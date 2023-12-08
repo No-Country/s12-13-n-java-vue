@@ -13,8 +13,14 @@ public class TaskMapper {
                 description(task.getDescription()).
                 dateCreated(task.getDateCreated()).
                 dateUpdated(task.getDateUpdated()).
+<<<<<<< HEAD
                 price(task.getPrice()).
                 status(task.getStatus())
+=======
+                price(task.getPrice())
+                .currencyType(task.getCurrencyType())
+                .status(task.getStatus())
+>>>>>>> dev-backend
                 .occupations(task.getOccupations().stream().map(OccupationMapper::occupationToDto).toList())
                 .taskDate(task.getTaskDate())
                 //.client(task.getClient())
@@ -28,6 +34,10 @@ public class TaskMapper {
                 .dateCreated(taskDTO.getDateCreated())
                 .dateUpdated(taskDTO.getDateUpdated())
                 .price(taskDTO.getPrice())
+<<<<<<< HEAD
+=======
+                .currencyType(taskDTO.getCurrencyType())
+>>>>>>> dev-backend
                 .status(taskDTO.getStatus())
                 .occupations(taskDTO.getOccupations().stream().map(OccupationMapper::DtoToOccupation).toList())
                 .taskDate(taskDTO.getTaskDate())

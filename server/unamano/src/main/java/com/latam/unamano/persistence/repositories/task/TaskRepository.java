@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 public interface TaskRepository extends JpaRepository<Task, Long> {
     @Query("SELECT t FROM Task t WHERE t.status=PUBLISHED")
     Page<Task> findByStatusPUBLISHED(Pageable pageable);
+<<<<<<< HEAD
 
     @Query("SELECT t FROM Task t INNER JOIN t.occupations o WHERE o.occupationName=:occupationName AND t.status=PUBLISHED")
     Page<Task> findByOccupationOccupationName(Pageable pageable, @Param("occupationName") String occupationName);
@@ -20,4 +21,9 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
 
 
+=======
+    @Query("SELECT t FROM Task t INNER JOIN t.occupations o WHERE o.occupationName=:occupationName AND t.status=PUBLISHED")
+    Page<Task> findByOccupationOccupationName(Pageable pageable, @Param("occupationName") String occupationName);
+
+>>>>>>> dev-backend
 }
