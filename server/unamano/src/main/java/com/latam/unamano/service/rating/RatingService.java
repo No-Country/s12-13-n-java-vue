@@ -72,7 +72,7 @@ public class RatingService {
         var worker = userRepository.findById(userId);
         if(worker.isPresent()){
             User user = worker.get();
-            if(!(user.getRole().equals(Role.WORKER))){
+            if(!(user.getRole().equals(Role.ROLE_WORKER))){
                 throw new RuntimeException(new IncorretRoleException("El Usuario no es un Worker"));
             }else{
                 return user;
@@ -86,7 +86,7 @@ public class RatingService {
         var client = userRepository.findById(userId);
         if(client.isPresent()){
             User user = client.get();
-            if(!(user.getRole().equals(Role.CLIENT))){
+            if(!(user.getRole().equals(Role.ROLE_CLIENT))){
                 throw new RuntimeException(new IncorretRoleException("El Usuario no es un Client"));
             }else{
                 return user;

@@ -33,11 +33,8 @@ public class Task {
     @Column(name = "date_updated")
     private LocalDateTime dateUpdated;
     private BigDecimal price;
-<<<<<<< HEAD
-=======
     @Column(name = "currency_type")
     private String currencyType;
->>>>>>> dev-backend
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
     @ManyToMany(

@@ -2,17 +2,11 @@ package com.latam.unamano.controller.occupationController;
 
 import com.latam.unamano.commons.controller.GenericRestController;
 import com.latam.unamano.commons.dto.response.CustomResponse;
-<<<<<<< HEAD
-import com.latam.unamano.persistence.entities.ocupationEntity.Occupation;
-
-import com.latam.unamano.service.occupationService.OccupationServiceInterface;
-=======
 import com.latam.unamano.dto.occupationDto.OccupationMapper;
 import com.latam.unamano.persistence.entities.ocupationEntity.Occupation;
 
 import com.latam.unamano.service.occupationService.OccupationServiceInterface;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
->>>>>>> dev-backend
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,10 +19,7 @@ import static com.latam.unamano.controller.occupationController.constanst.Occupa
 
 @RestController
 @RequestMapping(REQUEST_OCCUPATION)
-<<<<<<< HEAD
-=======
 @SecurityRequirement(name = "bearer-key")
->>>>>>> dev-backend
 public class OccupationControllerImp extends GenericRestController implements OccupationControllerInterface{
 
     private OccupationServiceInterface occupationServiceInterface;
@@ -44,12 +35,8 @@ public class OccupationControllerImp extends GenericRestController implements Oc
 
     @Override
     public ResponseEntity<CustomResponse> getAllOccupation() {
-<<<<<<< HEAD
-        return ok(occupationServiceInterface.getAll(),null,REQUEST_OCCUPATION);
-=======
         return ok(occupationServiceInterface.getAll()
                 ,null,REQUEST_OCCUPATION);
->>>>>>> dev-backend
     }
 
     @Override
@@ -58,11 +45,7 @@ public class OccupationControllerImp extends GenericRestController implements Oc
         if (occupation.isEmpty()){
             return notFound(null,NOT_FOUND,REQUEST_OCCUPATION);
         }
-<<<<<<< HEAD
-        return ok(occupation,null,REQUEST_OCCUPATION);
-=======
         return ok(OccupationMapper.occupationToDto(occupation.get()),null,REQUEST_OCCUPATION);
->>>>>>> dev-backend
     }
 
     @Override

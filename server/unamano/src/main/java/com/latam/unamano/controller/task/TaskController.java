@@ -3,15 +3,10 @@ package com.latam.unamano.controller.task;
 import com.latam.unamano.dto.task.TaskDTO;
 import com.latam.unamano.dto.task.TaskMapper;
 import com.latam.unamano.service.task.TaskService;
-<<<<<<< HEAD
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-=======
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
->>>>>>> dev-backend
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.data.domain.Page;
@@ -24,10 +19,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("api/task")
-<<<<<<< HEAD
-=======
 @SecurityRequirement(name = "bearer-key")
->>>>>>> dev-backend
 public class TaskController {
     private final TaskService taskService;
     public TaskController(TaskService taskService){
@@ -38,30 +30,19 @@ public class TaskController {
     public ResponseEntity<Page<TaskDTO>> getTasks(@PageableDefault(size = 9) Pageable pageable){
         return ResponseEntity.ok(taskService.findTasks(pageable).map(TaskMapper::taskToTaskDTO));
     }
-<<<<<<< HEAD
-/*
-=======
 
->>>>>>> dev-backend
     @GetMapping("/on/{occupation_name}")
     public ResponseEntity<Page<TaskDTO>> getTasksByOccupation(@PageableDefault(size = 9) Pageable pageable, @PathVariable String occupation_name){
         return ResponseEntity.ok(taskService.findTasksByOccupation(pageable, occupation_name).map(TaskMapper::taskToTaskDTO));
     }
-<<<<<<< HEAD
-*/
-=======
 
->>>>>>> dev-backend
     @GetMapping("/{id}")
     public ResponseEntity<TaskDTO> findTaskById(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.FOUND).body(taskService.findTaskById(id));
     }
 
     @PostMapping
-<<<<<<< HEAD
-=======
     @Secured("ROLE_CLIENT")
->>>>>>> dev-backend
     public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO taskDTO,
                                               UriComponentsBuilder uriComponentsBuilder){
         TaskDTO task = taskService.createTask(taskDTO);
@@ -70,27 +51,18 @@ public class TaskController {
     }
 
     @PutMapping
-<<<<<<< HEAD
-=======
     @Secured("ROLE_CLIENT")
->>>>>>> dev-backend
     public ResponseEntity<TaskDTO> updateTask(@RequestBody TaskDTO taskDTO){
         return ResponseEntity.ok(taskService.updateTask(taskDTO));
     }
 
     @DeleteMapping("{id}")
-<<<<<<< HEAD
-=======
     @Secured("ROLE_CLIENT")
->>>>>>> dev-backend
     public ResponseEntity<String> deleteTaskById(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(taskService.deleteTaskById(id));
     }
     @DeleteMapping("delete/{id}")
-<<<<<<< HEAD
-=======
     @Secured("ROLE_CLIENT")
->>>>>>> dev-backend
     public ResponseEntity<String> hideTaskById(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(taskService.hideTaskById(id));
     }

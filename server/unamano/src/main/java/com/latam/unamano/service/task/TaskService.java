@@ -1,17 +1,11 @@
 package com.latam.unamano.service.task;
 
-<<<<<<< HEAD
-import com.latam.unamano.dto.task.TaskDTO;
-import com.latam.unamano.exceptions.BadDataEntryException;
-import com.latam.unamano.dto.task.TaskMapper;
-=======
 import com.latam.unamano.dto.occupationDto.OccupationDTO;
 import com.latam.unamano.dto.occupationDto.OccupationMapper;
 import com.latam.unamano.dto.task.TaskDTO;
 import com.latam.unamano.exceptions.BadDataEntryException;
 import com.latam.unamano.dto.task.TaskMapper;
 import com.latam.unamano.persistence.entities.ocupationEntity.Occupation;
->>>>>>> dev-backend
 import com.latam.unamano.persistence.repositories.addressRespository.AddressRepository;
 import com.latam.unamano.persistence.repositories.user.UserRepository;
 import com.latam.unamano.service.occupationService.OccupationService;
@@ -81,8 +75,6 @@ public class TaskService {
         //price
         if(taskDTO.getPrice()==null||taskDTO.getPrice().compareTo(BigDecimal.ZERO)<0)
             throw new BadDataEntryException("El precio por la tarea no puede estar vacío o ser menor a 0");
-<<<<<<< HEAD
-=======
         if(taskDTO.getCurrencyType()==null||taskDTO.getCurrencyType().isBlank())
             throw new BadDataEntryException("El tipo de moneda no puede estar vacío");
         if(taskDTO.getAddress()==null)
@@ -98,7 +90,6 @@ public class TaskService {
             if(occupationService.findByOccupationName(o)==null)
                 throw new EntityNotFoundException("No se encontró en la base de datos la ocupación o categoría con el nombre " + o.getOccupationName());
         }
->>>>>>> dev-backend
     }
 
     //TODO Completar
