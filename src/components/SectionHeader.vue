@@ -102,15 +102,12 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      isVisible: false
-    }
-  },
-  methods: {
-    toggleSidebar() {
-      this.isVisible = !this.isVisible
+  import router from '@/router';
+  export default {
+    data() {
+      return {
+        isVisible: false
+      }
     },
     handleClickScrollAboutUs() {
       const element = document.getElementById('about-us')
@@ -136,11 +133,17 @@ export default {
         element.scrollIntoView({ behavior: 'smooth' })
       }
     },
-    navigateToLogin() {
-      this.$router.push('/login')
+    methods: {
+      toggleSidebar() {
+        this.isVisible = !this.isVisible
+      },
+      navigateToLogin() {
+        // this.$router.push('/login')
+        router.push({name:'login'})
+      }
     }
   }
-}
+  
 </script>
 
 <style scoped>
