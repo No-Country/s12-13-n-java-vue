@@ -119,28 +119,34 @@ export default {
   data() {
     return {
       isVisible: false,
-      sliderValue: 14, // Initial value for the slider
-      minValue: 10, // Initial/minimum value for the slider
-      maxValue: 20
+      sliderValue: 15, // Initial value for the slider
+      minValue: 15, // Initial/minimum value for the slider
+      maxValue: 25
     }
   },
   methods: {
     handleSliderInput() {
       // const city = document.getElementById('city')
-      var elementHTML = document.getElementById('app')
-      console.log('elementHTML:', elementHTML)
-      const computedStyle = window.getComputedStyle(elementHTML)
+      var el = document.getElementById('app')
+      console.log('elementHTMLel:', el)
+      var style = window.getComputedStyle(el, null).getPropertyValue('font-size')
+      console.log('elementHTMLstyle:', style)
+      var fontSize = parseFloat(style)
+      console.log('elementHTMLfontSize:', fontSize)
+      el.style.fontSize = this.sliderValue + 'px'
+      // console.log('elementHTML:', elementHTML)
+      // const computedStyle = window.getComputedStyle(elementHTML)
 
-      const actualSize = parseInt(computedStyle.fontSize, 10)
-      console.log('aelementHTMLctualSize:', actualSize)
-      if (actualSize) {
-        const newSize = actualSize + (this.sliderValue - 50) * 0.01 // Increase or decrease by 1% based on slider movement
-        elementHTML.style.fontSize = newSize + 'px'
-      }
-      console.log('elementHTMLactualSize:', actualSize)
-      console.log('elementHTMLelementHTML:', elementHTML.style)
-      // elementHTML.style.fontSize = this.sliderValue + 'px'
-      console.log('elementHTMLSlider value changed:', this.sliderValue)
+      // const actualSize = parseInt(computedStyle.fontSize, 10)
+      // console.log('aelementHTMLctualSize:', actualSize)
+      // if (actualSize) {
+      //   const newSize = actualSize + (this.sliderValue - 50) * 0.01 // Increase or decrease by 1% based on slider movement
+      //   elementHTML.style.fontSize = newSize + 'px'
+      // }
+      // console.log('elementHTMLactualSize:', actualSize)
+      // console.log('elementHTMLelementHTML:', elementHTML.style)
+      // // elementHTML.style.fontSize = this.sliderValue + 'px'
+      // console.log('elementHTMLSlider value changed:', this.sliderValue)
     },
     toggleSidebar() {
       this.isVisible = !this.isVisible
@@ -234,7 +240,7 @@ li {
   font-size: 27.683px;
   font-style: normal;
   font-weight: 600;
-  line-height: 67%; /* 18.548px */
+  line-height: 67%;
   letter-spacing: 2.215px;
 }
 .menu__item-text_home {
@@ -293,7 +299,6 @@ li {
 .link {
   text-decoration: none;
 }
-
 .link:hover {
   cursor: pointer;
 }
@@ -375,8 +380,8 @@ li {
 
 .sidebar-config .range-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 20px; /* Adjust the width to change the size */
-  height: 20px; /* Adjust the height to change the size */
+  width: 20px;
+  height: 20px;
   background-color: #149ed7;
   border-radius: 50%;
   cursor: pointer;
@@ -413,7 +418,6 @@ li {
 
 @media screen and (max-width: 833px) {
   .sidebar {
-    /* width: 289px; */
     height: 802px;
     padding: 60.39px 40.5px;
   }
