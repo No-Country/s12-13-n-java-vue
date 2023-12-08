@@ -17,14 +17,14 @@
       <img class="sidebar-logo" src="../assets/logo.svg" />
       <ul class="nav__list">
         <li class="nav__item">
-          <a class="nav__item link"  @click="handleClickScrollNeeds">
+          <a class="nav__item link" @click="handleClickScrollNeeds">
             <div class="nav__item-picture">
               <img class="nav__item-icon" src="../assets/images/page-icon.svg" alt="page-icon" />
             </div>
             <p class="nav__item-text">Necesidades</p>
           </a>
         </li>
-        <li class="nav__item"  @click="handleClickScrollJobs">
+        <li class="nav__item" @click="handleClickScrollJobs">
           <a class="nav__item link">
             <div class="nav__item-picture">
               <img class="nav__item-icon" src="../assets/images/blog-icon.svg" alt="blog-icon" />
@@ -33,7 +33,7 @@
           </a>
         </li>
         <li class="nav__item">
-          <a class="nav__item link"  @click="handleClickScrollSupport">
+          <a class="nav__item link" @click="handleClickScrollSupport">
             <div class="nav__item-picture">
               <img
                 class="nav__item-icon"
@@ -88,12 +88,25 @@
           </ul>
         </section>
         <section class="sidebar-config">
-          <h3 class="config-title sidebar-title">TAMAÑO</h3>
-          <img
-            src="../assets/images/size-config.svg"
-            alt="size configuration"
-            class="config-image"
-          />
+          <h3 class="config-title sidebar-title" id="city">TAMAÑO</h3>
+          <div>
+            <label for="slider">Slider Value: {{ sliderValue }}</label>
+            <div class="slider-container">
+              <span class="circle start"></span>
+              <input
+                class="range-slider"
+                type="range"
+                id="slider"
+                step="5"
+                v-model="sliderValue"
+                @input="handleSliderInput"
+                :min="minValue"
+                :max="maxValue"
+              />
+              <span class="circle center"></span>
+              <span class="circle end"></span>
+            </div>
+          </div>
         </section>
       </div>
       <a href="/login" class="sidebar__button link" @onclick="navigateToLogin">Iniciar sesión</a>
@@ -105,10 +118,30 @@
 export default {
   data() {
     return {
-      isVisible: false
+      isVisible: false,
+      sliderValue: 14, // Initial value for the slider
+      minValue: 10, // Initial/minimum value for the slider
+      maxValue: 20
     }
   },
   methods: {
+    handleSliderInput() {
+      // const city = document.getElementById('city')
+      var elementHTML = document.getElementById('app')
+      console.log('elementHTML:', elementHTML)
+      const computedStyle = window.getComputedStyle(elementHTML)
+
+      const actualSize = parseInt(computedStyle.fontSize, 10)
+      console.log('aelementHTMLctualSize:', actualSize)
+      if (actualSize) {
+        const newSize = actualSize + (this.sliderValue - 50) * 0.01 // Increase or decrease by 1% based on slider movement
+        elementHTML.style.fontSize = newSize + 'px'
+      }
+      console.log('elementHTMLactualSize:', actualSize)
+      console.log('elementHTMLelementHTML:', elementHTML.style)
+      // elementHTML.style.fontSize = this.sliderValue + 'px'
+      console.log('elementHTMLSlider value changed:', this.sliderValue)
+    },
     toggleSidebar() {
       this.isVisible = !this.isVisible
     },
@@ -323,6 +356,59 @@ li {
   border-radius: 6px;
   background: var(--blue1, #1d3d8f);
   border: none;
+}
+
+.range-slider {
+  background-color: #149ed7;
+  border: 0.5px solid #149ed7;
+  height: 0.5px;
+  cursor: pointer;
+  appearance: none;
+  width: 200px;
+  margin-left: 7px;
+  z-index: 1000;
+}
+
+.slider-container {
+  width: 210px;
+}
+
+.sidebar-config .range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px; /* Adjust the width to change the size */
+  height: 20px; /* Adjust the height to change the size */
+  background-color: #149ed7;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+  position: relative;
+}
+
+.circle {
+  width: 10px;
+  height: 10px;
+  background-color: #1d3d8f;
+  border-radius: 50%;
+  position: absolute;
+  margin-top: -3px;
+  z-index: 1;
+}
+
+.circle.start {
+  left: 0;
+  transform: translateX(-50%);
+  margin-left: 57px;
+}
+
+.circle.center {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.circle.end {
+  right: 0;
+  transform: translateX(50%);
+  margin-right: 53px;
 }
 
 @media screen and (max-width: 833px) {
