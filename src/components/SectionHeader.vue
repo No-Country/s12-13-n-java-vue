@@ -114,6 +114,8 @@
 </template>
 
 <script>
+import router from '@/router'
+
 export default {
   data() {
     return {
@@ -161,7 +163,8 @@ export default {
       }
     },
     navigateToLogin() {
-      this.$router.push('/login')
+      // this.$router.push('/login')
+      router.push({ name: 'login' })
     }
   }
 }
