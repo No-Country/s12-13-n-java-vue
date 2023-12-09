@@ -13,10 +13,20 @@
         </li>
       </nav>
     </header>
-    <section class="sidebar" :class="{ visible: isVisible }">
+    <section :style="getSidebarStyles()" class="sidebar" :class="{ visible: isVisible }">
       <img class="sidebar-logo" src="../assets/logo.svg" />
+      <section v-if="$route.name === 'dashboard'" class="profile">
+        <div class="circle-container">
+          <img src="../assets/images/avatar.svg" alt="avatar" class="avatar" />
+        </div>
+        <div class="profile__info">
+          <p class="profile__name">Florencia R.</p>
+          <p class="profile__role">Contratador</p>
+        </div>
+      </section>
       <ul class="nav__list">
-        <li class="nav__item">
+        <div v-if="$route.name === 'dashboard'" class="sidebar__line"></div>
+        <li v-if="$route.name === 'home'" class="nav__item">
           <a class="nav__item link" @click="handleClickScrollNeeds">
             <div class="nav__item-picture">
               <img class="nav__item-icon" src="../assets/images/page-icon.svg" alt="page-icon" />
@@ -24,7 +34,27 @@
             <p class="nav__item-text">Necesidades</p>
           </a>
         </li>
-        <li class="nav__item" @click="handleClickScrollJobs">
+        <li v-if="$route.name === 'dashboard'" class="nav__item">
+          <a class="nav__item link" @click="handleClickScrollNeeds">
+            <div class="nav__item-picture">
+              <img class="nav__item-icon" src="../assets/images/profile-icon.svg" alt="page-icon" />
+            </div>
+            <p class="nav__item-text">Perfil</p>
+          </a>
+        </li>
+        <li v-if="$route.name === 'dashboard'" class="nav__item">
+          <a class="nav__item link" @click="handleClickScrollNeeds">
+            <div class="nav__item-picture">
+              <img
+                class="nav__item-icon"
+                src="../assets/images/tutorial-icon.svg"
+                alt="page-icon"
+              />
+            </div>
+            <p class="nav__item-text">Tutorial</p>
+          </a>
+        </li>
+        <li v-if="$route.name === 'home'" class="nav__item" @click="handleClickScrollJobs">
           <a class="nav__item link">
             <div class="nav__item-picture">
               <img class="nav__item-icon" src="../assets/images/blog-icon.svg" alt="blog-icon" />
@@ -108,7 +138,14 @@
           </div>
         </section>
       </div>
-      <a href="/login" class="sidebar__button link" @onclick="navigateToLogin">Iniciar sesión</a>
+      <a
+        v-if="$route.name === 'home'"
+        href="/login"
+        class="sidebar__button link"
+        @onclick="navigateToLogin"
+        >Iniciar sesión</a
+      >
+      <a v-if="$route.name === 'dashboard'" href="#" class="sidebar__button link">Cerrar sesión</a>
     </section>
   </section>
 </template>
@@ -119,7 +156,7 @@ import router from '@/router'
 export default {
   data() {
     return {
-      isVisible: false,
+      isVisible: true,
       sliderValue: 25 / 16,
       minValue: 20 / 16,
       maxValue: 30 / 16
@@ -165,6 +202,17 @@ export default {
     navigateToLogin() {
       // this.$router.push('/login')
       router.push({ name: 'login' })
+    },
+    getSidebarStyles() {
+      // Determine the route and set gap size accordingly
+      const route = this.$route.name
+      const gapSize = route === 'home' ? '61px' : '24px'
+
+      // Return an object with the dynamic styles
+      return {
+        gap: gapSize
+        // Add other styles as needed
+      }
     }
   }
 }
@@ -181,8 +229,8 @@ li {
 }
 
 .placeholder {
-  height: 4.375rem;
-  width: 24.5625rem;
+  height: 70px;
+  width: 393px;
   background: #fff;
 }
 .container {
@@ -191,18 +239,18 @@ li {
 }
 .menu {
   z-index: 100;
-  width: 24.5625rem;
-  margin-top: -4.375rem;
+  width: 393px;
+  margin-top: -70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  height: 4.375rem;
+  padding-left: 32px;
+  padding-right: 32px;
+  height: 70px;
   background: #fff;
 }
 .menu__item-logo {
-  height: 2.917rem;
+  height: 46.672px;
 }
 
 .menu__item-button {
@@ -212,37 +260,37 @@ li {
   padding: 0;
 }
 .menu__item-image {
-  width: 2.375rem;
-  height: 2.375rem;
+  width: 38px;
+  height: 38px;
 }
 
 .menu__item-container {
   display: flex;
   align-items: baseline;
-  gap: 0.8125rem;
+  gap: 13px;
 }
 
 .menu__item-text {
   color: var(--blue2, #149ed7);
   font-family: 'Yaldevi';
-  font-size: 1.7302rem;
+  font-size: 27.6832px;
   font-style: normal;
   font-weight: 600;
   line-height: 67%;
-  letter-spacing: 0.1384rem;
+  letter-spacing: 2.2144px;
 }
 .menu__item-text_home {
   color: var(--blue1, #1d3d8f);
 }
 .menu__item-underline {
-  border-bottom: solid 0.5625rem #1d3d8f;
-  width: 8.125rem;
-  border-radius: 1.25rem;
+  border-bottom: solid 9px #1d3d8f;
+  width: 130px;
+  border-radius: 20px;
 }
 .sidebar {
-  width: 18.0625rem;
+  width: 289px;
   background-color: white;
-  min-height: 45rem;
+  min-height: 720px;
   overflow-x: visible;
   overflow-y: visible;
   position: fixed;
@@ -254,9 +302,9 @@ li {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  gap: 3.8125rem;
-  border-radius: 0.375rem 0rem 0rem 0.375rem;
-  box-shadow: 0rem 0.25rem 1.3rem 0rem rgba(16, 96, 217, 0.25);
+  gap: 61px;
+  border-radius: 6px 0px 0px 6px;
+  box-shadow: 0px 4px 20.8px 0px rgba(16, 96, 217, 0.25);
 }
 
 .visible {
@@ -268,20 +316,21 @@ li {
 }
 
 .sidebar-logo {
-  width: 10.6875rem;
+  width: 171px;
 }
 
 .nav__list {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 1.25rem;
+  gap: 20px;
   align-self: flex-start;
 }
 
 .nav__item {
   display: flex;
-  gap: 0.625rem;
+  gap: 10px;
+  align-items: center;
 }
 
 .link {
@@ -291,7 +340,7 @@ li {
   cursor: pointer;
 }
 .nav__item-picture {
-  width: 1.75rem;
+  width: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -299,80 +348,80 @@ li {
 .nav__item-text {
   color: #000;
   font-family: 'Baloo 2';
-  /* font-size: 1.25rem; */
+  /* font-size: 20px; */
   font-style: normal;
   font-weight: 400;
   line-height: normal;
 }
 .sidebar__line {
-  width: 12.9389rem;
-  border-bottom: solid 0.0625rem #149ed7;
+  width: 207.0224px;
+  border-bottom: solid 1px #149ed7;
 }
 
 .sidebar__social {
 }
 
 .sidebar-title {
-  margin-top: 2.25rem;
-  margin-bottom: 1.1875rem;
+  margin-top: 36px;
+  margin-bottom: 19px;
   color: var(--black1, #2f2f2f);
   font-family: 'Baloo 2';
-  /* font-size: 1.25rem; */
+  /* font-size: 20px; */
   font-weight: 500;
 }
 
 .social-list {
   display: flex;
-  gap: 1.6875rem;
+  gap: 27px;
   align-items: center;
 }
 
 .sidebar-config {
-  margin-top: 1.75rem;
-  /* /* height: 55px; */
+  margin-top: 28px;
+  /* /* height: 3.4375rem; */
   /* display: flex; */
   /* flex-direction: column;  */
 }
 .config-title {
   margin-top: 0;
-  margin-bottom: 0.5625rem;
+  margin-bottom: 9px;
 }
 
 .sidebar__button {
   color: var(--white, #fff);
   font-family: 'Baloo 2';
-  font-size: 1.25rem;
+  font-size: 20px;
   font-weight: 700;
   display: flex;
-  height: 3.1875rem;
-  padding: 0.625rem;
+  height: 51px;
+  padding: 10px;
   width: 100%;
   justify-content: center;
   align-items: center;
-  border-radius: 0.375rem;
+  border-radius: 6px;
   background: var(--blue1, #1d3d8f);
   border: none;
 }
 
 .range-slider {
   background-color: #149ed7;
-  border: 0.0313rem solid #149ed7;
-  height: 0.0313rem;
+  border: 0.5008px solid #149ed7;
+  height: 0.5008px;
   cursor: pointer;
   appearance: none;
-  width: 12.5rem;
-  margin-left: 0.4375rem;
+  width: 200px;
+  margin-left: 7px;
   z-index: 1000;
 }
 
 .slider-container {
-  width: 13.125rem;
+  width: 210px;
 }
 
 .sidebar-config .range-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 20px;
+  height: 20px;
   background-color: #149ed7;
   border-radius: 50%;
   cursor: pointer;
@@ -381,20 +430,20 @@ li {
 }
 
 .circle {
-  width: 0.625rem;
-  height: 0.625rem;
+  width: 10px;
+  height: 10px;
   background-color: #1d3d8f;
   border-radius: 50%;
   position: absolute;
   z-index: 1;
-  font-size: 10px;
-  margin-bottom: -18px;
+  font-size: 0.625rem;
+  margin-bottom: -1.125rem;
 }
 
 .circle.start {
   left: 0;
   transform: translateX(-50%);
-  margin-left: 3.5625rem;
+  margin-left: 57px;
 }
 
 .circle.center {
@@ -405,13 +454,52 @@ li {
 .circle.end {
   right: 0;
   transform: translateX(50%);
-  margin-right: 3.3125rem;
+  margin-right: 53px;
 }
 
-@media screen and (max-width: 52.0625rem) {
+.circle-container {
+  width: 55px;
+  height: 55px;
+  overflow: hidden;
+  border-radius: 50%;
+  background-color: #149ed7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+
+.profile {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.profile__name {
+  font-family: 'Baloo 2';
+  font-weight: 500;
+}
+
+.profile__role {
+  color: var(--blue2, #149ed7);
+  font-family: 'Baloo 2';
+  font-weight: 400;
+}
+.profile__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media screen and (max-width: 833px) {
   .sidebar {
-    min-height: 50.125rem;
-    padding: 3.7744rem 2.5313rem;
+    min-height: 802px;
+    padding: 60.3904px 40.5008px;
   }
 }
 </style>
