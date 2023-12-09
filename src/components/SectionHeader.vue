@@ -90,9 +90,8 @@
         <section class="sidebar-config">
           <h3 class="config-title sidebar-title" id="city">TAMAÑO</h3>
           <div>
-            <label for="slider">Slider Value: {{ sliderValue }}</label>
             <div class="slider-container">
-              <span class="circle start"></span>
+              <!-- <span class="circle start"></span> -->
               <input
                 class="range-slider"
                 type="range"
@@ -103,8 +102,8 @@
                 :min="minValue"
                 :max="maxValue"
               />
-              <span class="circle center"></span>
-              <span class="circle end"></span>
+              <!-- <span class="circle center"></span>
+              <span class="circle end"></span> -->
             </div>
           </div>
         </section>
@@ -119,14 +118,13 @@ export default {
   data() {
     return {
       isVisible: false,
-      sliderValue: 25 / 16, // Initial value for the slider
-      minValue: 20 / 16, // Initial/minimum value for the slider
+      sliderValue: 25 / 16,
+      minValue: 20 / 16,
       maxValue: 30 / 16
     }
   },
   methods: {
     handleSliderInput() {
-      // const city = document.getElementById('city')
       var el = document.getElementById('app')
       console.log('elementHTMLel:', el)
       var style = window.getComputedStyle(el, null).getPropertyValue('font-size')
@@ -134,19 +132,6 @@ export default {
       var fontSize = parseFloat(style)
       console.log('elementHTMLfontSize:', fontSize)
       el.style.fontSize = this.sliderValue + 'rem'
-      // console.log('elementHTML:', elementHTML)
-      // const computedStyle = window.getComputedStyle(elementHTML)
-
-      // const actualSize = parseInt(computedStyle.fontSize, 10)
-      // console.log('aelementHTMLctualSize:', actualSize)
-      // if (actualSize) {
-      //   const newSize = actualSize + (this.sliderValue - 50) * 0.01 // Increase or decrease by 1% based on slider movement
-      //   elementHTML.style.fontSize = newSize + 'px'
-      // }
-      // console.log('elementHTMLactualSize:', actualSize)
-      // console.log('elementHTMLelementHTML:', elementHTML.style)
-      // // elementHTML.style.fontSize = this.sliderValue + 'px'
-      // console.log('elementHTMLSlider value changed:', this.sliderValue)
     },
     toggleSidebar() {
       this.isVisible = !this.isVisible
@@ -254,7 +239,7 @@ li {
 .sidebar {
   width: 18.0625rem;
   background-color: white;
-  height: 45rem;
+  min-height: 45rem;
   overflow-x: visible;
   overflow-y: visible;
   position: fixed;
@@ -341,6 +326,9 @@ li {
 
 .sidebar-config {
   margin-top: 1.75rem;
+  /* /* height: 55px; */
+  /* display: flex; */
+  /* flex-direction: column;  */
 }
 .config-title {
   margin-top: 0;
@@ -350,7 +338,7 @@ li {
 .sidebar__button {
   color: var(--white, #fff);
   font-family: 'Baloo 2';
-  /* font-size: 1.25rem; */
+  font-size: 1.25rem;
   font-weight: 700;
   display: flex;
   height: 3.1875rem;
@@ -395,8 +383,9 @@ li {
   background-color: #1d3d8f;
   border-radius: 50%;
   position: absolute;
-  margin-top: -0.1875rem;
   z-index: 1;
+  font-size: 10px;
+  margin-bottom: -18px;
 }
 
 .circle.start {
@@ -418,7 +407,7 @@ li {
 
 @media screen and (max-width: 52.0625rem) {
   .sidebar {
-    height: 50.125rem;
+    min-height: 50.125rem;
     padding: 3.7744rem 2.5313rem;
   }
 }
