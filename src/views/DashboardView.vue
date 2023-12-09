@@ -160,10 +160,6 @@ detalles de tu trabajo"
         </div>
       </modal>
     </Transition>
-          <button class="form__submit-button link">Publicar</button>
-        </form>
-      </div>
-    </modal>
     <FooterPage />
   </main>
 </template>
