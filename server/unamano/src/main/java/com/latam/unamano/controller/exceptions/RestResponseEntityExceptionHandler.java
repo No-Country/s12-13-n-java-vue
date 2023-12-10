@@ -14,6 +14,8 @@ import com.latam.unamano.dto.exceptions.ErrorResponse;
 import com.latam.unamano.exceptions.IncorretRoleException;
 import com.latam.unamano.exceptions.UsernameOrPasswordIncorretException;
 
+import org.springframework.security.access.AccessDeniedException;
+
 @RestControllerAdvice
 public class RestResponseEntityExceptionHandler {
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -44,5 +46,9 @@ public class RestResponseEntityExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<String> badDataEntry(HttpMessageNotReadableException e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getLocalizedMessage());
+    }
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<String> accessDenied(AccessDeniedException e){
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
     }
 }
