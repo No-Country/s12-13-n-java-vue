@@ -32,7 +32,7 @@ public class SecurityConfig {
 					.disable())
 			.authorizeHttpRequests(authRequest -> 
 			authRequest
-				.requestMatchers("api/auth/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+				.requestMatchers("api/auth/**", "api/workers/register/**", "api/clients/register/**" ,"/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
 			.anyRequest().authenticated()
 			)
 			.sessionManagement(sessionManager -> sessionManager

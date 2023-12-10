@@ -1,4 +1,4 @@
-/*package com.latam.unamano.persistence.repositories.workerRepository;
+package com.latam.unamano.persistence.repositories.workerRepository;
 
 
 import com.latam.unamano.persistence.entities.workerEntity.Worker;
@@ -8,4 +8,3 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WorkerRepository extends JpaRepository<Worker, Long> {
 }
-*/
