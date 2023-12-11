@@ -54,11 +54,11 @@
 
 
 <style scoped>
-
 .conteiner{
-  --bs-breakpoint-xxl: 1400px;
+  --bs-breakpoint-xl: 1400px;
   width:auto;
   height:4609px ;
+  justify-content: left;
 }
 
 img {
