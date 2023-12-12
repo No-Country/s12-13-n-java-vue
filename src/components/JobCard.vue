@@ -55,12 +55,12 @@ p {
 }
 
 .card.expanded {
-  height: 240px;
+  min-height: 240px;
   animation: expand 0.5s ease;
 }
 
 .card.unexpanded {
-  height: 134px;
+  min-height: 134px;
   animation: unexpand 0.5s ease;
 }
 .card__category {
@@ -115,18 +115,18 @@ p {
 
 @keyframes expand {
   0% {
-    height: 180px;
+    min-height: 134px;
   }
   100% {
-    height: 240px;
+    min-height: 240px;
   }
 }
 @keyframes unexpand {
   0% {
-    height: 240px;
+    min-height: 240px;
   }
   100% {
-    height: 134px;
+    min-height: 134px;
   }
 }
 </style>
