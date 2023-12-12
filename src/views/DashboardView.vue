@@ -45,7 +45,9 @@ const date = ref()
         </li>
       </ul>
     </nav>
-    <section class="container"></section>
+    <section class="container">
+      <JobCard> </JobCard>
+    </section>
     <section class="modal-info">
       <p class="modal-info__text">
         Crea tu primera publicación y <br />
@@ -56,7 +58,6 @@ const date = ref()
     <section class="section-blog">
       <!-- contenido de la segunda tarjeta -->
     </section>
-    <JobCard> </JobCard>
     <Transition>
       <modal class="popup" v-if="isOpen" :class="{ open: isOpen }">
         <div class="popup__container">

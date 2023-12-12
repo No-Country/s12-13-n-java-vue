@@ -395,7 +395,7 @@ li {
   display: flex;
   height: 51px;
   padding: 10px;
-  width: 100%;
+  width: fit-content;
   justify-content: center;
   align-items: center;
   border-radius: 6px;
