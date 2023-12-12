@@ -14,6 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.latam.unamano.persistence.repositories.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.web.access.AccessDeniedHandler;
+
+import java.nio.file.AccessDeniedException;
 
 @Configuration
 @RequiredArgsConstructor

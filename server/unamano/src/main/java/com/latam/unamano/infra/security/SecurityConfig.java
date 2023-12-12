@@ -8,12 +8,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.latam.unamano.infra.jwt.JwtAuthenticationFilter;
 
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.security.access.AccessDeniedException;
 
 @Configuration
 @EnableWebSecurity
@@ -26,15 +29,15 @@ public class SecurityConfig {
 	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		return http		
-			.csrf(csrf ->
-					csrf
-					.disable())
-			.authorizeHttpRequests(authRequest -> 
-			authRequest
-				.requestMatchers("api/auth/**", "api/workers/register/**", "api/clients/register/**" ,"/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-			.anyRequest().authenticated()
-			)
+		return http
+				.csrf(csrf ->
+						csrf
+								.disable())
+				.authorizeHttpRequests(authRequest ->
+						authRequest
+								.requestMatchers("api/auth/**", "api/workers/register/**", "api/clients/register/**" ,"/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+								.anyRequest().authenticated()
+				).exceptionHandling(customizer -> customizer.accessDeniedHandler((request, response, accessDeniedException) -> {throw new AccessDeniedException("Acceso denegado");}))
 			.sessionManagement(sessionManager -> sessionManager
 					.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authenticationProvider(authProvider)
