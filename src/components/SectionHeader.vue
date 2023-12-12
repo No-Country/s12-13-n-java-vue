@@ -156,7 +156,7 @@ import router from '@/router'
 export default {
   data() {
     return {
-      isVisible: true,
+      isVisible: false,
       sliderValue: 25 / 16,
       minValue: 20 / 16,
       maxValue: 30 / 16

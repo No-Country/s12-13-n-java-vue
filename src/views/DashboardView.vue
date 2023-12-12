@@ -4,10 +4,10 @@ import { ref } from 'vue'
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import FooterPage from '@/components/Footer.vue'
+import JobCard from '../components/JobCard.vue'
 
 const date = ref()
 </script>
-
 <template>
   <main>
     <SectionHeader />
@@ -56,6 +56,7 @@ const date = ref()
     <section class="section-blog">
       <!-- contenido de la segunda tarjeta -->
     </section>
+    <JobCard> </JobCard>
     <Transition>
       <modal class="popup" v-if="isOpen" :class="{ open: isOpen }">
         <div class="popup__container">
