@@ -15,4 +15,8 @@ public class OccupationDTO {
     private String occupationName;
     private String description;
     private List<TaskDTO> task;
+
+    public OccupationDTO(String occupationName){
+        this.occupationName=occupationName;
+    }
 }

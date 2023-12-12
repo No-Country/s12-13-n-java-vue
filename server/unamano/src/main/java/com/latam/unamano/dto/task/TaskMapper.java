@@ -1,6 +1,8 @@
 package com.latam.unamano.dto.task;
 
+import com.latam.unamano.dto.occupationDto.OccupationDTO;
 import com.latam.unamano.dto.occupationDto.OccupationMapper;
+import com.latam.unamano.persistence.entities.client.Client;
 import com.latam.unamano.persistence.entities.task.Task;
 import lombok.experimental.UtilityClass;
 
@@ -35,6 +37,18 @@ public class TaskMapper {
                 .taskDate(taskDTO.getTaskDate())
                 .client(taskDTO.getClient())
                 .address(taskDTO.getAddress())
+                .build();
+    }
+    public TaskDTO createTaskDTOtoDTO(CreateTaskDTO createTaskDTO){
+        return TaskDTO.builder()
+                .taskTitle(createTaskDTO.getTaskTitle())
+                .description(createTaskDTO.getDescription())
+                .price(createTaskDTO.getPrice())
+                .currencyType(createTaskDTO.getCurrencyType())
+                .occupations(createTaskDTO.getOccupations().stream().map(OccupationDTO::new).toList())
+                .taskDate(createTaskDTO.getTaskDate())
+                .address(createTaskDTO.getAddress())
+                .client(new Client())
                 .build();
     }
 }

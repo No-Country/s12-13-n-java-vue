@@ -1,21 +1,26 @@
 package com.latam.unamano.service.task;
 
 import com.latam.unamano.dto.occupationDto.OccupationDTO;
-import com.latam.unamano.dto.occupationDto.OccupationMapper;
+import com.latam.unamano.dto.task.CreateTaskDTO;
 import com.latam.unamano.dto.task.TaskDTO;
+import com.latam.unamano.dto.task.UpdateTaskDTO;
 import com.latam.unamano.exceptions.BadDataEntryException;
 import com.latam.unamano.dto.task.TaskMapper;
-import com.latam.unamano.persistence.entities.ocupationEntity.Occupation;
+import com.latam.unamano.exceptions.UpdatNotAllowedException;
 import com.latam.unamano.persistence.repositories.addressRespository.AddressRepository;
+import com.latam.unamano.persistence.repositories.clientRepository.ClientRepository;
 import com.latam.unamano.persistence.repositories.user.UserRepository;
+import com.latam.unamano.service.jwt.JwtService;
 import com.latam.unamano.service.occupationService.OccupationService;
 import com.latam.unamano.utils.TaskStatus;
 import com.latam.unamano.persistence.entities.task.Task;
 import com.latam.unamano.persistence.repositories.task.TaskRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -28,41 +33,49 @@ public class TaskService {
     private final OccupationService occupationService;
     private final AddressRepository addressRepository;
 
-    public TaskService(TaskRepository taskRepository, OccupationService occupationService, UserRepository userRepository, AddressRepository addressRepository){
+    private final ClientRepository clientRepository;
+    private final JwtService jwtService;
+
+    public TaskService(TaskRepository taskRepository, OccupationService occupationService, UserRepository userRepository, AddressRepository addressRepository, JwtService jwtService, ClientRepository clientRepository){
         this.taskRepository = taskRepository;
         this.occupationService= occupationService;
         this.userRepository=userRepository;
         this.addressRepository=addressRepository;
-
-
+        this.jwtService=jwtService;
+        this.clientRepository=clientRepository;
     }
 
 
 
     public Page<Task> findTasks(Pageable pageable) {
+
         return taskRepository.findAll(pageable);
     }
     @Transactional
-    public TaskDTO createTask(TaskDTO taskDTO) {
+    public TaskDTO createTask(CreateTaskDTO createTaskDTO, HttpServletRequest request) {
+        TaskDTO taskDTO=TaskMapper.createTaskDTOtoDTO(createTaskDTO);
         validateTaskData(taskDTO);
+        taskDTO.getClient().setId(getClientId(request));
         taskDTO.setDateCreated(LocalDateTime.now());
         taskDTO.setDateUpdated(LocalDateTime.now());
         taskDTO.setStatus(TaskStatus.PUBLISHED);
         Task task = TaskMapper.taskDTOToTask(taskDTO);
-
         task.setOccupations(task
                 .getOccupations()
                 .stream()
                 .map(occupationService::findByOccupationName)
                 .toList());
-
-
-
         //task.setClient(userRepository.findById(taskDTO.getClient().getId()).get());
         task.setAddress(addressRepository.save(taskDTO.getAddress()));
-
         task = taskRepository.save(task);
         return TaskMapper.taskToTaskDTO(task);
+    }
+
+    private Long getClientId(HttpServletRequest request) {
+        String header = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String token = header.substring(7);
+        String username = jwtService.getUsernameFromToken(token);
+        return clientRepository.findByUsernameClientId(username);
     }
 
     private void validateTaskData(TaskDTO taskDTO) {
@@ -79,10 +92,10 @@ public class TaskService {
             throw new BadDataEntryException("El tipo de moneda no puede estar vacío");
         if(taskDTO.getAddress()==null)
             throw new BadDataEntryException("La dirección en la que se va a realizar la tarea no puede estar vacía");
-        if(taskDTO.getClient()==null|| taskDTO.getClient().getId()==null)
-            throw new BadDataEntryException("Es requerido el id del cliente que desea realizar la tarea");
-        if(!userRepository.existsById(taskDTO.getClient().getId()))
-            throw new EntityNotFoundException("No se encontró en la base de datos el cliente con el id " + taskDTO.getClient().getId());
+        /*if(taskDTO.getClient()==null|| taskDTO.getClient().getId()==null)
+            throw new BadDataEntryException("Es requerido el id del cliente que desea realizar la tarea");*/
+        /*if(!userRepository.existsById(taskDTO.getClient().getId()))
+            throw new EntityNotFoundException("No se encontró en la base de datos el cliente con el id " + taskDTO.getClient().getId());*/
         if (taskDTO.getOccupations()==null||taskDTO.getOccupations().isEmpty())
             throw new BadDataEntryException("Es requerido ingresar al menos una ocupación o categoría para crear una tarea");
         //validar nombres de categorias
@@ -95,33 +108,40 @@ public class TaskService {
     //TODO Completar
     //TODO Separar Validaciones
     @Transactional
-    public TaskDTO updateTask(TaskDTO taskDTO) {
-        if(!taskRepository.existsById(taskDTO.getId())){
+    public TaskDTO updateTask(UpdateTaskDTO updateTaskDTO, Long id) {
+        if(!taskRepository.existsById(id)){
             throw new EntityNotFoundException("No existe una tarea con el id ingresado");
         }
-        Task taskUpdated = taskRepository.findById(taskDTO.getId()).get();
-        if (taskDTO.getTaskTitle()!=null&&!taskDTO.getTaskTitle().isBlank()){
-                taskUpdated.setTaskTitle(taskDTO.getTaskTitle());
+        Task taskUpdated = taskRepository.findById(id).get();
+        if(!taskUpdated.getStatus().equals(TaskStatus.PUBLISHED))
+            throw new UpdatNotAllowedException("Unicamente pueden modificarse las tareas con status PUBLISHED");
+
+        if (updateTaskDTO.getTaskTitle()!=null&&!updateTaskDTO.getTaskTitle().isBlank()){
+                taskUpdated.setTaskTitle(updateTaskDTO.getTaskTitle());
                 taskUpdated.setDateUpdated(LocalDateTime.now());
         }
-        if (taskDTO.getDescription()!=null&&!taskDTO.getDescription().isBlank()){
-                taskUpdated.setDescription(taskDTO.getDescription());
+        if (updateTaskDTO.getDescription()!=null&&!updateTaskDTO.getDescription().isBlank()){
+                taskUpdated.setDescription(updateTaskDTO.getDescription());
                 taskUpdated.setDateUpdated(LocalDateTime.now());
         }
-        if((taskDTO.getPrice() != null) && (taskDTO.getPrice().compareTo(BigDecimal.ZERO) > 0)){
-            taskUpdated.setPrice(taskDTO.getPrice());
+        if((updateTaskDTO.getPrice() != null) && (updateTaskDTO.getPrice().compareTo(BigDecimal.ZERO) > 0)){
+            taskUpdated.setPrice(updateTaskDTO.getPrice());
             taskUpdated.setDateUpdated(LocalDateTime.now());
-        }
+        }/*
         if (taskDTO.getStatus()!=null&&!taskDTO.getStatus().toString().isBlank()){
             taskUpdated.setStatus(taskDTO.getStatus());
             taskUpdated.setDateUpdated(LocalDateTime.now());
-        }
+        }*/
         //update taskDate
-        if(taskDTO.getTaskDate()!=null){
-            taskUpdated.setTaskDate(taskDTO.getTaskDate());
+        if(updateTaskDTO.getTaskDate()!=null){
+            taskUpdated.setTaskDate(updateTaskDTO.getTaskDate());
             taskUpdated.setDateUpdated(LocalDateTime.now());
         }
 
+        if(updateTaskDTO.getCurrencyType()!=null&&!updateTaskDTO.getCurrencyType().isBlank()) {
+            taskUpdated.setCurrencyType(updateTaskDTO.getCurrencyType());
+            taskUpdated.setDateUpdated(LocalDateTime.now());
+        }
         //update Occupations
         //TODO IN PROGRESS
 /*
@@ -177,6 +197,8 @@ public class TaskService {
 
         return taskRepository.findByOccupationOccupationName(pageable, occupationName);
     }
+
+
 
 
 }
