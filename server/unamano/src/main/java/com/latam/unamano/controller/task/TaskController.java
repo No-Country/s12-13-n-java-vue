@@ -43,7 +43,7 @@ public class TaskController {
 
     @PostMapping
     @Secured("ROLE_CLIENT")
-    public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO taskDTO,
+    public ResponseEntity<TaskDTO> createTask( @RequestBody TaskDTO taskDTO,
                                               UriComponentsBuilder uriComponentsBuilder){
         TaskDTO task = taskService.createTask(taskDTO);
         URI url = uriComponentsBuilder.path("/api/task/{id}").buildAndExpand(task.getId()).toUri();

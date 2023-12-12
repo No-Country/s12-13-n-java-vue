@@ -28,7 +28,7 @@ public class TaskDTO {
     private TaskStatus status;
     private List<OccupationDTO> occupations;
     private LocalDateTime taskDate;
-    private User client;
+    private Client client;
     private Address address;
 
     //TODO Relaciones entre clases

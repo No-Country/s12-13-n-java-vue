@@ -2,6 +2,59 @@ package com.latam.unamano.persistence.entities.client;
 
 import com.latam.unamano.persistence.entities.task.Task;
 import com.latam.unamano.persistence.entities.user.User;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.List;
+
+@Entity
+@Table(name = "clients")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(of = "id")
+public class Client {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Task> requestedTasks;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//******************************************************/
+/*package com.latam.unamano.persistence.entities.client;
+
+import com.latam.unamano.persistence.entities.task.Task;
+import com.latam.unamano.persistence.entities.user.User;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,4 +73,4 @@ import java.util.List;
 public class Client extends User {
 
 	
-}
+}*/

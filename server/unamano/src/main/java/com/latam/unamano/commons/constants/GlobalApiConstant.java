@@ -5,6 +5,7 @@ public class GlobalApiConstant {
     }
     public static final String CREATED = "created successfully";
     public static final String INIT_START_API = "/api/";
+    public static final String REGISTER = "/register";
     public static final String ID_PARAM = "/{id}";
     public static final String GENERIC_PAGINATOR_PARAM = "/page/{numberPage}";
     public static final String DELETED_SUCCESSFULLY = "Deleted Successfully";

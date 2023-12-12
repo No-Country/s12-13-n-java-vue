@@ -50,7 +50,7 @@ public class Task {
     private LocalDateTime taskDate;
     @ManyToOne
     @JoinColumn(name = "id_client")
-    private User client;
+    private Client client;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
