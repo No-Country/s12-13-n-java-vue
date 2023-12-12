@@ -10,7 +10,7 @@
         <p class="date__title">Fecha:</p>
         <p class="date__value">08/12/2023</p>
       </div>
-      <button class="card__button link" @click="openPopup">Ver más</button>
+      <button class="card__button link" @click="expand(this)">Ver más</button>
     </div>
   </section>
 </template>
@@ -18,7 +18,20 @@
 <script>
 export default {
   setup() {
-    return {}
+    return {
+      expand() {
+        const card = document.querySelector('.card')
+        console.log('card:', card)
+        console.log('expand:')
+        card.classList.toggle('expanded')
+
+        // If card is not expanded after toggle, add 'unexpanded' class
+        if (!card.classList.contains('expanded')) card.classList.toggle('unexpanded')
+        // Else if card is expanded after toggle and still contains 'unexpanded' class, remove 'unexpanded'
+        else if (card.classList.contains('expanded') && card.classList.contains('unexpanded'))
+          card.classList.toggle('unexpanded')
+      }
+    }
   }
 }
 </script>
@@ -39,6 +52,16 @@ p {
   border-radius: 6px;
   background: #fff;
   box-shadow: 0px 5px 0px 0px #4dc9ff inset;
+}
+
+.card.expanded {
+  height: 240px;
+  animation: expand 0.5s ease;
+}
+
+.card.unexpanded {
+  height: 134px;
+  animation: unexpand 0.5s ease;
 }
 .card__category {
   color: var(--blue1, #1d3d8f);
@@ -88,5 +111,22 @@ p {
 }
 .link:hover {
   cursor: pointer;
+}
+
+@keyframes expand {
+  0% {
+    height: 180px;
+  }
+  100% {
+    height: 240px;
+  }
+}
+@keyframes unexpand {
+  0% {
+    height: 240px;
+  }
+  100% {
+    height: 134px;
+  }
 }
 </style>
