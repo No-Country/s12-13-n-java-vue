@@ -496,6 +496,7 @@ li {
   justify-content: center;
 }
 
+
 @media screen and (max-width: 833px) {
   .sidebar {
     min-height: 802px;
