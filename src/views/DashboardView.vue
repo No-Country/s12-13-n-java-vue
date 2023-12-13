@@ -6,6 +6,8 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import FooterPage from '@/components/SectionFooter.vue'
 import JobCard from '../components/JobCard.vue'
 import useFormContratador from '@/stores/formContratador'
+import { categorias, currencies } from '../utils/constants'
+
 const date = ref()
 const store = useFormContratador()
 
@@ -79,14 +81,19 @@ const onSubmit = async () => {
               <label htmlFor="eventName" class="form__labelText"> Elige el tipo de servicio </label>
               <select
                 class="form__select"
-                type="select"
                 id="eventName"
                 name="eventName"
                 value="Categorias"
-                onChange="{handleInputChange}"
                 required
               >
                 <option class="form__optionText">Categorias</option>
+                <option
+                  class="form__optionText"
+                  v-for="(category, index) in categorias"
+                  :key="index"
+                >
+                  {{ category }}
+                </option>
               </select>
               <img src="../assets/images/shevron.svg" alt="shevron" class="shevron" />
             </div>
@@ -97,7 +104,6 @@ const onSubmit = async () => {
                 type="select"
                 id="eventTitle"
                 name="eventName"
-                onChange="{handleInputChange}"
                 placeholder="Escribe un título"
                 required
                 v-model="eventTitle"
@@ -114,7 +120,7 @@ const onSubmit = async () => {
                 placeholder="Agrega una descripción con los
 detalles de tu trabajo"
                 required
-              ></textarea>                
+              ></textarea>
             </div>
             <div class="labelBox-container">
               <div class="form__labelBox">
@@ -132,13 +138,17 @@ detalles de tu trabajo"
                 <label htmlFor="eventName" class="form__labelText">Moneda</label>
                 <select
                   class="form__select select-currency"
-                  type="select"
                   id="eventName"
                   name="eventName"
                   value="USD"
-                  onChange="{handleInputChange}"
                 >
-                  <option class="form__optionText">USD</option>
+                  <option
+                    class="form__optionText"
+                    v-for="(currency, index) in currencies"
+                    :key="index"
+                  >
+                    {{ currency }}
+                  </option>
                 </select>
                 <img src="../assets/images/shevron.svg" alt="shevron" class="shevron" />
               </div>
