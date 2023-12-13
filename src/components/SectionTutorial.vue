@@ -1,5 +1,9 @@
 <script setup>
  import Carrousel from '@/components/CarrouselTutorial.vue'
+ import router from '@/router'
+  const login = ()=>{
+    router.push({ name: 'login' })
+  }
 </script>
 
 <template>
@@ -12,7 +16,7 @@
       <div class="col-sm-12 col-md-12">
         <div class="container-description">
           <h3>CUBRE TUS NECESIDADES</h3>
-          <button class="description-btn">Comienza a contratar</button>
+          <button @click="login" class="description-btn">Comienza a contratar</button>
         </div>
       </div>
     </div>
