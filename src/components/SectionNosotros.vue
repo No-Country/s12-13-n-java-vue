@@ -45,7 +45,7 @@
   
           <div class=" col">
             <div class="cards">
-              <img src="@/assets/images/about-me/Felipe.png" alt="">
+              <img src="@/assets/images/about-me/felipe.png" alt="">
               <h6>Felipe Ruiz</h6>
               <div>
                 <span>Ui-Ux</span>

@@ -13,18 +13,48 @@
         </li>
       </nav>
     </header>
-    <section class="sidebar" :class="{ visible: isVisible }">
+    <section :style="getSidebarStyles()" class="sidebar" :class="{ visible: isVisible }">
       <img class="sidebar-logo" src="../assets/logo.svg" />
+      <section v-if="$route.name === 'dashboard'" class="profile">
+        <div class="circle-container">
+          <img src="../assets/images/avatar.svg" alt="avatar" class="avatar" />
+        </div>
+        <div class="profile__info">
+          <p class="profile__name">Florencia R.</p>
+          <p class="profile__role">Contratador</p>
+        </div>
+      </section>
       <ul class="nav__list">
-        <li class="nav__item">
-          <a class="nav__item link"  @click="handleClickScrollNeeds">
+        <div v-if="$route.name === 'dashboard'" class="sidebar__line"></div>
+        <li v-if="$route.name === 'home'" class="nav__item">
+          <a class="nav__item link" @click="handleClickScrollNeeds">
             <div class="nav__item-picture">
               <img class="nav__item-icon" src="../assets/images/page-icon.svg" alt="page-icon" />
             </div>
             <p class="nav__item-text">Necesidades</p>
           </a>
         </li>
-        <li class="nav__item"  @click="handleClickScrollJobs">
+        <li v-if="$route.name === 'dashboard'" class="nav__item">
+          <a class="nav__item link" @click="handleClickScrollNeeds">
+            <div class="nav__item-picture">
+              <img class="nav__item-icon" src="../assets/images/profile-icon.svg" alt="page-icon" />
+            </div>
+            <p class="nav__item-text">Perfil</p>
+          </a>
+        </li>
+        <li v-if="$route.name === 'dashboard'" class="nav__item">
+          <a class="nav__item link" @click="handleClickScrollNeeds">
+            <div class="nav__item-picture">
+              <img
+                class="nav__item-icon"
+                src="../assets/images/tutorial-icon.svg"
+                alt="page-icon"
+              />
+            </div>
+            <p class="nav__item-text">Tutorial</p>
+          </a>
+        </li>
+        <li v-if="$route.name === 'home'" class="nav__item" @click="handleClickScrollJobs">
           <a class="nav__item link">
             <div class="nav__item-picture">
               <img class="nav__item-icon" src="../assets/images/blog-icon.svg" alt="blog-icon" />
@@ -33,7 +63,7 @@
           </a>
         </li>
         <li class="nav__item">
-          <a class="nav__item link"  @click="handleClickScrollSupport">
+          <a class="nav__item link" @click="handleClickScrollSupport">
             <div class="nav__item-picture">
               <img
                 class="nav__item-icon"
@@ -88,27 +118,60 @@
           </ul>
         </section>
         <section class="sidebar-config">
-          <h3 class="config-title sidebar-title">TAMAÑO</h3>
-          <img
-            src="../assets/images/size-config.svg"
-            alt="size configuration"
-            class="config-image"
-          />
+          <h3 class="config-title sidebar-title" id="city">TAMAÑO</h3>
+          <div>
+            <div class="slider-container">
+              <!-- <span class="circle start"></span> -->
+              <input
+                class="range-slider"
+                type="range"
+                id="slider"
+                step="0.3125"
+                v-model="sliderValue"
+                @input="handleSliderInput"
+                :min="minValue"
+                :max="maxValue"
+              />
+              <!-- <span class="circle center"></span>
+              <span class="circle end"></span> -->
+            </div>
+          </div>
         </section>
       </div>
-      <a href="/login" class="sidebar__button link" @onclick="navigateToLogin">Iniciar sesión</a>
+      <a
+        v-if="$route.name === 'home'"
+        href="/login"
+        class="sidebar__button link"
+        @onclick="navigateToLogin"
+        >Iniciar sesión</a
+      >
+      <a v-if="$route.name === 'dashboard'" href="#" class="sidebar__button link">Cerrar sesión</a>
     </section>
   </section>
 </template>
 
 <script>
+import router from '@/router'
+
 export default {
   data() {
     return {
-      isVisible: false
+      isVisible: true,
+      sliderValue: 25 / 16,
+      minValue: 20 / 16,
+      maxValue: 30 / 16
     }
   },
   methods: {
+    handleSliderInput() {
+      var el = document.getElementById('app')
+      console.log('elementHTMLel:', el)
+      var style = window.getComputedStyle(el, null).getPropertyValue('font-size')
+      console.log('elementHTMLstyle:', style)
+      var fontSize = parseFloat(style)
+      console.log('elementHTMLfontSize:', fontSize)
+      el.style.fontSize = this.sliderValue + 'rem'
+    },
     toggleSidebar() {
       this.isVisible = !this.isVisible
     },
@@ -137,7 +200,19 @@ export default {
       }
     },
     navigateToLogin() {
-      this.$router.push('/login')
+      // this.$router.push('/login')
+      router.push({ name: 'login' })
+    },
+    getSidebarStyles() {
+      // Determine the route and set gap size accordingly
+      const route = this.$route.name
+      const gapSize = route === 'home' ? '61px' : '24px'
+
+      // Return an object with the dynamic styles
+      return {
+        gap: gapSize
+        // Add other styles as needed
+      }
     }
   }
 }
@@ -198,11 +273,11 @@ li {
 .menu__item-text {
   color: var(--blue2, #149ed7);
   font-family: 'Yaldevi';
-  font-size: 27.683px;
+  font-size: 27.6832px;
   font-style: normal;
   font-weight: 600;
-  line-height: 67%; /* 18.548px */
-  letter-spacing: 2.215px;
+  line-height: 67%;
+  letter-spacing: 2.2144px;
 }
 .menu__item-text_home {
   color: var(--blue1, #1d3d8f);
@@ -215,7 +290,7 @@ li {
 .sidebar {
   width: 289px;
   background-color: white;
-  height: 720px;
+  min-height: 720px;
   overflow-x: visible;
   overflow-y: visible;
   position: fixed;
@@ -255,12 +330,12 @@ li {
 .nav__item {
   display: flex;
   gap: 10px;
+  align-items: center;
 }
 
 .link {
   text-decoration: none;
 }
-
 .link:hover {
   cursor: pointer;
 }
@@ -273,13 +348,13 @@ li {
 .nav__item-text {
   color: #000;
   font-family: 'Baloo 2';
-  font-size: 20px;
+  /* font-size: 20px; */
   font-style: normal;
   font-weight: 400;
   line-height: normal;
 }
 .sidebar__line {
-  width: 207.022px;
+  width: 207.0224px;
   border-bottom: solid 1px #149ed7;
 }
 
@@ -291,7 +366,7 @@ li {
   margin-bottom: 19px;
   color: var(--black1, #2f2f2f);
   font-family: 'Baloo 2';
-  font-size: 20px;
+  /* font-size: 20px; */
   font-weight: 500;
 }
 
@@ -303,6 +378,9 @@ li {
 
 .sidebar-config {
   margin-top: 28px;
+  /* /* height: 3.4375rem; */
+  /* display: flex; */
+  /* flex-direction: column;  */
 }
 .config-title {
   margin-top: 0;
@@ -325,11 +403,103 @@ li {
   border: none;
 }
 
+.range-slider {
+  background-color: #149ed7;
+  border: 0.5008px solid #149ed7;
+  height: 0.5008px;
+  cursor: pointer;
+  appearance: none;
+  width: 200px;
+  margin-left: 7px;
+  z-index: 1000;
+}
+
+.slider-container {
+  width: 210px;
+}
+
+.sidebar-config .range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background-color: #149ed7;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+  position: relative;
+}
+
+.circle {
+  width: 10px;
+  height: 10px;
+  background-color: #1d3d8f;
+  border-radius: 50%;
+  position: absolute;
+  z-index: 1;
+  font-size: 0.625rem;
+  margin-bottom: -1.125rem;
+}
+
+.circle.start {
+  left: 0;
+  transform: translateX(-50%);
+  margin-left: 57px;
+}
+
+.circle.center {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.circle.end {
+  right: 0;
+  transform: translateX(50%);
+  margin-right: 53px;
+}
+
+.circle-container {
+  width: 55px;
+  height: 55px;
+  overflow: hidden;
+  border-radius: 50%;
+  background-color: #149ed7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+
+.profile {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.profile__name {
+  font-family: 'Baloo 2';
+  font-weight: 500;
+}
+
+.profile__role {
+  color: var(--blue2, #149ed7);
+  font-family: 'Baloo 2';
+  font-weight: 400;
+}
+.profile__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 @media screen and (max-width: 833px) {
   .sidebar {
-    /* width: 289px; */
-    height: 802px;
-    padding: 60.39px 40.5px;
+    min-height: 802px;
+    padding: 60.3904px 40.5008px;
   }
 }
 </style>
