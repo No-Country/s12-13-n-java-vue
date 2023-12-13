@@ -5,8 +5,15 @@ import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import FooterPage from '@/components/Footer.vue'
 import JobCard from '../components/JobCard.vue'
-
+import useFormContratador from '@/stores/formContratador'
 const date = ref()
+const store = useFormContratador()
+
+const eventTitle = ref('')
+
+const onSubmit = async () => {
+  await store.submit(eventTitle.value)
+}
 </script>
 <template>
   <main>
@@ -67,7 +74,7 @@ const date = ref()
               <img src="../assets/images/close-button-icon.svg" alt="Button Image" />
             </button>
           </div>
-          <form class="form">
+          <form class="form" @submit.prevent="onSubmit">
             <div class="form__labelBox">
               <label htmlFor="eventName" class="form__labelText"> Elige el tipo de servicio </label>
               <select
@@ -84,15 +91,16 @@ const date = ref()
               <img src="../assets/images/shevron.svg" alt="shevron" class="shevron" />
             </div>
             <div class="form__labelBox">
-              <label htmlFor="eventName" class="form__labelText">Título</label>
+              <label htmlFor="eventTitle" class="form__labelText">Título</label>
               <input
                 class="form__input"
                 type="select"
-                id="eventName"
+                id="eventTitle"
                 name="eventName"
                 onChange="{handleInputChange}"
                 placeholder="Escribe un título"
                 required
+                v-model="eventTitle"
               />
             </div>
             <div class="form__labelBox">
@@ -105,7 +113,6 @@ const date = ref()
                 onChange="{handleInputChange}"
                 placeholder="Agrega una descripción con los
 detalles de tu trabajo"
-                required
               />
             </div>
             <div class="labelBox-container">
@@ -118,7 +125,6 @@ detalles de tu trabajo"
                   name="eventName"
                   onChange="{handleInputChange}"
                   placeholder="$"
-                  required
                 />
               </div>
               <div class="form__labelBox">
@@ -130,7 +136,6 @@ detalles de tu trabajo"
                   name="eventName"
                   value="USD"
                   onChange="{handleInputChange}"
-                  required
                 >
                   <option class="form__optionText">USD</option>
                 </select>
@@ -149,7 +154,6 @@ detalles de tu trabajo"
                 name="eventName"
                 onChange="{handleInputChange}"
                 placeholder="Ingresa tu dirección"
-                required
               />
             </div>
             <div class="form__labelBox">
