@@ -7,6 +7,7 @@ import { createApp } from 'vue';
 import './assets/main.css';
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
+import VueSplide from '@splidejs/vue-splide';
 
 addIcons(FaRegularEyeSlash, FaRegularEye, LaLinkedin, RiFacebookBoxLine, SiInstagram, CoTiktok, RiTwitterLine )
 
@@ -17,6 +18,7 @@ const app = createApp(App)
 
 app.component('v-icon', OhVueIcon)
 app.component('VueDatePicker', VueDatePicker)
+app.use( VueSplide )
 
 app.use(createPinia())
 app.use(router)

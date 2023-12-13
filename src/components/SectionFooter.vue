@@ -1,5 +1,5 @@
-<script setup>
-</script>
+<!-- src\components\Footer.vue -->
+<script setup></script>
 
 <template>
   <div class="container-description ">

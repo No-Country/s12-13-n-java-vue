@@ -1,5 +1,9 @@
 <script setup>
-  import { ref } from 'vue'
+  /*import { ref } from 'vue'*/
+  import router from '@/router'
+  const login = ()=>{
+    router.push({ name: 'login' })
+  }
 </script>
 
 <template>
@@ -16,12 +20,12 @@
             <h3>CONECTAMOS GENERACIONES</h3>
             <P style="padding: 0px 21px"> Nuestra aplicación te ayuda a crear posiciones de trabajo personalizadas y conectar con personas comprometidas
               y listas para trabajar</P>
-            <button class="section1-btn"> Ofrece empleo </button>
+            <button @click="login" class="section1-btn"> Ofrece empleo </button>
             <p class="div">___________________ ó ___________________</p>
             <div class="container-description">
               <p>Nuestra aplicación te ayuda a crear posiciones de trabajo personalizadas y conectar con personas comprometidas
                 y listas para trabajar.</p>
-              <button style="background-color: #1D3D8F;" class="description-btn">Busca oportunidades</button>
+              <button @click="login" style="background-color: #1D3D8F;" class="description-btn">Busca oportunidades</button>
             </div>
           </div>
         </div>

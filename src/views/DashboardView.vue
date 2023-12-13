@@ -3,7 +3,7 @@ import SectionHeader from '../components/SectionHeader.vue'
 import { ref } from 'vue'
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
-import FooterPage from '@/components/Footer.vue'
+import FooterPage from '@/components/SectionFooter.vue'
 import JobCard from '../components/JobCard.vue'
 import useFormContratador from '@/stores/formContratador'
 const date = ref()
@@ -113,7 +113,8 @@ const onSubmit = async () => {
                 onChange="{handleInputChange}"
                 placeholder="Agrega una descripción con los
 detalles de tu trabajo"
-              />
+                required
+              ></textarea>                
             </div>
             <div class="labelBox-container">
               <div class="form__labelBox">
