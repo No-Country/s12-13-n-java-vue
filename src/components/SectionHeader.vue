@@ -156,7 +156,7 @@ import router from '@/router'
 export default {
   data() {
     return {
-      isVisible: true,
+      isVisible: false,
       sliderValue: 25 / 16,
       minValue: 20 / 16,
       maxValue: 30 / 16
@@ -395,7 +395,7 @@ li {
   display: flex;
   height: 51px;
   padding: 10px;
-  width: 100%;
+  width: fit-content;
   justify-content: center;
   align-items: center;
   border-radius: 6px;
@@ -495,6 +495,7 @@ li {
   flex-direction: column;
   justify-content: center;
 }
+
 
 @media screen and (max-width: 833px) {
   .sidebar {
