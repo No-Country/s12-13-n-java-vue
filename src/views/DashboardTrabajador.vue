@@ -1,14 +1,24 @@
 <template>
     <main>
         <!--mobilebar-->
-        <div>
+        <div class="referencias">
             <img src="../assets/images/iconosmobilebar.svg" alt="frecuencia, wifi, bateria">
         </div>
         <!--navbar-->
         <div>
-            <img src="../assets/images/isotipo.svg" alt="una mano">
-        
-            <img src="../assets/images/frame.svg" alt="menú hamburguesa">
+            <div>
+                <div class="isotipo">
+                    <div>
+                        <img src="../assets/images/isotipo.svg" alt="una mano">
+                    </div>
+                    <div>
+                        <img src="../assets/images/una mano.png" alt="una mano texto">
+                    </div>
+                </div>
+                <div class="referencias">
+                    <img  src="../assets/images/frame.svg" alt="menú hamburguesa">
+                </div>
+            </div>
         </div>
         <!--navbar trabajador-->
         <div>
@@ -25,18 +35,18 @@
             <div class="accordion-item">
                     <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Kinesiología
+                        <strong>Kinesiología</strong>
                     </button>
                     </h2>
                     <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                         <strong><h4>Sesiones semanales</h4></strong> 
-                        <p>8/12/2023</p>
+                        <p v-bind:style="{'justify-content': alineacion, 'align-items':alineacion,'display': inline}">8/12/2023</p>
                         <ul>
-                            <strong>Fecha:</strong><div>8/12/2023</div>
-                            <strong>Dirección:</strong> <div>Bogotá, Colombia</div>
-                            <strong>Precio:</strong> <div>30 USD</div>
-                            <strong>Descripción:</strong>
+                            <div><strong>Fecha:</strong></div><div class="referencias">8/12/2023</div>
+                            <div><strong>Dirección:</strong></div> <div class="referencias">Bogotá, Colombia</div>
+                            <div><strong>Precio:</strong></div> <div class="referencias">30 USD</div>
+                            <div><strong>Descripción:</strong></div>
                             <div>
                                 <p>Necesito tres sesiones semanales a domicilio durante las tardes para tratar una lesión a la rodilla. Precio sugerido por sesión.</p>
                             </div>
@@ -77,7 +87,9 @@
     </main>        
 </template>
 
-<script setup>
+<script lang="js" setup>
+import {ref} from 'vue'
+let alineacion = ref('right')
 /*import Footer from '../components/Footer.vue';
 import SectionHeader from '../components/SectionHeader.vue';
 import CardTrabajador from '../components/CardTrabajador.vue';
@@ -85,5 +97,15 @@ import {ref} from 'vue'*/
 </script>
 
 <style scoped>
+.isotipo{
+    display:flex;
+    align-items: center;
+    margin: 0;
+}
 
+.referencias{
+    align-content: right;
+    display: flex;
+    justify-content: right;
+}
 </style>
