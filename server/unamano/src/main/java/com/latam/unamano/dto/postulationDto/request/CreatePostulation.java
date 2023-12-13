@@ -1,4 +1,4 @@
-package com.latam.unamano.dto.postulationDto;
+package com.latam.unamano.dto.postulationDto.request;
 
 import jakarta.validation.constraints.NotNull;
 

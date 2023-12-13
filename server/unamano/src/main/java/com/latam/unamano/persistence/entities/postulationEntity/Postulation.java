@@ -2,6 +2,7 @@ package com.latam.unamano.persistence.entities.postulationEntity;
 
 import com.latam.unamano.persistence.entities.task.Task;
 import com.latam.unamano.persistence.entities.workerEntity.Worker;
+import com.latam.unamano.utils.PostulationStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,4 +29,6 @@ public class Postulation {
     private Task task;
 
     private LocalDateTime date = LocalDateTime.now();
+
+    private PostulationStatus status;
 }
