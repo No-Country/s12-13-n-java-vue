@@ -138,8 +138,8 @@
           </div>
         </section>
       </div>
-      <button v-if="$route.name === 'home'" class=" sidebarbutton link"  @click="navigateToLogin">Iniciar sesión</button>
-      <button v-if="$route.name === 'dashboard'" class="sidebarbutton link"  @click="closeSesion">Cerrar sesión</button>
+      <button v-if="$route.name === 'home'" class=" sidebar__button link"  @click="navigateToLogin">Iniciar sesión</button>
+      <button v-if="$route.name === 'dashboard'" class="sidebar__button link"  @click="closeSesion">Cerrar sesión</button>
     </section>
   </section>
 </template>

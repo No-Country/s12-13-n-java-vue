@@ -2,12 +2,16 @@ import { createRouter, createWebHistory } from 'vue-router'
 import DashboardView from '../views/DashboardView.vue'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
+// import useAuth from '@/stores/auth'
 
 const routes = [
  {
       path: '/login',
       name: 'login',
-      component: LoginView
+      component: LoginView,
+      /*  meta: {
+        requereAuth: false
+      }, */
     },
 
     {
@@ -22,7 +26,10 @@ const routes = [
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      /*  meta: {
+        requereAuth: false
+      }, */
     }
 ]
 
