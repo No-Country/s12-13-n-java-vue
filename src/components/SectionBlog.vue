@@ -1,11 +1,11 @@
 <script setup>
-/* import Carrousel from '@/components/CarrouselBlog.vue' */
+import Carrousel from '@/components/CarrouselBlog.vue'
 </script>
 <template>
-  <section class="conteiner" id="jobs">
+  <section class="conteiner">
     <div class="row gx-0">
       <div class="col-sm-12 col-md-12">
-        <!--    <Carrousel /> -->
+           <Carrousel />
       </div>
       <div class="col-sm-12 col-md-12">
         <div class="container-description">
@@ -23,7 +23,7 @@
   margin-top: 48px;
 }
 .container-description {
-  margin-top: 30px;
+ 
   display: flex;
   padding: 0px 32px;
   justify-content: center;

@@ -31,6 +31,11 @@
 </template>
 
 <style scoped>
+.conteiner {
+  padding-top: 48px;
+  background-color: #1b9964;
+  color: #fff;
+}
 .conteiner-form {
   display: flex;
   flex-direction: column;
@@ -38,24 +43,25 @@
 }
 .conteiner-form label {
   font-size: 20px;
-  color: #2f2f2f;
+   color: #fff;
 }
 .conteiner-form input,
 .conteiner-form textarea {
   height: 40px;
-  background-color: #d2d8ee;
+  background-color: #fff;
   align-self: stretch;
   border-radius: 6px;
   font-size: 25px;
   border: 1px;
+  
 }
 .conteiner-form textarea {
   height: 135px;
   font-size: 25px;
 }
 .container-description h3 {
-  color: #fff;
-  margin-top: 48px;
+  
+  margin-top: 15px;
   font-size: 20px;
 }
 .container-description {
@@ -67,9 +73,7 @@
   gap: 26px;
   flex-direction: column;
 }
-.container-description {
-  background-color: #1b9964;
-}
+
 
 .description-btn {
   width: 328px;
