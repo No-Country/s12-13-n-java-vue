@@ -1,18 +1,22 @@
 <script setup>
-/*  import Carrousel from '@/components/CarrouselTutorial.vue' */
+ import Carrousel from '@/components/CarrouselTutorial.vue'
+ import router from '@/router'
+  const login = ()=>{
+    router.push({ name: 'login' })
+  }
 </script>
 
 <template>
   <section class="conteiner" id="needs">
     <div class="row gx-0">
       <div class="col-sm-12 col-md-12">
-        <!-- <Carrousel /> -->
+        <Carrousel />
       </div>
 
       <div class="col-sm-12 col-md-12">
         <div class="container-description">
           <h3>CUBRE TUS NECESIDADES</h3>
-          <button class="description-btn">Comienza a contratar</button>
+          <button @click="login" class="description-btn">Comienza a contratar</button>
         </div>
       </div>
     </div>
@@ -26,7 +30,7 @@
 }
 
 .container-description {
-  margin-top: 30px;
+  
   display: flex;
   padding: 0px 32px;
   justify-content: center;

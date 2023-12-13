@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import DashboardView from '../views/DashboardView.vue'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
-import DemoVista from '../views/DemoVista.vue'
 import DashboardTrabajador from '../views/DashboardTrabajador.vue'
 
 const routes = [

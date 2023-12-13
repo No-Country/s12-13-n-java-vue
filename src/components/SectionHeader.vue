@@ -138,14 +138,8 @@
           </div>
         </section>
       </div>
-      <a
-        v-if="$route.name === 'home'"
-        href="/login"
-        class="sidebar__button link"
-        @onclick="navigateToLogin"
-        >Iniciar sesión</a
-      >
-      <a v-if="$route.name === 'dashboard'" href="#" class="sidebar__button link">Cerrar sesión</a>
+      <button v-if="$route.name === 'home'" class=" sidebar__button link"  @click="navigateToLogin">Iniciar sesión</button>
+      <button v-if="$route.name === 'dashboard'" class="sidebar__button link"  @click="closeSesion">Cerrar sesión</button>
     </section>
   </section>
 </template>
@@ -156,7 +150,7 @@ import router from '@/router'
 export default {
   data() {
     return {
-      isVisible: true,
+      isVisible: false,
       sliderValue: 25 / 16,
       minValue: 20 / 16,
       maxValue: 30 / 16
@@ -358,8 +352,8 @@ li {
   border-bottom: solid 1px #149ed7;
 }
 
-.sidebar__social {
-}
+/*.sidebar__social {
+}*/
 
 .sidebar-title {
   margin-top: 36px;
@@ -395,7 +389,7 @@ li {
   display: flex;
   height: 51px;
   padding: 10px;
-  width: 100%;
+  width: fit-content;
   justify-content: center;
   align-items: center;
   border-radius: 6px;
@@ -495,6 +489,7 @@ li {
   flex-direction: column;
   justify-content: center;
 }
+
 
 @media screen and (max-width: 833px) {
   .sidebar {
