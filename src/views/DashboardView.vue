@@ -4,10 +4,10 @@ import { ref } from 'vue'
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import FooterPage from '@/components/Footer.vue'
+import JobCard from '../components/JobCard.vue'
 
 const date = ref()
 </script>
-
 <template>
   <main>
     <SectionHeader />
@@ -45,7 +45,9 @@ const date = ref()
         </li>
       </ul>
     </nav>
-    <section class="container"></section>
+    <section class="container">
+      <JobCard> </JobCard>
+    </section>
     <section class="modal-info">
       <p class="modal-info__text">
         Crea tu primera publicación y <br />
