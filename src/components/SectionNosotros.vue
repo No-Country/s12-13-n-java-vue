@@ -1,5 +1,5 @@
 <script setup>
-  import FooterPage from '@/components/Footer.vue'
+  import FooterPage from '@/components/SectionFooter.vue'
 </script>
 
 <template>

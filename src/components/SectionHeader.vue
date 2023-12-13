@@ -138,14 +138,8 @@
           </div>
         </section>
       </div>
-      <a
-        v-if="$route.name === 'home'"
-        href="/login"
-        class="sidebar__button link"
-        @onclick="navigateToLogin"
-        >Iniciar sesión</a
-      >
-      <a v-if="$route.name === 'dashboard'" href="#" class="sidebar__button link">Cerrar sesión</a>
+      <button v-if="$route.name === 'home'" class=" sidebarbutton link"  @click="navigateToLogin">Iniciar sesión</button>
+      <button v-if="$route.name === 'dashboard'" class="sidebarbutton link"  @click="closeSesion">Cerrar sesión</button>
     </section>
   </section>
 </template>
@@ -358,8 +352,8 @@ li {
   border-bottom: solid 1px #149ed7;
 }
 
-.sidebar__social {
-}
+/*.sidebar__social {
+}*/
 
 .sidebar-title {
   margin-top: 36px;

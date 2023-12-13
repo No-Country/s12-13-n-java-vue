@@ -116,8 +116,8 @@ p {
   flex-wrap: wrap;
 }
 
-.data-container {
-}
+/*.data-container {
+}*/
 
 .container_expanded {
   width: 100%;
