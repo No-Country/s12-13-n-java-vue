@@ -35,6 +35,16 @@
           Necesito 3 sesiones semanales a domicilio durante las tardes para tratar una lesión a la
           rodilla. Precio sugerido por sesión.
         </p>
+        <div class="container_expanded buttons-container" :class="{ hidden: !isExpanded }">
+          <button class="edit-button link">Editar</button>
+          <button class="applications-button link">
+            <div class="users-container">
+              <span>3</span>
+              <img src="../assets/images/user-icon.svg" alt="user" class="applications-image" />
+            </div>
+            Postulaciones
+          </button>
+        </div>
       </div>
       <button class="expand-button link" :class="{ hidden: isExpanded }" @click="expand()">
         Ver más
@@ -134,12 +144,36 @@ p {
   min-width: 123px;
   justify-content: center;
   align-items: center;
-  border-radius: 6px;
   background: var(--blue1, #1d3d8f);
-  border: none;
 }
+.link {
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+}
+
 .link:hover {
   cursor: pointer;
+}
+
+.edit-button {
+  border: 2px solid var(--blue1, #1d3d8f);
+  background-color: transparent;
+  color: var(--blue1, #1d3d8f);
+  font-family: 'Baloo 2';
+  font-weight: 700;
+  padding: 10px;
+  width: 100px;
+}
+
+.applications-button {
+  background: var(--blue1, #1d3d8f);
+  color: var(--white, #fff);
+  width: 227px;
+  gap: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .section-container {
@@ -151,7 +185,6 @@ p {
 .unexpand-button {
   width: 27px;
   height: 27px;
-  border: none;
   background-color: transparent;
 }
 
@@ -163,11 +196,15 @@ p {
   z-index: 1000;
 }
 
-.description-text {
+.buttons-container {
+  display: flex;
+  gap: 12px;
+  margin-top: 23px;
 }
 
-.description-container {
-  /* display: flex; */
+.users-container {
+  display: flex;
+  align-items: center;
 }
 
 @keyframes expand {
