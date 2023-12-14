@@ -118,18 +118,25 @@ public class PostulationService implements PostulationServiceInterface{
     @Override
     public TaskDTO acceptPostulation(AcceptPostulation acceptPostulation) {
         try{
+		Long w_id=null;
+		Long c_id;
             List<Postulation> postulations = postulationRepository.getAllByTaskId(acceptPostulation.task_id());
             for (Postulation p: postulations) {
                 if (p.getId().equals(acceptPostulation.postulation_id())){
                     p.setStatus(PostulationStatus.APPROVED);
+			        w_id= p.getWorker().getId();
                 } else {
                     p.setStatus(PostulationStatus.CANCELED);
                 }
                 postulationRepository.save(p);
             }
             Task task = taskRepository.findById(acceptPostulation.task_id()).get();
+            c_id= task.getClient().getId();
+            if(w_id!=null&&c_id!=null)
+                System.out.println("Id del worker: " + w_id + " id del cliente " + c_id);
             task.setStatus(TaskStatus.INPROGRESS);
             taskRepository.save(task);
+		//sale el chat
             return TaskMapper.taskToTaskDTO(task);
         }catch (Exception e){
             throw new EntityNotFoundException("Error en el ingreso de datos." +
