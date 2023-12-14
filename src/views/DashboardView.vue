@@ -111,10 +111,10 @@ onMounted(() => {
       </ul>
     </nav>
     <section class="container">
-      <JobCard> </JobCard>
       <div v-if="cards && cards.length">
         <div v-for="card in cards" :key="card.id">
           <p>{{ card.taskTitle }}</p>
+          <JobCard class="z-index--10"> </JobCard>
         </div>
       </div>
 
@@ -124,7 +124,7 @@ onMounted(() => {
       </div>
     </section>
     <section class="modal-info">
-      <p class="modal-info__text">
+      <p class="modal-info__text" v-if="!cards">
         Crea tu primera publicación y <br />
         conecta con trabajadores
       </p>
@@ -321,8 +321,8 @@ li {
   margin-left: auto;
   margin-right: auto;
 
-  position: absolute;
-  top: 500px;
+  position: fixed;
+  bottom: 10%;
   display: flex;
   padding: 15px 10px;
   flex-direction: column;
@@ -502,5 +502,9 @@ li {
 .v-enter-from,
 .v-leave-to {
   transform: translateY(100%);
+}
+
+.z-index--10 {
+  z-index: -10;
 }
 </style>
