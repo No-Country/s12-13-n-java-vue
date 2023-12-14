@@ -27,6 +27,8 @@ let taskLocation = ref('')
 let precio = ref(0)
 let cards = ref(null)
 
+let clientID = ref(0)
+
 const toggleNavItem = (index) => {
   activeItems.value[index] = !activeItems.value[index]
 }
@@ -64,12 +66,19 @@ const onSubmit = async () => {
 const fetchCards = async () => {
   await axios.get('task/published', { headers }).then((response) => {
     console.log('response:', response.data.content)
-    cards.value = response.data.content
-    console.log('cards.value:', cards.value)
+    cards.value = response.data.content.filter((card) => card.id === 2)
+  })
+}
+
+const fetchClient = async () => {
+  await axios.get('auth/details', { headers }).then((response) => {
+    console.log('response:', response.data.content)
+    cards.value = response.data.content.filter((card) => card.username === 'abuelita')
   })
 }
 
 onMounted(() => {
+  fetchClient()
   fetchCards()
 })
 </script>
