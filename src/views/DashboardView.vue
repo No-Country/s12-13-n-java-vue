@@ -1,6 +1,6 @@
 <script setup>
 import SectionHeader from '../components/SectionHeader.vue'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import FooterPage from '@/components/SectionFooter.vue'
@@ -25,10 +25,7 @@ let currency = ref('')
 let taskDescription = ref('')
 let taskLocation = ref('')
 let precio = ref(0)
-
-let cards = ref([])
-console.log('cards:', cards)
-console.log('cards:', cards.value)
+let cards = ref(null)
 
 const toggleNavItem = (index) => {
   activeItems.value[index] = !activeItems.value[index]
@@ -64,26 +61,17 @@ const onSubmit = async () => {
   closePopup()
 }
 
-const fetchCards = () => {
-  axios
-    .get('task/published', { headers })
-    .then((response) => {
-      console.log('response:', response.data.content)
-      cards.value = response.data.content.map((card) => {
-        return {
-          adderes: card.address.street,
-          description: card.description,
-          taskDate: card.taskDate,
-          price: card.price,
-          taskTitle: card.taskTitle
-        }
-
-      })
-    })
-    .then((data) => console.log(data))
+const fetchCards = async () => {
+  await axios.get('task/published', { headers }).then((response) => {
+    console.log('response:', response.data.content)
+    cards.value = response.data.content
+    console.log('cards.value:', cards.value)
+  })
 }
 
-fetchCards()
+onMounted(() => {
+  fetchCards()
+})
 </script>
 <template>
   <main>
@@ -124,6 +112,16 @@ fetchCards()
     </nav>
     <section class="container">
       <JobCard> </JobCard>
+      <div v-if="cards && cards.length">
+        <div v-for="card in cards" :key="card.id">
+          <p>{{ card.taskTitle }}</p>
+        </div>
+      </div>
+
+      <div v-else>
+        <!-- Handle the case when cards is null or empty -->
+        No cards available.
+      </div>
     </section>
     <section class="modal-info">
       <p class="modal-info__text">
