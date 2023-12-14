@@ -32,6 +32,12 @@ const routes = [
     },
 
     {
+      path: '/Chat',
+      name: 'Chat',
+      component: ChatView
+    },
+
+    {
       path: '/',
       name: 'home',
       component: HomeView,
