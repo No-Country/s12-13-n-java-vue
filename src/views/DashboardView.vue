@@ -317,15 +317,20 @@ li {
   overflow: auto;
 }
 
+::-webkit-scrollbar {
+  height: 0px;
+  width: 1px;
+  border: 0px solid #fff;
+}
+
 .tasks-container {
-  display:flex;
+  display: flex;
   flex-direction: column;
-  gap:10px;
+  gap: 10px;
 }
 
 .cards-container {
   background-color: #a9b8de;
-
 }
 .modal-info {
   width: 361px;
