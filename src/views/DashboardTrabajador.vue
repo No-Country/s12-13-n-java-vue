@@ -21,9 +21,9 @@
             </div>
         </div>
         <!--navbar trabajador-->
-        <div>
+        <div class="navbar-trabajador">
             <img src="../assets/images/home-icon.svg" alt="ícono home">
-            <img src="../assets/images/navbar iconochat.png" alt="ícono chat">
+            <img src="../assets/images/iconochat.svg" alt="ícono chat">
             <img src="../assets/images/iconocalendario.png" alt="ícono calendario">
         </div>
 
@@ -103,9 +103,43 @@ import {ref} from 'vue'*/
     margin: 0;
 }
 
+.navbar-trabajador{
+    align-items: center;
+    align-content: center;
+    display: flex;
+    justify-content: center;
+}
+
 .referencias{
     align-content: right;
     display: flex;
     justify-content: right;
 }
+
+.container-description h3 {
+    color: #fff;
+    margin-top: 48px;
+    font-size: 20px;
+
+  }
+ 
+  .container-description {
+    display: flex;
+    background-color: #1D3D8F;
+    flex-direction: column;
+    align-items: center;
+    text-align: center
+  }
+
+  .foot {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (min-width: 768px){
+    .foot{
+      display: flex;
+      flex-direction: row;
+    }
+  }
 </style>
