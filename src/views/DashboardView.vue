@@ -11,12 +11,27 @@ import { categorias, currencies } from '../utils/constants'
 const date = ref()
 const store = useFormContratador()
 
+const activeItems = ref([false, false, false])
+const isOpen = ref(false)
+
 let taskTitle = ref('')
 let category = ref('')
 let currency = ref('')
 let taskDescription = ref('')
 let taskLocation = ref('')
 let precio = ref(0)
+
+const toggleNavItem = (index) => {
+  activeItems.value[index] = !activeItems.value[index]
+}
+
+const openPopup = () => {
+  isOpen.value = true
+}
+
+const closePopup = () => {
+  isOpen.value = false
+}
 
 const onSubmit = async () => {
   // ;(currencyType = currency.value),
@@ -52,6 +67,7 @@ const onSubmit = async () => {
       street: taskLocation.value
     }
   )
+  closePopup()
 }
 </script>
 <template>
@@ -216,7 +232,7 @@ detalles de tu trabajo"
   </main>
 </template>
 
-<script>
+<!-- <script>
 export default {
   props: ['onSubmit'],
   data() {
@@ -240,7 +256,7 @@ export default {
     }
   }
 }
-</script>
+</script> -->
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Yaldevi:wght@600&display=swap');
