@@ -3,28 +3,39 @@ import { defineStore } from 'pinia'
 
 const useFormContratador = defineStore('formContratador', {
   state: () => {
-    return {
-      taskTitle: '',
-      category: '',
-      currency: '',
-      taskDescription: '',
-      taskLocation: ''
-    }
+    return {}
   },
 
   actions: {
-    async submit(formData) {
+    async submit(
+      taskTitle,
+      description,
+      price,
+      currencyType,
+      occupations,
+      taskDate,
+      client,
+      address
+    ) {
+      const token = localStorage.getItem('token')
+      console.log('token:', token)
+      const headers = {
+        Authorization: `Bearer ${token}`
+      }
+
       this.reset()
 
       await axios
-        .post('task', {
-          formData
-        })
+        .post(
+          'task',
+          { taskTitle, description, price, currencyType, occupations, taskDate, client, address },
+          { headers }
+        )
         .then((response) => {
           console.log('Response', response)
         })
         .catch((error) => {
-          console.log('Error en login', error)
+          console.log('Error en form', error)
         })
     },
 

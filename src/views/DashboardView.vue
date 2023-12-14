@@ -11,31 +11,47 @@ import { categorias, currencies } from '../utils/constants'
 const date = ref()
 const store = useFormContratador()
 
-const taskTitle = ref('')
-const category = ref('')
-const currency = ref('')
-const taskDescription = ref('')
-const taskLocation = ref('')
-const precio = ref('')
+let taskTitle = ref('')
+let category = ref('')
+let currency = ref('')
+let taskDescription = ref('')
+let taskLocation = ref('')
+let precio = ref(0)
 
 const onSubmit = async () => {
-  formData.currency = currency.value
-  formData.category = category.value
-  formData.taskTitle = taskTitle.value
-  formData.taskDescription = taskDescription.value
-  formData.taskLocation = taskLocation.value
-  formData.precio = precio.value
-  formData.date = date.value
-
-  console.log('formData:', formData)
-
-  await store.submit(formData)
-}
-
-const formData = {
-  taskTitle,
-  category,
-  currency
+  // ;(currencyType = currency.value),
+  //   (ocupations = [
+  //     {
+  //       occupationName: category.value
+  //     }
+  //   ]),
+  //   (description = taskDescription.value),
+  //   (price = precio.value),
+  //   (taskDate = date.value),
+  //   (address = {
+  //     street: taskLocation.value
+  //   }),
+  //   (client = {
+  //     id: 1
+  //   })
+  await store.submit(
+    taskTitle.value,
+    taskDescription.value,
+    precio.value,
+    currency.value,
+    [
+      {
+        occupationName: category.value
+      }
+    ],
+    date.value,
+    {
+      id: 1
+    },
+    {
+      street: taskLocation.value
+    }
+  )
 }
 </script>
 <template>
@@ -147,11 +163,11 @@ detalles de tu trabajo"
                 <label htmlFor="eventName" class="form__labelText">Precio</label>
                 <input
                   class="form__input"
-                  type="select"
                   name="eventName"
                   placeholder="$"
+                  type="number"
                   :value="precio"
-                  @input="(e) => (precio = e.target.value)"
+                  @input="(e) => (precio = Number(e.target.value))"
                 />
               </div>
               <div class="form__labelBox">
@@ -180,7 +196,6 @@ detalles de tu trabajo"
 
               <input
                 class="form__input input-location"
-                type="select"
                 name="eventName"
                 placeholder="Ingresa tu dirección"
                 :value="taskLocation"
