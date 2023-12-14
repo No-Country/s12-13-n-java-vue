@@ -17,7 +17,6 @@ const currency = ref('')
 const taskDescription = ref('')
 const taskLocation = ref('')
 const precio = ref('')
-const date = ref('')
 
 const onSubmit = async () => {
   formData.currency = currency.value
@@ -149,10 +148,10 @@ detalles de tu trabajo"
                 <input
                   class="form__input"
                   type="select"
-                  id="eventName"
                   name="eventName"
-                  onChange="{handleInputChange}"
                   placeholder="$"
+                  :value="precio"
+                  @input="(e) => (precio = e.target.value)"
                 />
               </div>
               <div class="form__labelBox">
