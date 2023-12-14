@@ -12,6 +12,7 @@ import com.latam.unamano.persistence.repositories.workerRepository.WorkerReposit
 import com.latam.unamano.utils.PostulationStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -61,16 +62,13 @@ public class PostulationService implements PostulationServiceInterface{
      * @return List<Postulation>
      */
     @Override
-    public List<Postulation> getAllByWorkerId(Long idWorker) {
+    public Page<Postulation> getAllByWorkerId(Long idWorker, Pageable pageable) {
         Optional<Worker> workerOptional = workerRepository.findById(idWorker);
+
         if (workerOptional.isPresent()){
-
-            //TODO: get a list of postulations per worker id
-            // return Optional.of(PostulationRepository......);
-
-            return null;
+            return postulationRepository.getAllByWorkerId(pageable, idWorker);
         }
-        return Collections.emptyList();
+        return Page.empty();
     }
 
     @Override
