@@ -1,8 +1,10 @@
 package com.latam.unamano.service.workerService;
 
+import com.latam.unamano.dto.clientDto.response.GetClient;
 import com.latam.unamano.dto.workerDto.reponse.GetWorker;
 import com.latam.unamano.dto.workerDto.request.WorkerCreateDto;
 import com.latam.unamano.dto.workerDto.request.WorkerUpdateDto;
+import com.latam.unamano.persistence.entities.client.Client;
 import com.latam.unamano.persistence.entities.ocupationEntity.Occupation;
 import com.latam.unamano.persistence.entities.workerEntity.Worker;
 import com.latam.unamano.persistence.repositories.occupationRepository.OccupationRepository;
@@ -112,5 +114,11 @@ public class WorkerService implements WorkerServiceInterface{
     @Override
     public void delete(Long id) {
         workerRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<GetWorker> getByUserId(Long userId) {
+        Optional<Worker> clientOptional = workerRepository.findByUserId(userId);
+        return clientOptional.map(GetWorker::new);
     }
 }

@@ -74,6 +74,12 @@ public class ClientService implements ClientServiceInterface{
     }
 
     @Override
+    public Optional<GetClient> getByUserId(Long userId) {
+        Optional<Client> clientOptional = clientRepository.findByUserId(userId);
+        return clientOptional.map(GetClient::new);
+    }
+
+    @Override
     public void delete(Long id) {
 
     }
