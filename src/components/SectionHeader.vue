@@ -1,7 +1,7 @@
 <template>
   <div class="placeholder"></div>
   <section class="container gx-0">
-    <header>
+    <header class="header">
       <nav class="menu">
         <li class="menu__item" :class="{ hidden: isVisible }">
           <img class="menu__item-logo" src="../assets/logo.svg" />
@@ -143,9 +143,19 @@
     </section>
   </section>
 </template>
+<script setup>
+  import useAuth from '@/stores/auth'
+  const store = useAuth()
 
+  const closeSesion=()=>{
+    store.reset()
+    router.push({ name: 'login' })
+  }
+
+</script>
 <script>
-import router from '@/router'
+  import router from '@/router'
+  
 
 export default {
   data() {
@@ -153,7 +163,8 @@ export default {
       isVisible: false,
       sliderValue: 25 / 16,
       minValue: 20 / 16,
-      maxValue: 30 / 16
+      maxValue: 30 / 16,
+      store: useAuth()
     }
   },
   methods: {
@@ -197,6 +208,7 @@ export default {
       // this.$router.push('/login')
       router.push({ name: 'login' })
     },
+    
     getSidebarStyles() {
       // Determine the route and set gap size accordingly
       const route = this.$route.name
@@ -224,7 +236,7 @@ li {
 
 .placeholder {
   height: 70px;
-  width: 393px;
+  /* width: 393px; */
   background: #fff;
 }
 .container {
@@ -233,7 +245,7 @@ li {
 }
 .menu {
   z-index: 100;
-  width: 393px;
+  /* width: 393px; */
   margin-top: -70px;
   display: flex;
   justify-content: space-between;
@@ -283,6 +295,8 @@ li {
 }
 .sidebar {
   width: 289px;
+  padding: 60.3904px 40.5008px;
+
   background-color: white;
   min-height: 720px;
   overflow-x: visible;
@@ -381,7 +395,7 @@ li {
   margin-bottom: 9px;
 }
 
-.sidebar__button {
+.sidebarbutton {
   color: var(--white, #fff);
   font-family: 'Baloo 2';
   font-size: 20px;
@@ -488,13 +502,5 @@ li {
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-
-
-@media screen and (max-width: 833px) {
-  .sidebar {
-    min-height: 802px;
-    padding: 60.3904px 40.5008px;
-  }
 }
 </style>

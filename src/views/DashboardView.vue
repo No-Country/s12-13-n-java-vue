@@ -1,16 +1,95 @@
 <script setup>
 import SectionHeader from '../components/SectionHeader.vue'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import FooterPage from '@/components/SectionFooter.vue'
 import JobCard from '../components/JobCard.vue'
+import useFormContratador from '@/stores/formContratador'
+import { categorias, currencies } from '../utils/constants'
+import axios from '@/plugins/axios'
+const token = localStorage.getItem('token')
+const headers = {
+  Authorization: `Bearer ${token}`
+}
 import router from '@/router'
   const chat = ()=>{
     router.push({ name: 'chat' })
   }
 
 const date = ref()
+const store = useFormContratador()
+
+const activeItems = ref([false, false, false])
+const isOpen = ref(false)
+
+let taskTitle = ref('')
+let category = ref('')
+let currency = ref('')
+let taskDescription = ref('')
+let taskLocation = ref('')
+let precio = ref(0)
+let cards = ref(null)
+
+// let clientID = ref(0)
+
+const toggleNavItem = (index) => {
+  activeItems.value[index] = !activeItems.value[index]
+}
+
+const openPopup = () => {
+  isOpen.value = true
+}
+
+const closePopup = () => {
+  isOpen.value = false
+}
+
+const onSubmit = async () => {
+  await store.submit(
+    taskTitle.value,
+    taskDescription.value,
+    precio.value,
+    currency.value,
+    [
+      {
+        occupationName: category.value
+      }
+    ],
+    date.value,
+    {
+      id: 1
+    },
+    {
+      street: taskLocation.value
+    }
+  )
+  fetchCards()
+  closePopup()
+}
+
+const fetchCards = async () => {
+  await axios.get('task/published', { headers }).then((response) => {
+    console.log('response:', response.data.content)
+    cards.value = response.data.content.filter((card) => card.id > 15)
+  })
+}
+
+// const fetchClient = async () => {
+//   await axios.get('auth/details', { headers }).then((response) => {
+//     console.log('response:', response.data.content)
+//     cards.value = response.data.content.filter((card) => card.username === 'abuelita')
+//   })
+// }
+
+onMounted(() => {
+  // fetchClient()
+  fetchCards()
+})
+
+const onCardDelete = () => {
+  fetchCards()
+}
 </script>
 <template>
   <main>
@@ -49,16 +128,40 @@ const date = ref()
         </li>
       </ul>
     </nav>
-    <section class="container">
-      <JobCard> </JobCard>
-    </section>
-    <section class="modal-info">
-      <p class="modal-info__text">
-        Crea tu primera publicación y <br />
-        conecta con trabajadores
-      </p>
-      <button class="modal-info__button link" @click="openPopup">Crear publicación</button>
-    </section>
+    <div class="cards-container">
+      <section class="container">
+        <p>Publicaciones activas</p>
+        <div v-if="cards && cards.length" class="tasks-container">
+          <div v-for="card in cards" :key="card.id">
+            <JobCard
+              @onDelete="onCardDelete"
+              :taskTitle="card.taskTitle"
+              :taskDate="card.taskDate.slice(0, 10).replace(/-/g, '/')"
+              :category="card.occupations[0].occupationName"
+              :description="card.description"
+              :price="card.price"
+              :currencyType="card.currencyType"
+              :address="card.address.street"
+              :id="card.id"
+            >
+            </JobCard>
+          </div>
+        </div>
+
+        <div v-else>
+          <!-- Handle the case when cards is null or empty -->
+          No cards available.
+        </div>
+      </section>
+      <section class="modal-info">
+        <p class="modal-info__text" v-if="!cards">
+          Crea tu primera publicación y <br />
+          conecta con trabajadores
+        </p>
+        <button class="modal-info__button link" @click="openPopup">Crear publicación</button>
+      </section>
+    </div>
+
     <section class="section-blog">
       <!-- contenido de la segunda tarjeta -->
     </section>
@@ -71,32 +174,36 @@ const date = ref()
               <img src="../assets/images/close-button-icon.svg" alt="Button Image" />
             </button>
           </div>
-          <form class="form">
+          <form class="form" @submit.prevent="onSubmit({ taskTitle, taskDescription })">
             <div class="form__labelBox">
               <label htmlFor="eventName" class="form__labelText"> Elige el tipo de servicio </label>
               <select
                 class="form__select"
-                type="select"
                 id="eventName"
                 name="eventName"
-                value="Categorias"
-                onChange="{handleInputChange}"
+                v-model="category"
                 required
               >
                 <option class="form__optionText">Categorias</option>
+                <option
+                  class="form__optionText"
+                  v-for="(category, index) in categorias"
+                  :key="index"
+                >
+                  {{ category }}
+                </option>
               </select>
               <img src="../assets/images/shevron.svg" alt="shevron" class="shevron" />
             </div>
             <div class="form__labelBox">
-              <label htmlFor="eventName" class="form__labelText">Título</label>
+              <label htmlFor="taskTitle" class="form__labelText">Título</label>
               <input
                 class="form__input"
-                type="select"
-                id="eventName"
                 name="eventName"
-                onChange="{handleInputChange}"
                 placeholder="Escribe un título"
                 required
+                :value="taskTitle"
+                @input="(e) => (taskTitle = e.target.value)"
               />
             </div>
             <div class="form__labelBox">
@@ -104,39 +211,41 @@ const date = ref()
               <textarea
                 class="form__textarea"
                 type="select"
-                id="eventName"
                 name="eventName"
-                onChange="{handleInputChange}"
+                :value="taskDescription"
+                @input="(e) => (taskDescription = e.target.value)"
                 placeholder="Agrega una descripción con los
 detalles de tu trabajo"
                 required
-              ></textarea>                
+              ></textarea>
             </div>
             <div class="labelBox-container">
               <div class="form__labelBox">
                 <label htmlFor="eventName" class="form__labelText">Precio</label>
                 <input
                   class="form__input"
-                  type="select"
-                  id="eventName"
                   name="eventName"
-                  onChange="{handleInputChange}"
                   placeholder="$"
-                  required
+                  type="number"
+                  :value="precio"
+                  @input="(e) => (precio = Number(e.target.value))"
                 />
               </div>
               <div class="form__labelBox">
                 <label htmlFor="eventName" class="form__labelText">Moneda</label>
                 <select
                   class="form__select select-currency"
-                  type="select"
                   id="eventName"
                   name="eventName"
-                  value="USD"
-                  onChange="{handleInputChange}"
-                  required
+                  v-model="currency"
                 >
-                  <option class="form__optionText">USD</option>
+                  <option
+                    class="form__optionText"
+                    v-for="(currency, index) in currencies"
+                    :key="index"
+                  >
+                    {{ currency }}
+                  </option>
                 </select>
                 <img src="../assets/images/shevron.svg" alt="shevron" class="shevron" />
               </div>
@@ -148,12 +257,10 @@ detalles de tu trabajo"
 
               <input
                 class="form__input input-location"
-                type="select"
-                id="eventName"
                 name="eventName"
-                onChange="{handleInputChange}"
                 placeholder="Ingresa tu dirección"
-                required
+                :value="taskLocation"
+                @input="(e) => (taskLocation = e.target.value)"
               />
             </div>
             <div class="form__labelBox">
@@ -169,30 +276,6 @@ detalles de tu trabajo"
     <FooterPage />
   </main>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      activeItems: [false, false, false],
-      isOpen: false
-    }
-  },
-  methods: {
-    toggleNavItem(index) {
-      this.$set(this.activeItems, index, !this.activeItems[index])
-    },
-    openPopup() {
-      console.log('isOpen:')
-      this.isOpen = true
-    },
-    closePopup() {
-      this.isOpen = false
-    }
-  }
-}
-</script>
-
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Yaldevi:wght@600&display=swap');
 ul,
@@ -258,20 +341,33 @@ li {
   color: var(--blue1, #3960c2);
 }
 .container {
-  background-color: #a9b8de;
   width: 100%;
-  height: 530px;
+  height: 653px;
+  overflow: auto;
+}
+
+::-webkit-scrollbar {
+  height: 0px;
+  width: 1px;
+  border: 0px solid #fff;
+}
+
+.tasks-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cards-container {
+  background-color: #a9b8de;
 }
 .modal-info {
   width: 361px;
   left: 0;
   right: 0;
-
   margin-left: auto;
   margin-right: auto;
-
-  position: absolute;
-  top: 500px;
+  bottom: 40%;
   display: flex;
   padding: 15px 10px;
   flex-direction: column;
@@ -280,7 +376,6 @@ li {
   gap: 25px;
   align-self: stretch;
   border-radius: 6px;
-  background: var(--white, #fff);
 }
 .modal-info__button {
   color: var(--white, #fff);
@@ -307,8 +402,9 @@ li {
 
 .popup {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 391px;
   height: 736px;
   background-color: rgba(0, 0, 0, 0.5);
@@ -451,5 +547,9 @@ li {
 .v-enter-from,
 .v-leave-to {
   transform: translateY(100%);
+}
+
+.z-index--10 {
+  z-index: -10;
 }
 </style>
