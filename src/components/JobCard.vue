@@ -1,7 +1,6 @@
 <script setup></script>
 
 <template>
-  <p>Publicaciones activas</p>
   <section
     class="card"
     :class="{ unexpanded: !isExpanded, expanded: isExpanded, 'z-1000': isExpanded }"

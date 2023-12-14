@@ -110,26 +110,29 @@ onMounted(() => {
         </li>
       </ul>
     </nav>
-    <section class="container">
-      <div v-if="cards && cards.length">
-        <div v-for="card in cards" :key="card.id">
-          <p>{{ card.taskTitle }}</p>
-          <JobCard class="z-index--10"> </JobCard>
+    <div class="cards-container">
+      <section class="container">
+        <p>Publicaciones activas</p>
+        <div v-if="cards && cards.length" class="tasks-container">
+          <div v-for="card in cards" :key="card.id">
+            <JobCard> </JobCard>
+          </div>
         </div>
-      </div>
 
-      <div v-else>
-        <!-- Handle the case when cards is null or empty -->
-        No cards available.
-      </div>
-    </section>
-    <section class="modal-info">
-      <p class="modal-info__text" v-if="!cards">
-        Crea tu primera publicación y <br />
-        conecta con trabajadores
-      </p>
-      <button class="modal-info__button link" @click="openPopup">Crear publicación</button>
-    </section>
+        <div v-else>
+          <!-- Handle the case when cards is null or empty -->
+          No cards available.
+        </div>
+      </section>
+      <section class="modal-info">
+        <p class="modal-info__text" v-if="!cards">
+          Crea tu primera publicación y <br />
+          conecta con trabajadores
+        </p>
+        <button class="modal-info__button link" @click="openPopup">Crear publicación</button>
+      </section>
+    </div>
+
     <section class="section-blog">
       <!-- contenido de la segunda tarjeta -->
     </section>
@@ -309,20 +312,28 @@ li {
   color: var(--blue1, #3960c2);
 }
 .container {
-  background-color: #a9b8de;
   width: 100%;
-  height: 530px;
+  height: 653px;
+  overflow: auto;
+}
+
+.tasks-container {
+  display:flex;
+  flex-direction: column;
+  gap:10px;
+}
+
+.cards-container {
+  background-color: #a9b8de;
+
 }
 .modal-info {
   width: 361px;
   left: 0;
   right: 0;
-
   margin-left: auto;
   margin-right: auto;
-
-  position: fixed;
-  bottom: 10%;
+  bottom: 40%;
   display: flex;
   padding: 15px 10px;
   flex-direction: column;
@@ -331,7 +342,6 @@ li {
   gap: 25px;
   align-self: stretch;
   border-radius: 6px;
-  background: var(--white, #fff);
 }
 .modal-info__button {
   color: var(--white, #fff);
