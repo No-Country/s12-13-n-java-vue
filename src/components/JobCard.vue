@@ -15,6 +15,8 @@ function deleteTask({ id }) {
 
 const props = defineProps({
   taskTitle: String,
+  taskDate: String,
+  category: String,
   id: Number
 })
 </script>
@@ -26,7 +28,7 @@ const props = defineProps({
   >
     <div class="container">
       <div>
-        <h3 class="card__category">Kinesiólogía</h3>
+        <h3 class="card__category">{{ props.category }}</h3>
         <p class="card__title">{{ props.taskTitle }}</p>
       </div>
       <button class="unexpand-button link" @click="expand()" :class="{ hidden: !isExpanded }">
@@ -37,7 +39,7 @@ const props = defineProps({
     <div class="container">
       <div class="data-container" :class="{ container_expanded: isExpanded }">
         <p class="data__title">Fecha:</p>
-        <p class="data__value">08/12/2023</p>
+        <p class="data__value">{{ props.taskDate }}</p>
       </div>
       <div
         class="data-container"
