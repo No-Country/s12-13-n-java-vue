@@ -4,22 +4,21 @@ import { defineStore } from 'pinia'
 const useFormContratador = defineStore('formContratador', {
   state: () => {
     return {
-      token: null,
-      rol: null,
-      feedback: '',
-      feedbackError: ''
+      taskTitle: '',
+      category: '',
+      currency: '',
+      taskDescription: '',
+      taskLocation: ''
     }
   },
 
   actions: {
-    async submit(username, password, role) {
+    async submit(formData) {
       this.reset()
 
       await axios
         .post('task', {
-          username,
-          password,
-          role
+          formData
         })
         .then((response) => {
           console.log('Response', response)

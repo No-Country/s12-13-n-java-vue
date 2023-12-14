@@ -11,10 +11,32 @@ import { categorias, currencies } from '../utils/constants'
 const date = ref()
 const store = useFormContratador()
 
-const eventTitle = ref('')
+const taskTitle = ref('')
+const category = ref('')
+const currency = ref('')
+const taskDescription = ref('')
+const taskLocation = ref('')
+const precio = ref('')
+const date = ref('')
 
 const onSubmit = async () => {
-  await store.submit(eventTitle.value)
+  formData.currency = currency.value
+  formData.category = category.value
+  formData.taskTitle = taskTitle.value
+  formData.taskDescription = taskDescription.value
+  formData.taskLocation = taskLocation.value
+  formData.precio = precio.value
+  formData.date = date.value
+
+  console.log('formData:', formData)
+
+  await store.submit(formData)
+}
+
+const formData = {
+  taskTitle,
+  category,
+  currency
 }
 </script>
 <template>
@@ -76,14 +98,14 @@ const onSubmit = async () => {
               <img src="../assets/images/close-button-icon.svg" alt="Button Image" />
             </button>
           </div>
-          <form class="form" @submit.prevent="onSubmit">
+          <form class="form" @submit.prevent="onSubmit({ taskTitle, taskDescription })">
             <div class="form__labelBox">
               <label htmlFor="eventName" class="form__labelText"> Elige el tipo de servicio </label>
               <select
                 class="form__select"
                 id="eventName"
                 name="eventName"
-                value="Categorias"
+                v-model="category"
                 required
               >
                 <option class="form__optionText">Categorias</option>
@@ -98,15 +120,14 @@ const onSubmit = async () => {
               <img src="../assets/images/shevron.svg" alt="shevron" class="shevron" />
             </div>
             <div class="form__labelBox">
-              <label htmlFor="eventTitle" class="form__labelText">Título</label>
+              <label htmlFor="taskTitle" class="form__labelText">Título</label>
               <input
                 class="form__input"
-                type="select"
-                id="eventTitle"
                 name="eventName"
                 placeholder="Escribe un título"
                 required
-                v-model="eventTitle"
+                :value="taskTitle"
+                @input="(e) => (taskTitle = e.target.value)"
               />
             </div>
             <div class="form__labelBox">
@@ -114,9 +135,9 @@ const onSubmit = async () => {
               <textarea
                 class="form__textarea"
                 type="select"
-                id="eventName"
                 name="eventName"
-                onChange="{handleInputChange}"
+                :value="taskDescription"
+                @input="(e) => (taskDescription = e.target.value)"
                 placeholder="Agrega una descripción con los
 detalles de tu trabajo"
                 required
@@ -140,7 +161,7 @@ detalles de tu trabajo"
                   class="form__select select-currency"
                   id="eventName"
                   name="eventName"
-                  value="USD"
+                  v-model="currency"
                 >
                   <option
                     class="form__optionText"
@@ -161,10 +182,10 @@ detalles de tu trabajo"
               <input
                 class="form__input input-location"
                 type="select"
-                id="eventName"
                 name="eventName"
-                onChange="{handleInputChange}"
                 placeholder="Ingresa tu dirección"
+                :value="taskLocation"
+                @input="(e) => (taskLocation = e.target.value)"
               />
             </div>
             <div class="form__labelBox">
@@ -183,10 +204,13 @@ detalles de tu trabajo"
 
 <script>
 export default {
+  props: ['onSubmit'],
   data() {
     return {
       activeItems: [false, false, false],
-      isOpen: false
+      isOpen: false,
+      taskTitle: '',
+      taskDescription: ''
     }
   },
   methods: {
