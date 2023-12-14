@@ -1,7 +1,7 @@
 <template>
   <div class="placeholder"></div>
   <section class="container gx-0">
-    <header>
+    <header class="header">
       <nav class="menu">
         <li class="menu__item" :class="{ hidden: isVisible }">
           <img class="menu__item-logo" src="../assets/logo.svg" />
@@ -228,7 +228,7 @@ li {
 
 .placeholder {
   height: 70px;
-  width: 393px;
+  /* width: 393px; */
   background: #fff;
 }
 .container {
@@ -237,7 +237,7 @@ li {
 }
 .menu {
   z-index: 100;
-  width: 393px;
+  /* width: 393px; */
   margin-top: -70px;
   display: flex;
   justify-content: space-between;

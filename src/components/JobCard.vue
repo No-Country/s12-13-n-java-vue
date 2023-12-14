@@ -1,4 +1,23 @@
-<script setup></script>
+<script setup>
+import axios from '@/plugins/axios'
+const token = localStorage.getItem('token')
+const headers = {
+  Authorization: `Bearer ${token}`
+}
+
+function deleteTask({ id }) {
+  ;async () => {
+    await axios.delete(`task/${id}`, { headers }).then((response) => {
+      console.log('response:', response)
+    })
+  }
+}
+
+const props = defineProps({
+  taskTitle: String,
+  id: Number
+})
+</script>
 
 <template>
   <section
@@ -8,7 +27,7 @@
     <div class="container">
       <div>
         <h3 class="card__category">Kinesiólogía</h3>
-        <p class="card__title">{{ taskTitle }}</p>
+        <p class="card__title">{{ props.taskTitle }}</p>
       </div>
       <button class="unexpand-button link" @click="expand()" :class="{ hidden: !isExpanded }">
         <img src="../assets/images/unexpand-icon.svg" alt="unexpand" />
@@ -59,6 +78,7 @@
         </p>
         <div class="container_expanded buttons-container" :class="{ hidden: !isExpanded }">
           <button class="edit-button link">Editar</button>
+          <!-- <button class="delete-button link" @click="deleteTask({ id })">Del</button> -->
           <button class="applications-button link">
             <div class="users-container">
               <span>3</span>
@@ -77,9 +97,10 @@
 
 <script>
 export default {
-  props: {
-    taskTitle: String
-  },
+  // props: {
+  //   taskTitle: String,
+  //   id: Number
+  // },
   data() {
     return {
       isExpanded: false
@@ -116,6 +137,9 @@ p {
   animation: expand 0.5s ease;
 }
 
+.description-text {
+  width: fit-content;
+}
 .card.unexpanded {
   min-height: 134px;
   animation: unexpand 0.5s ease;
@@ -200,6 +224,14 @@ p {
   width: 100px;
 }
 
+.delete-button {
+  border: 2px solid var(--delete-error, #e20c0c);
+  background-color: transparent;
+  color: var(--delete-error, #e20c0c);
+  font-family: 'Baloo 2';
+  font-weight: 700;
+  padding: 10px;
+}
 .applications-button {
   background: var(--blue1, #1d3d8f);
   color: var(--white, #fff);
