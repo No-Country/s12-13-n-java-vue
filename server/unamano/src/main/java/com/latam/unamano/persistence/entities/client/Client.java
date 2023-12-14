@@ -1,5 +1,7 @@
 package com.latam.unamano.persistence.entities.client;
 
+import com.latam.unamano.persistence.entities.chatMessage.ChatMessage;
+import com.latam.unamano.persistence.entities.chatRoom.ChatRoom;
 import com.latam.unamano.persistence.entities.task.Task;
 import com.latam.unamano.persistence.entities.user.User;
 import jakarta.persistence.*;
@@ -24,7 +26,8 @@ public class Client {
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Task> requestedTasks;
-
+    @OneToMany(mappedBy = "client")
+    private List<ChatRoom> chatMessagesAsClient;
 }
 
 
