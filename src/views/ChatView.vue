@@ -1,13 +1,12 @@
 <script setup>
 import SectionHeader from '../components/SectionHeader.vue'
 import { ref } from 'vue'
-import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import FooterPage from '@/components/SectionFooter.vue'
-import JobCard from '../components/JobCard.vue'
+import ChatCard from '../components/ChatCard.vue'
 import router from '@/router'
-  const chat = ()=>{
-    router.push({ name: 'chat' })
+  const dashboard = ()=>{
+    router.push({ name: 'dashboard' })
   }
 
 const date = ref()
@@ -17,7 +16,7 @@ const date = ref()
     <SectionHeader />
     <nav class="nav">
       <ul class="nav__list">
-        <li class="nav__item link" @click="toggleNavItem">
+        <li class="nav__item link" @click="toggleNavItem" @click.prevent="dashboard">
           <div class="nav__item-container">
             <img
               class="nav__item-image"
@@ -27,7 +26,7 @@ const date = ref()
             <p class="nav__item-text" :class="{ active: isActive }">Inicio</p>
           </div>
         </li>
-        <li class="nav__item link" @click="toggleNavItem" @click.prevent="chat">  
+        <li class="nav__item link" @click="toggleNavItem">
           <div class="nav__item-container">
             <img
               class="nav__item-image"
@@ -50,14 +49,7 @@ const date = ref()
       </ul>
     </nav>
     <section class="container">
-      <JobCard> </JobCard>
-    </section>
-    <section class="modal-info">
-      <p class="modal-info__text">
-        Crea tu primera publicación y <br />
-        conecta con trabajadores
-      </p>
-      <button class="modal-info__button link" @click="openPopup">Crear publicación</button>
+        <button @click="openPopup"><ChatCard @click="openPopup"/> </button>
     </section>
     <section class="section-blog">
       <!-- contenido de la segunda tarjeta -->
@@ -261,48 +253,6 @@ li {
   background-color: #a9b8de;
   width: 100%;
   height: 530px;
-}
-.modal-info {
-  width: 361px;
-  left: 0;
-  right: 0;
-
-  margin-left: auto;
-  margin-right: auto;
-
-  position: absolute;
-  top: 500px;
-  display: flex;
-  padding: 15px 10px;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 25px;
-  align-self: stretch;
-  border-radius: 6px;
-  background: var(--white, #fff);
-}
-.modal-info__button {
-  color: var(--white, #fff);
-  font-family: 'Baloo 2';
-  font-size: 20px;
-  font-weight: 700;
-  display: flex;
-  height: 51px;
-  padding: 10px;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  border-radius: 6px;
-  background: var(--blue1, #1d3d8f);
-  border: none;
-}
-
-.modal-info__text {
-  text-align: center;
-  font-family: 'Baloo 2';
-  font-size: 20px;
-  font-weight: 600;
 }
 
 .popup {
