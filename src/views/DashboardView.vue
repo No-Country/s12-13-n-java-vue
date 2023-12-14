@@ -1,12 +1,17 @@
 <script setup>
 import SectionHeader from '../components/SectionHeader.vue'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import FooterPage from '@/components/SectionFooter.vue'
 import JobCard from '../components/JobCard.vue'
 import useFormContratador from '@/stores/formContratador'
 import { categorias, currencies } from '../utils/constants'
+import axios from '@/plugins/axios'
+const token = localStorage.getItem('token')
+const headers = {
+  Authorization: `Bearer ${token}`
+}
 
 const date = ref()
 const store = useFormContratador()
@@ -20,6 +25,9 @@ let currency = ref('')
 let taskDescription = ref('')
 let taskLocation = ref('')
 let precio = ref(0)
+let cards = ref(null)
+
+// let clientID = ref(0)
 
 const toggleNavItem = (index) => {
   activeItems.value[index] = !activeItems.value[index]
@@ -52,7 +60,31 @@ const onSubmit = async () => {
       street: taskLocation.value
     }
   )
+  fetchCards()
   closePopup()
+}
+
+const fetchCards = async () => {
+  await axios.get('task/published', { headers }).then((response) => {
+    console.log('response:', response.data.content)
+    cards.value = response.data.content.filter((card) => card.id > 15)
+  })
+}
+
+// const fetchClient = async () => {
+//   await axios.get('auth/details', { headers }).then((response) => {
+//     console.log('response:', response.data.content)
+//     cards.value = response.data.content.filter((card) => card.username === 'abuelita')
+//   })
+// }
+
+onMounted(() => {
+  // fetchClient()
+  fetchCards()
+})
+
+const onCardDelete = () => {
+  fetchCards()
 }
 </script>
 <template>
@@ -92,16 +124,40 @@ const onSubmit = async () => {
         </li>
       </ul>
     </nav>
-    <section class="container">
-      <JobCard> </JobCard>
-    </section>
-    <section class="modal-info">
-      <p class="modal-info__text">
-        Crea tu primera publicación y <br />
-        conecta con trabajadores
-      </p>
-      <button class="modal-info__button link" @click="openPopup">Crear publicación</button>
-    </section>
+    <div class="cards-container">
+      <section class="container">
+        <p>Publicaciones activas</p>
+        <div v-if="cards && cards.length" class="tasks-container">
+          <div v-for="card in cards" :key="card.id">
+            <JobCard
+              @onDelete="onCardDelete"
+              :taskTitle="card.taskTitle"
+              :taskDate="card.taskDate.slice(0, 10).replace(/-/g, '/')"
+              :category="card.occupations[0].occupationName"
+              :description="card.description"
+              :price="card.price"
+              :currencyType="card.currencyType"
+              :address="card.address.street"
+              :id="card.id"
+            >
+            </JobCard>
+          </div>
+        </div>
+
+        <div v-else>
+          <!-- Handle the case when cards is null or empty -->
+          No cards available.
+        </div>
+      </section>
+      <section class="modal-info">
+        <p class="modal-info__text" v-if="!cards">
+          Crea tu primera publicación y <br />
+          conecta con trabajadores
+        </p>
+        <button class="modal-info__button link" @click="openPopup">Crear publicación</button>
+      </section>
+    </div>
+
     <section class="section-blog">
       <!-- contenido de la segunda tarjeta -->
     </section>
@@ -281,20 +337,33 @@ li {
   color: var(--blue1, #3960c2);
 }
 .container {
-  background-color: #a9b8de;
   width: 100%;
-  height: 530px;
+  height: 653px;
+  overflow: auto;
+}
+
+::-webkit-scrollbar {
+  height: 0px;
+  width: 1px;
+  border: 0px solid #fff;
+}
+
+.tasks-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cards-container {
+  background-color: #a9b8de;
 }
 .modal-info {
   width: 361px;
   left: 0;
   right: 0;
-
   margin-left: auto;
   margin-right: auto;
-
-  position: absolute;
-  top: 500px;
+  bottom: 40%;
   display: flex;
   padding: 15px 10px;
   flex-direction: column;
@@ -303,7 +372,6 @@ li {
   gap: 25px;
   align-self: stretch;
   border-radius: 6px;
-  background: var(--white, #fff);
 }
 .modal-info__button {
   color: var(--white, #fff);
@@ -330,8 +398,9 @@ li {
 
 .popup {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 391px;
   height: 736px;
   background-color: rgba(0, 0, 0, 0.5);
@@ -474,5 +543,9 @@ li {
 .v-enter-from,
 .v-leave-to {
   transform: translateY(100%);
+}
+
+.z-index--10 {
+  z-index: -10;
 }
 </style>
