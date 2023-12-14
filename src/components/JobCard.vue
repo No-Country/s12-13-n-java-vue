@@ -21,15 +21,38 @@
         <p class="data__title">Fecha:</p>
         <p class="data__value">08/12/2023</p>
       </div>
-      <div class="data-container" :class="{ container_expanded: isExpanded, hidden: !isExpanded }">
+      <div
+        class="data-container"
+        :class="{
+          container_expanded: isExpanded,
+          hidden: !isExpanded,
+          container_unrevealed: !isExpanded,
+          container_revealed: isExpanded
+        }"
+      >
         <p class="data__title">Dirección:</p>
         <p class="data__value">Bogotá, Colombia</p>
       </div>
-      <div class="data-container" :class="{ container_expanded: isExpanded, hidden: !isExpanded }">
+      <div
+        class="data-container"
+        :class="{
+          container_expanded: isExpanded,
+          hidden: !isExpanded,
+          container_unrevealed: !isExpanded,
+          container_revealed: isExpanded
+        }"
+      >
         <p class="data__title">Precio:</p>
         <p class="data__value">30 USD</p>
       </div>
-      <div class="description-container" :class="{ hidden: !isExpanded }">
+      <div
+        class="description-container"
+        :class="{
+          hidden: !isExpanded,
+          container_unrevealed: !isExpanded,
+          container_revealed: isExpanded
+        }"
+      >
         <p class="data__title">Descripción:</p>
         <p class="data__value description-text">
           Necesito 3 sesiones semanales a domicilio durante las tardes para tratar una lesión a la
@@ -94,6 +117,15 @@ p {
 .card.unexpanded {
   min-height: 134px;
   animation: unexpand 0.5s ease;
+}
+
+.container_unrevealed {
+  opacity: 0;
+  animation: unreveal 0.5s ease;
+}
+.container_revealed {
+  opacity: 1;
+  animation: reveal 0.7s ease;
 }
 .card__category {
   color: var(--blue1, #1d3d8f);
@@ -212,15 +244,32 @@ p {
     min-height: 134px;
   }
   100% {
-    min-height: 340px;
+    min-height: 300px;
   }
 }
 @keyframes unexpand {
   0% {
-    min-height: 340px;
+    min-height: 300px;
   }
   100% {
     min-height: 134px;
+  }
+}
+
+@keyframes reveal {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes unreveal {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 </style>

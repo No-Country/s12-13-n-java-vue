@@ -295,6 +295,8 @@ li {
 }
 .sidebar {
   width: 289px;
+  padding: 60.3904px 40.5008px;
+
   background-color: white;
   min-height: 720px;
   overflow-x: visible;
@@ -393,7 +395,7 @@ li {
   margin-bottom: 9px;
 }
 
-.sidebar__button {
+.sidebarbutton {
   color: var(--white, #fff);
   font-family: 'Baloo 2';
   font-size: 20px;
@@ -500,13 +502,5 @@ li {
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-
-
-@media screen and (max-width: 833px) {
-  .sidebar {
-    min-height: 802px;
-    padding: 60.3904px 40.5008px;
-  }
 }
 </style>
