@@ -382,8 +382,9 @@ li {
 
 .popup {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 391px;
   height: 736px;
   background-color: rgba(0, 0, 0, 0.5);
