@@ -129,6 +129,10 @@ onMounted(() => {
               :taskTitle="card.taskTitle"
               :taskDate="card.taskDate.slice(0, 10).replace(/-/g, '/')"
               :category="card.occupations[0].occupationName"
+              :description="card.description"
+              :price="card.price"
+              :currencyType="card.currencyType"
+              :address="card.street"
             >
             </JobCard>
           </div>

@@ -17,6 +17,10 @@ const props = defineProps({
   taskTitle: String,
   taskDate: String,
   category: String,
+  description: String,
+  address: String,
+  price: String,
+  currencyType: String,
   id: Number
 })
 </script>
@@ -51,7 +55,7 @@ const props = defineProps({
         }"
       >
         <p class="data__title">Dirección:</p>
-        <p class="data__value">Bogotá, Colombia</p>
+        <p class="data__value">{{ props.address }}</p>
       </div>
       <div
         class="data-container"
@@ -63,7 +67,7 @@ const props = defineProps({
         }"
       >
         <p class="data__title">Precio:</p>
-        <p class="data__value">30 USD</p>
+        <p class="data__value">{{ props.price }} {{ props.currencyType }}</p>
       </div>
       <div
         class="description-container"
@@ -75,8 +79,7 @@ const props = defineProps({
       >
         <p class="data__title">Descripción:</p>
         <p class="data__value description-text">
-          Necesito 3 sesiones semanales a domicilio durante las tardes para tratar una lesión a la
-          rodilla. Precio sugerido por sesión.
+          {{ props.description }}
         </p>
         <div class="container_expanded buttons-container" :class="{ hidden: !isExpanded }">
           <button class="edit-button link">Editar</button>
