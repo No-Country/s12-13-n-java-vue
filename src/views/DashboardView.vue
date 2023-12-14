@@ -7,6 +7,11 @@ import FooterPage from '@/components/SectionFooter.vue'
 import JobCard from '../components/JobCard.vue'
 import useFormContratador from '@/stores/formContratador'
 import { categorias, currencies } from '../utils/constants'
+import axios from '@/plugins/axios'
+const token = localStorage.getItem('token')
+const headers = {
+  Authorization: `Bearer ${token}`
+}
 
 const date = ref()
 const store = useFormContratador()
@@ -20,6 +25,10 @@ let currency = ref('')
 let taskDescription = ref('')
 let taskLocation = ref('')
 let precio = ref(0)
+
+let cards = ref([])
+console.log('cards:', cards)
+console.log('cards:', cards.value)
 
 const toggleNavItem = (index) => {
   activeItems.value[index] = !activeItems.value[index]
@@ -54,6 +63,27 @@ const onSubmit = async () => {
   )
   closePopup()
 }
+
+const fetchCards = () => {
+  axios
+    .get('task/published', { headers })
+    .then((response) => {
+      console.log('response:', response.data.content)
+      cards.value = response.data.content.map((card) => {
+        return {
+          adderes: card.address.street,
+          description: card.description,
+          taskDate: card.taskDate,
+          price: card.price,
+          taskTitle: card.taskTitle
+        }
+
+      })
+    })
+    .then((data) => console.log(data))
+}
+
+fetchCards()
 </script>
 <template>
   <main>
