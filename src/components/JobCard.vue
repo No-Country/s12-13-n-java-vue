@@ -30,6 +30,7 @@ const props = defineProps({
     class="card"
     :class="{ unexpanded: !isExpanded, expanded: isExpanded, 'z-1000': isExpanded }"
   >
+    <button type="button" className="eventButtonTrash" @click="deleteTask(id)"></button>
     <div class="container">
       <div>
         <h3 class="card__category">{{ props.category }}</h3>
@@ -124,6 +125,19 @@ h3,
 p {
   margin: 0;
   padding: 0;
+}
+
+.eventButtonTrash {
+  background: url(../assets/images/trashbag-icon.svg);
+  background-size: contain;
+  width: 20px;
+  height: 20px;
+  appearance: auto;
+  border: initial;
+  outline: initial;
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
 }
 
 .card {
