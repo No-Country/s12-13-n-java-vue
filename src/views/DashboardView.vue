@@ -27,7 +27,7 @@ let taskLocation = ref('')
 let precio = ref(0)
 let cards = ref(null)
 
-let clientID = ref(0)
+// let clientID = ref(0)
 
 const toggleNavItem = (index) => {
   activeItems.value[index] = !activeItems.value[index]
@@ -60,25 +60,26 @@ const onSubmit = async () => {
       street: taskLocation.value
     }
   )
+  fetchCards()
   closePopup()
 }
 
 const fetchCards = async () => {
   await axios.get('task/published', { headers }).then((response) => {
     console.log('response:', response.data.content)
-    cards.value = response.data.content.filter((card) => card.id === 2)
+    cards.value = response.data.content.filter((card) => card.id > 15)
   })
 }
 
-const fetchClient = async () => {
-  await axios.get('auth/details', { headers }).then((response) => {
-    console.log('response:', response.data.content)
-    cards.value = response.data.content.filter((card) => card.username === 'abuelita')
-  })
-}
+// const fetchClient = async () => {
+//   await axios.get('auth/details', { headers }).then((response) => {
+//     console.log('response:', response.data.content)
+//     cards.value = response.data.content.filter((card) => card.username === 'abuelita')
+//   })
+// }
 
 onMounted(() => {
-  fetchClient()
+  // fetchClient()
   fetchCards()
 })
 </script>
@@ -124,7 +125,7 @@ onMounted(() => {
         <p>Publicaciones activas</p>
         <div v-if="cards && cards.length" class="tasks-container">
           <div v-for="card in cards" :key="card.id">
-            <JobCard> </JobCard>
+            <JobCard :taskTitle="card.taskTitle"> </JobCard>
           </div>
         </div>
 

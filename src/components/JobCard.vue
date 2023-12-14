@@ -8,7 +8,7 @@
     <div class="container">
       <div>
         <h3 class="card__category">Kinesiólogía</h3>
-        <p class="card__title">Sesiones semanales</p>
+        <p class="card__title">{{ taskTitle }}</p>
       </div>
       <button class="unexpand-button link" @click="expand()" :class="{ hidden: !isExpanded }">
         <img src="../assets/images/unexpand-icon.svg" alt="unexpand" />
@@ -77,6 +77,9 @@
 
 <script>
 export default {
+  props: {
+    taskTitle: String
+  },
   data() {
     return {
       isExpanded: false
