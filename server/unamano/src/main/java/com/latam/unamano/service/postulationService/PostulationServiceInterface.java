@@ -1,13 +1,14 @@
 package com.latam.unamano.service.postulationService;
 
+import com.latam.unamano.dto.postulationDto.request.AcceptPostulation;
 import com.latam.unamano.dto.postulationDto.request.CreatePostulation;
 import com.latam.unamano.dto.postulationDto.request.UpdatePostulation;
 import com.latam.unamano.dto.postulationDto.response.PostulationResponse;
+import com.latam.unamano.dto.task.TaskDTO;
 import com.latam.unamano.persistence.entities.postulationEntity.Postulation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface PostulationServiceInterface {
@@ -20,4 +21,6 @@ public interface PostulationServiceInterface {
     void delete(Long id);
 
     Page<PostulationResponse> getPostulationsByTaskId(Pageable pageable, Long idTask);
+
+    TaskDTO acceptPostulation(AcceptPostulation idPostulation);
 }

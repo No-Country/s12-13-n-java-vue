@@ -2,18 +2,17 @@ package com.latam.unamano.controller.postulationController;
 
 import com.latam.unamano.commons.controller.GenericRestController;
 import com.latam.unamano.commons.dto.response.CustomResponse;
+import com.latam.unamano.dto.postulationDto.request.AcceptPostulation;
 import com.latam.unamano.dto.postulationDto.request.CreatePostulation;
 import com.latam.unamano.dto.postulationDto.request.UpdatePostulation;
 import com.latam.unamano.dto.postulationDto.response.PostulationResponse;
+import com.latam.unamano.dto.task.TaskDTO;
 import com.latam.unamano.persistence.entities.postulationEntity.Postulation;
 import com.latam.unamano.service.postulationService.PostulationServiceInterface;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.Optional;
@@ -74,5 +73,9 @@ public class PostulationControllerImp extends GenericRestController implements P
     @GetMapping("task_postulations/{idTask}")
     public Page<PostulationResponse> getPostulationsByTaskId(Pageable pageable, @PathVariable Long idTask){
         return postulationServiceInterface.getPostulationsByTaskId(pageable, idTask);
+    }
+    @PutMapping("accept_postulation/")
+    public TaskDTO acceptPostulation(@RequestBody AcceptPostulation acceptPostulation){
+        return postulationServiceInterface.acceptPostulation(acceptPostulation);
     }
 }

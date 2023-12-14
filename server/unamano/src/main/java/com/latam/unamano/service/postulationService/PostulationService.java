@@ -1,8 +1,11 @@
 package com.latam.unamano.service.postulationService;
 
+import com.latam.unamano.dto.postulationDto.request.AcceptPostulation;
 import com.latam.unamano.dto.postulationDto.request.CreatePostulation;
 import com.latam.unamano.dto.postulationDto.request.UpdatePostulation;
 import com.latam.unamano.dto.postulationDto.response.PostulationResponse;
+import com.latam.unamano.dto.task.TaskDTO;
+import com.latam.unamano.dto.task.TaskMapper;
 import com.latam.unamano.persistence.entities.postulationEntity.Postulation;
 import com.latam.unamano.persistence.entities.task.Task;
 import com.latam.unamano.persistence.entities.workerEntity.Worker;
@@ -10,13 +13,13 @@ import com.latam.unamano.persistence.repositories.postulationRepository.Postulat
 import com.latam.unamano.persistence.repositories.task.TaskRepository;
 import com.latam.unamano.persistence.repositories.workerRepository.WorkerRepository;
 import com.latam.unamano.utils.PostulationStatus;
+import com.latam.unamano.utils.TaskStatus;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -108,6 +111,29 @@ public class PostulationService implements PostulationServiceInterface{
             return postulationRepository.getAllByTaskId(pageable, idTask).map(PostulationResponse::new);
         }catch (Exception e){
             throw new EntityNotFoundException("No existe una tarea con el id " + idTask);
+        }
+
+    }
+
+    @Override
+    public TaskDTO acceptPostulation(AcceptPostulation acceptPostulation) {
+        try{
+            List<Postulation> postulations = postulationRepository.getAllByTaskId(acceptPostulation.task_id());
+            for (Postulation p: postulations) {
+                if (p.getId().equals(acceptPostulation.postulation_id())){
+                    p.setStatus(PostulationStatus.APPROVED);
+                } else {
+                    p.setStatus(PostulationStatus.CANCELED);
+                }
+                postulationRepository.save(p);
+            }
+            Task task = taskRepository.findById(acceptPostulation.task_id()).get();
+            task.setStatus(TaskStatus.INPROGRESS);
+            taskRepository.save(task);
+            return TaskMapper.taskToTaskDTO(task);
+        }catch (Exception e){
+            throw new EntityNotFoundException("Error en el ingreso de datos." +
+                    "No existe una tarea o una postulación con los id ingresados");
         }
 
     }
