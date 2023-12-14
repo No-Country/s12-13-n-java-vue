@@ -1,3 +1,4 @@
+import useAuth from '@/stores/auth'
 import { createRouter, createWebHistory } from 'vue-router'
 import DashboardView from '../views/DashboardView.vue'
 import HomeView from '../views/HomeView.vue'
@@ -7,22 +8,28 @@ const routes = [
  {
       path: '/login',
       name: 'login',
-      component: LoginView
+      component: LoginView,
+       meta: {
+        requereAuth: false
+      },
     },
 
     {
       path: '/dashboard',
       name: 'dashboard',
       component: DashboardView,
-     /*  meta: {
+      meta: {
         requereAuth: true
-      }, */
+      },
     },
 
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+       meta: {
+        requereAuth: false
+      },
     }
 ]
 
@@ -31,7 +38,7 @@ const router = createRouter({
   routes
 })
 
-/* router.beforeEach((to, from, next)=>{
+router.beforeEach((to, from, next)=>{
 
   const auth = useAuth() 
   const isAuth = auth.token
@@ -42,6 +49,6 @@ const router = createRouter({
     next()
   }
   
-}) */
+})
 
 export default router
