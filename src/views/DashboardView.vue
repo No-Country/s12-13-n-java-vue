@@ -132,7 +132,7 @@ onMounted(() => {
               :description="card.description"
               :price="card.price"
               :currencyType="card.currencyType"
-              :address="card.street"
+              :address="card.address.street"
             >
             </JobCard>
           </div>
