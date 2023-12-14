@@ -1,8 +1,14 @@
 <template>
     <main>
         <!--mobilebar-->
-        <div class="referencias">
-            <img src="../assets/images/iconosmobilebar.svg" alt="frecuencia, wifi, bateria">
+        <div>
+            <div>
+                <img src="../assets/images/12_19.png" alt="hora">
+            </div>   
+            
+            <div class="referencias">
+                <img src="../assets/images/iconosmobilebar.svg" alt="frecuencia, wifi, bateria">
+            </div>
         </div>
         <!--navbar-->
         <div>
@@ -27,34 +33,67 @@
             <img src="../assets/images/iconocalendario.png" alt="ícono calendario">
         </div>
 
-        <div>
-            <h3>Publicaciones activas</h3>
-        </div>
-        <!--Card trabajador-->
-        <div class="accordion" id="accordionExample">
-            <div class="accordion-item">
-                    <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        <strong>Kinesiología</strong>
-                    </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <strong><h4>Sesiones semanales</h4></strong> 
-                        <p v-bind:style="{'justify-content': alineacion, 'align-items':alineacion,'display': inline}">8/12/2023</p>
-                        <ul>
-                            <div><strong>Fecha:</strong></div><div class="referencias">8/12/2023</div>
-                            <div><strong>Dirección:</strong></div> <div class="referencias">Bogotá, Colombia</div>
-                            <div><strong>Precio:</strong></div> <div class="referencias">30 USD</div>
-                            <div><strong>Descripción:</strong></div>
-                            <div>
-                                <p>Necesito tres sesiones semanales a domicilio durante las tardes para tratar una lesión a la rodilla. Precio sugerido por sesión.</p>
-                            </div>
-                        </ul>
-                    </div>
-                    </div>
+        <section class="fondo-card">
+            <div>
+                <h3>Publicaciones activas</h3>
             </div>
-        </div>
+            <!--Card trabajador-->
+            <section>
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                            <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <div>
+                                    <strong><p class="kinesiologia">Kinesiología</p></strong>
+                                </div>
+                            </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div>
+                                    <div>
+                                        <strong><h4>Sesiones semanales</h4></strong>
+                                    </div> 
+                                    <div>
+                                        <div class="perfil-florencia">
+                                            <img src="../assets/images/contratadoraflorenciar.png" alt="contratadora">
+                                            <div class="info-florencia">
+                                                <p><strong>Florencia R.</strong></p>
+                                                <p class="contratador">Contratador</p>
+                                            </div>
+                                        </div>  
+                                        <div class="valoracion">  
+                                            <div class="estrellas">
+                                                <img src="../assets/images/estrellacompleta.svg" alt="estrella completa">
+                                                <img src="../assets/images/estrellacompleta.svg" alt="estrella completa">
+                                                <img src="../assets/images/estrellacompleta.svg" alt="estrella completa">
+                                                <img src="../assets/images/estrellacompleta.svg" alt="estrella completa">
+                                                <img src="../assets/images/mediaestrella.svg" alt="media estrella">
+                                                <img src="../assets/images/4.5calificacion.svg" alt="4.5">
+                                            </div>
+                                            <div class="calificaciones">
+                                                <img src="../assets/images/16 calificaciones.svg" alt="16 calificaciones">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>    
+                                <ul>
+                                    <div><strong>Fecha:<br class="referencias">8/12/2023</strong></div>
+                                    <div><strong>Dirección:<br class="referencias">Bogotá, Colombia</strong></div>
+                                    <div><strong>Precio:<br class="referencias">30 USD</strong></div>
+                                    <div><strong>Descripción:</strong></div>
+                                    <div>
+                                        <div class="descripcion">
+                                            <p>Necesito tres sesiones semanales a domicilio <br> durante las tardes para tratar una lesión a <br> la rodilla. Precio sugerido por sesión.</p>
+                                        </div>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
 
         <!--<li class="nav__item link" @click="toggleNavItem">
           <div class="nav__item-container">
@@ -67,29 +106,30 @@
           </div>
         </li>-->
             
-        <!--footer-->    
-        <div class="container-description ">
-    
-            <h3 class="mb-3">REDES</h3>
+        <!--footer-->   
+        <section class="fondo-card"> 
+            <div class="container-description ">
+        
+                <h3 class="mb-3">REDES</h3>
 
-            <div class="mb-3">
-                <v-icon class="me-3" fill="white" scale="1.5" name="ri-facebook-box-line" />
-                <v-icon class="me-3" fill="white" scale="1.5" name="si-instagram" />
-                <v-icon class="me-3" fill="white" scale="1.5" name="co-tiktok" />
-                <v-icon fill="white" scale="1.5" name="ri-twitter-line" />
-            </div>
+                <div class="mb-3">
+                    <v-icon class="me-3" fill="white" scale="1.5" name="ri-facebook-box-line" />
+                    <v-icon class="me-3" fill="white" scale="1.5" name="si-instagram" />
+                    <v-icon class="me-3" fill="white" scale="1.5" name="co-tiktok" />
+                    <v-icon fill="white" scale="1.5" name="ri-twitter-line" />
+                </div>
 
-            <div class="foot">
-                <small style="color: #fff;">copyright © 2023 unamano</small>
-                <small style="color: #fff;"> seleccionado 12</small>
+                <div class="foot">
+                    <small style="color: #fff;">copyright © 2023 unamano</small>
+                    <small style="color: #fff;"> seleccionado 12</small>
+                </div>
             </div>
-        </div>
+        </section>
     </main>        
 </template>
 
 <script lang="js" setup>
 import {ref} from 'vue'
-let alineacion = ref('right')
 /*import Footer from '../components/Footer.vue';
 import SectionHeader from '../components/SectionHeader.vue';
 import CardTrabajador from '../components/CardTrabajador.vue';
@@ -116,11 +156,58 @@ import {ref} from 'vue'*/
     justify-content: right;
 }
 
+.descripcion{
+    text-align: justify;
+    text-align-last: justify;
+    line-height: 1.5;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.kinesiologia{
+    color:#1D3D8F;
+    text-decoration: solid;
+}
+
+.perfil-florencia{
+    display:flex;
+    align-items: center;
+    background-color: violet;
+}
+
+.info-florencia{
+    margin-right: auto;
+    background-color: yellow;
+}
+
+.valoracion{
+    display: flex;
+    flex-direction: column;
+    align-items:flex-end;
+    background-color: orange;
+}
+
+.estrellas{
+    background-color: red;
+}
+
+.calificaciones{
+    margin-left: auto;
+    background-color: green;
+}
+
+.contratador{
+    color:#149ED7;
+}
+
+.fondo-card{
+    background-color: #D8DFF2;
+}
+
 .container-description h3 {
     color: #fff;
     margin-top: 48px;
     font-size: 20px;
-
   }
  
   .container-description {
