@@ -7,8 +7,11 @@ import com.latam.unamano.dto.workerDto.request.WorkerCreateDto;
 import com.latam.unamano.dto.workerDto.request.WorkerUpdateDto;
 
 import com.latam.unamano.service.workerService.WorkerServiceInterface;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -61,4 +64,10 @@ public class WorkerControllerImpl extends GenericRestController implements Worke
         workerServiceInterface.delete(id);
         return ok(null,DELETED_SUCCESSFULLY,REQUEST_WORKER);
     }
+    @GetMapping("/data")
+    @Secured("ROLE_WORKER")
+    public GetWorker getWorkerData( HttpServletRequest request){
+        return workerServiceInterface.getWorkerData(request);
+    }
+
 }

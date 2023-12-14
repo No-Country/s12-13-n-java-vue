@@ -2,6 +2,7 @@ package com.latam.unamano.service.clientService;
 
 import com.latam.unamano.dto.clientDto.request.ClientCreateDto;
 import com.latam.unamano.dto.clientDto.response.GetClient;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 
 import java.util.Optional;
@@ -14,4 +15,6 @@ public interface ClientServiceInterface {
     Optional<GetClient> update(ClientCreateDto clientCreateDto);
 
     void delete(Long id);
+
+    GetClient getClientData(HttpServletRequest request);
 }
