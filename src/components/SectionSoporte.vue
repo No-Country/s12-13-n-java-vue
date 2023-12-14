@@ -1,4 +1,35 @@
-<script setup></script>
+<script setup>
+  import { ref } from 'vue'
+  const name = ref('')
+  const msj = ref('')
+  const visible = ref(false)
+
+  const isVisible = ()=>{
+    
+    return visible.value = !visible.value
+  }
+
+  const sendMessage=()=>{
+
+    if(name.value !=''){
+      console.log('tiene nombre')
+
+       const url = `https://api.whatsapp.com/send?phone=${1133081248}&text=${encodeURIComponent(
+        'Hola, me llamo '+ name.value + ', mi consulta: ' + msj.value)}`;
+      window.open(url, "_blank");
+
+      name.value=''
+      msj.value=''
+
+      return
+    }
+    isVisible()
+    setTimeout(() => {
+      isVisible()
+    }, 1000)
+
+  }
+</script>
 
 <template>
   <section class="conteiner" id="support">
@@ -13,17 +44,18 @@
           <div class="col-12 col-sm-6">
             <div class="conteiner-form">
               <label for="name">Nombre</label>
-              <input type="text" name="" id="name" />
-              <label for="messaje">Mensaje</label>
-              <textarea name="messaje" id="messaje" cols="30" rows="10"></textarea>
+              <input type="text" v-model="name" id="name" autocomplete="false"/>
+              <label for="messaje"  >Mensaje</label>
+              <textarea v-model="msj" id="messaje" cols="30" rows="10"></textarea>
             </div>
+            <span v-if="visible" class="conteiner-form mt-3" style="background-color: red;"><h2>EL NOMBRE ES REQUERIDO</h2></span>
           </div>
         </div>
       </div>
       <div class="col-sm-12">
         <div class="container-description">
           <h3>COMUNÍCATE CON NOSOTROS</h3>
-          <button class="description-btn">whatsapp</button>
+          <button @click="sendMessage()" class="description-btn">whatsapp</button>
         </div>
       </div>
     </div>
