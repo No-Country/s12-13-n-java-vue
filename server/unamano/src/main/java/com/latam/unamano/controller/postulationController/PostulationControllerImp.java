@@ -30,7 +30,7 @@ public class PostulationControllerImp extends GenericRestController implements P
     @Override
     public ResponseEntity<CustomResponse> savePostulation(CreatePostulation createPostulation) {
         Optional<Postulation> postulation = postulationServiceInterface.save(createPostulation);
-        return ok(postulation,CREATED,REQUEST_POSTULATION);
+        return ok(new PostulationResponse(postulation.get()),CREATED,REQUEST_POSTULATION);
     }
 
     @Override

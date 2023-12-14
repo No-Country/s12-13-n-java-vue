@@ -35,8 +35,8 @@ public class PostulationService implements PostulationServiceInterface{
     @Override
     public Optional<Postulation> save(CreatePostulation createPostulation) {
         Optional<Worker> workerOptional = workerRepository.findById(createPostulation.worker_id());
-        Optional<Task> taskOptional = taskRepository.findById(createPostulation.worker_id());
-        if (workerOptional.isPresent() || taskOptional.isPresent()){
+        Optional<Task> taskOptional = taskRepository.findById(createPostulation.task_id());
+        if (workerOptional.isPresent() && taskOptional.isPresent()){
             Postulation postulation = new Postulation();
             postulation.setStatus(PostulationStatus.STARTED);
                 postulation.setWorker(workerOptional.get());
