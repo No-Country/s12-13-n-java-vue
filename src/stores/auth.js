@@ -7,42 +7,40 @@ const useAuth = defineStore('auth', {
       token: null,
       rol: null,
       feedback: '',
-      feedbackError:''
+      feedbackError: ''
     }
   },
 
-  actions:{
-
-    async login(username, password, tipo){
-
+  actions: {
+    async login(username, password, tipo) {
       this.reset()
 
       let role = 0
-      
-      if(tipo == 'contratador'){
+
+      if (tipo == 'contratador') {
         role = 0
       }
 
-      if(tipo =='trabajador'){
+      if (tipo == 'trabajador') {
         role = 1
       }
 
-      await axios.post('auth/login',{
-        username,
-        password,
-        role
-      })
-      
-      .then (response =>{
-       this.token = response.data.token
-       this.notification('Acceso correcto')
-      })
-      .catch((error)=>{
-  
-        console.log('Error en login', error)
-        this.notificationError(error.response.data.error)
-      })
+      await axios
+        .post('auth/login', {
+          username,
+          password,
+          role
+        })
 
+        .then((response) => {
+          this.token = response.data.token
+          localStorage.setItem('token', this.token)
+          this.notification('Acceso correcto')
+        })
+        .catch((error) => {
+          console.log('Error en login', error)
+          this.notificationError(error.response.data.error)
+        })
     },
 
     notification(messaje) {
@@ -64,12 +62,10 @@ const useAuth = defineStore('auth', {
     reset() {
       this.token = null
       this.rol = null
-      this.feedback =''
+      this.feedback = ''
       this.feedbackError = ''
-    },
-
+    }
   }
-
 })
 
 export default useAuth

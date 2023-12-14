@@ -1,7 +1,7 @@
 <template>
   <div class="placeholder"></div>
   <section class="container gx-0">
-    <header>
+    <header class="header">
       <nav class="menu">
         <li class="menu__item" :class="{ hidden: isVisible }">
           <img class="menu__item-logo" src="../assets/logo.svg" />
@@ -138,8 +138,12 @@
           </div>
         </section>
       </div>
-      <button v-if="$route.name === 'home'" class=" sidebarbutton link"  @click="navigateToLogin">Iniciar sesión</button>
-      <button v-if="$route.name === 'dashboard'" class="sidebarbutton link"  @click="closeSesion">Cerrar sesión</button>
+      <button v-if="$route.name === 'home'" class="sidebarbutton link" @click="navigateToLogin">
+        Iniciar sesión
+      </button>
+      <button v-if="$route.name === 'dashboard'" class="sidebarbutton link" @click="closeSesion">
+        Cerrar sesión
+      </button>
     </section>
   </section>
 </template>
@@ -224,7 +228,7 @@ li {
 
 .placeholder {
   height: 70px;
-  width: 393px;
+  /* width: 393px; */
   background: #fff;
 }
 .container {
@@ -233,7 +237,7 @@ li {
 }
 .menu {
   z-index: 100;
-  width: 393px;
+  /* width: 393px; */
   margin-top: -70px;
   display: flex;
   justify-content: space-between;
@@ -283,6 +287,8 @@ li {
 }
 .sidebar {
   width: 289px;
+  padding: 60.3904px 40.5008px;
+
   background-color: white;
   min-height: 720px;
   overflow-x: visible;
@@ -381,7 +387,7 @@ li {
   margin-bottom: 9px;
 }
 
-.sidebar__button {
+.sidebarbutton {
   color: var(--white, #fff);
   font-family: 'Baloo 2';
   font-size: 20px;
@@ -488,13 +494,5 @@ li {
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-
-
-@media screen and (max-width: 833px) {
-  .sidebar {
-    min-height: 802px;
-    padding: 60.3904px 40.5008px;
-  }
 }
 </style>

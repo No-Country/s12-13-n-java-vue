@@ -1,15 +1,43 @@
-<script setup></script>
+<script setup>
+import axios from '@/plugins/axios'
+const token = localStorage.getItem('token')
+const headers = {
+  Authorization: `Bearer ${token}`
+}
+
+function deleteTask(id) {
+  console.log('id:', id)
+  axios.delete(`task/${id}`, { headers }).then((response) => {
+    console.log('response:', response)
+  })
+}
+
+const props = defineProps({
+  taskTitle: String,
+  taskDate: String,
+  category: String,
+  description: String,
+  address: String,
+  price: String,
+  currencyType: String,
+  id: Number
+})
+</script>
 
 <template>
-  <p>Publicaciones activas</p>
   <section
     class="card"
     :class="{ unexpanded: !isExpanded, expanded: isExpanded, 'z-1000': isExpanded }"
   >
+    <button
+      type="button"
+      className="eventButtonTrash"
+      @click="$emit('onDelete', deleteTask(props.id))"
+    ></button>
     <div class="container">
       <div>
-        <h3 class="card__category">Kinesiólogía</h3>
-        <p class="card__title">Sesiones semanales</p>
+        <h3 class="card__category">{{ props.category }}</h3>
+        <p class="card__title">{{ props.taskTitle }}</p>
       </div>
       <button class="unexpand-button link" @click="expand()" :class="{ hidden: !isExpanded }">
         <img src="../assets/images/unexpand-icon.svg" alt="unexpand" />
@@ -19,24 +47,47 @@
     <div class="container">
       <div class="data-container" :class="{ container_expanded: isExpanded }">
         <p class="data__title">Fecha:</p>
-        <p class="data__value">08/12/2023</p>
+        <p class="data__value">{{ props.taskDate }}</p>
       </div>
-      <div class="data-container" :class="{ container_expanded: isExpanded, hidden: !isExpanded }">
+      <div
+        class="data-container"
+        :class="{
+          container_expanded: isExpanded,
+          hidden: !isExpanded,
+          container_unrevealed: !isExpanded,
+          container_revealed: isExpanded
+        }"
+      >
         <p class="data__title">Dirección:</p>
-        <p class="data__value">Bogotá, Colombia</p>
+        <p class="data__value">{{ props.address }}</p>
       </div>
-      <div class="data-container" :class="{ container_expanded: isExpanded, hidden: !isExpanded }">
+      <div
+        class="data-container"
+        :class="{
+          container_expanded: isExpanded,
+          hidden: !isExpanded,
+          container_unrevealed: !isExpanded,
+          container_revealed: isExpanded
+        }"
+      >
         <p class="data__title">Precio:</p>
-        <p class="data__value">30 USD</p>
+        <p class="data__value">{{ props.price }} {{ props.currencyType }}</p>
       </div>
-      <div class="description-container" :class="{ hidden: !isExpanded }">
+      <div
+        class="description-container"
+        :class="{
+          hidden: !isExpanded,
+          container_unrevealed: !isExpanded,
+          container_revealed: isExpanded
+        }"
+      >
         <p class="data__title">Descripción:</p>
         <p class="data__value description-text">
-          Necesito 3 sesiones semanales a domicilio durante las tardes para tratar una lesión a la
-          rodilla. Precio sugerido por sesión.
+          {{ props.description }}
         </p>
         <div class="container_expanded buttons-container" :class="{ hidden: !isExpanded }">
           <button class="edit-button link">Editar</button>
+          <!-- <button class="delete-button link" @click="deleteTask({ id })">Del</button> -->
           <button class="applications-button link">
             <div class="users-container">
               <span>3</span>
@@ -55,6 +106,10 @@
 
 <script>
 export default {
+  // props: {
+  //   taskTitle: String,
+  //   id: Number
+  // },
   data() {
     return {
       isExpanded: false
@@ -75,6 +130,20 @@ p {
   padding: 0;
 }
 
+.eventButtonTrash {
+  background: url(../assets/images/trashbag-icon.svg);
+  background-size: contain;
+  width: 20px;
+  height: 20px;
+  appearance: auto;
+  border: initial;
+  outline: initial;
+  cursor: pointer;
+  position: absolute;
+  right: 70px;
+  top: 21px;
+}
+
 .card {
   display: flex;
   min-height: 134px;
@@ -91,9 +160,21 @@ p {
   animation: expand 0.5s ease;
 }
 
+.description-text {
+  width: fit-content;
+}
 .card.unexpanded {
   min-height: 134px;
   animation: unexpand 0.5s ease;
+}
+
+.container_unrevealed {
+  opacity: 0;
+  animation: unreveal 0.5s ease;
+}
+.container_revealed {
+  opacity: 1;
+  animation: reveal 0.7s ease;
 }
 .card__category {
   color: var(--blue1, #1d3d8f);
@@ -166,6 +247,14 @@ p {
   width: 100px;
 }
 
+.delete-button {
+  border: 2px solid var(--delete-error, #e20c0c);
+  background-color: transparent;
+  color: var(--delete-error, #e20c0c);
+  font-family: 'Baloo 2';
+  font-weight: 700;
+  padding: 10px;
+}
 .applications-button {
   background: var(--blue1, #1d3d8f);
   color: var(--white, #fff);
@@ -212,15 +301,32 @@ p {
     min-height: 134px;
   }
   100% {
-    min-height: 340px;
+    min-height: 300px;
   }
 }
 @keyframes unexpand {
   0% {
-    min-height: 340px;
+    min-height: 300px;
   }
   100% {
     min-height: 134px;
+  }
+}
+
+@keyframes reveal {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes unreveal {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 </style>
