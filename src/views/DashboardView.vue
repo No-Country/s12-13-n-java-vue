@@ -34,21 +34,6 @@ const closePopup = () => {
 }
 
 const onSubmit = async () => {
-  // ;(currencyType = currency.value),
-  //   (ocupations = [
-  //     {
-  //       occupationName: category.value
-  //     }
-  //   ]),
-  //   (description = taskDescription.value),
-  //   (price = precio.value),
-  //   (taskDate = date.value),
-  //   (address = {
-  //     street: taskLocation.value
-  //   }),
-  //   (client = {
-  //     id: 1
-  //   })
   await store.submit(
     taskTitle.value,
     taskDescription.value,
@@ -231,33 +216,6 @@ detalles de tu trabajo"
     <FooterPage />
   </main>
 </template>
-
-<!-- <script>
-export default {
-  props: ['onSubmit'],
-  data() {
-    return {
-      activeItems: [false, false, false],
-      isOpen: false,
-      taskTitle: '',
-      taskDescription: ''
-    }
-  },
-  methods: {
-    toggleNavItem(index) {
-      this.$set(this.activeItems, index, !this.activeItems[index])
-    },
-    openPopup() {
-      console.log('isOpen:')
-      this.isOpen = true
-    },
-    closePopup() {
-      this.isOpen = false
-    }
-  }
-}
-</script> -->
-
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Yaldevi:wght@600&display=swap');
 ul,
