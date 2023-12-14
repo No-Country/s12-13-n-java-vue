@@ -19,4 +19,5 @@ public interface PostulationServiceInterface {
     Optional<Postulation> update(UpdatePostulation updatePostulation);
     void delete(Long id);
 
+    Page<PostulationResponse> getPostulationsByTaskId(Pageable pageable, Long idTask);
 }

@@ -17,4 +17,5 @@ public interface PostulationRepository extends JpaRepository<Postulation, Long> 
 
     Page<Postulation> getAllByWorkerId(Pageable pageable, @Param("id") Long id);
 
+    Page<Postulation>  getAllByTaskId(Pageable pageable, @Param("id")Long idTask);
 }

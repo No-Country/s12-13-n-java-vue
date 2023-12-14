@@ -10,6 +10,7 @@ import com.latam.unamano.persistence.repositories.postulationRepository.Postulat
 import com.latam.unamano.persistence.repositories.task.TaskRepository;
 import com.latam.unamano.persistence.repositories.workerRepository.WorkerRepository;
 import com.latam.unamano.utils.PostulationStatus;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -99,5 +100,15 @@ public class PostulationService implements PostulationServiceInterface{
     @Override
     public void delete(Long id) {
         postulationRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<PostulationResponse> getPostulationsByTaskId(Pageable pageable, Long idTask) {
+        try{
+            return postulationRepository.getAllByTaskId(pageable, idTask).map(PostulationResponse::new);
+        }catch (Exception e){
+            throw new EntityNotFoundException("No existe una tarea con el id " + idTask);
+        }
+
     }
 }
