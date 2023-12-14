@@ -82,6 +82,10 @@ onMounted(() => {
   // fetchClient()
   fetchCards()
 })
+
+const onCardDelete = () => {
+  fetchCards()
+}
 </script>
 <template>
   <main>
@@ -126,6 +130,7 @@ onMounted(() => {
         <div v-if="cards && cards.length" class="tasks-container">
           <div v-for="card in cards" :key="card.id">
             <JobCard
+              @onDelete="onCardDelete"
               :taskTitle="card.taskTitle"
               :taskDate="card.taskDate.slice(0, 10).replace(/-/g, '/')"
               :category="card.occupations[0].occupationName"
@@ -133,6 +138,7 @@ onMounted(() => {
               :price="card.price"
               :currencyType="card.currencyType"
               :address="card.address.street"
+              :id="card.id"
             >
             </JobCard>
           </div>

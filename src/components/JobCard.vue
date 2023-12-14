@@ -5,12 +5,11 @@ const headers = {
   Authorization: `Bearer ${token}`
 }
 
-function deleteTask({ id }) {
-  ;async () => {
-    await axios.delete(`task/${id}`, { headers }).then((response) => {
-      console.log('response:', response)
-    })
-  }
+function deleteTask(id) {
+  console.log('id:', id)
+  axios.delete(`task/${id}`, { headers }).then((response) => {
+    console.log('response:', response)
+  })
 }
 
 const props = defineProps({
@@ -30,7 +29,11 @@ const props = defineProps({
     class="card"
     :class="{ unexpanded: !isExpanded, expanded: isExpanded, 'z-1000': isExpanded }"
   >
-    <button type="button" className="eventButtonTrash" @click="deleteTask(id)"></button>
+    <button
+      type="button"
+      className="eventButtonTrash"
+      @click="$emit('onDelete', deleteTask(props.id))"
+    ></button>
     <div class="container">
       <div>
         <h3 class="card__category">{{ props.category }}</h3>
@@ -137,7 +140,8 @@ p {
   outline: initial;
   cursor: pointer;
   position: absolute;
-  right: 20px;
+  right: 70px;
+  top: 21px;
 }
 
 .card {
