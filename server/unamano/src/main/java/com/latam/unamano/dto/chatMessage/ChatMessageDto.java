@@ -1,4 +1,7 @@
 package com.latam.unamano.dto.chatMessage;
 
-public record ChatMessageDto(String message, String user) {
+import com.latam.unamano.persistence.entities.chatRoom.ChatRoom;
+
+public record ChatMessageDto(String message, String username ,Long chatRoomId) {
+
 }

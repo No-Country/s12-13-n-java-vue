@@ -58,5 +58,11 @@ public class ChatRoomService {
     }
 
 
-
+    public ChatRoom getChatRoomById(Long chatRoomId) {
+        Optional<ChatRoom> chatRoomOptional = chatRoomRepository.findById(chatRoomId);
+        if (chatRoomOptional.isPresent()){
+            return chatRoomOptional.get();
+        }
+        throw new RuntimeException("No existe esta sala de chat");
+    }
 }

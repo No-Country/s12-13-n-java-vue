@@ -34,6 +34,8 @@ public class ChatRoom {
     @OneToMany(mappedBy = "chatRoom",cascade = CascadeType.ALL)
     List<ChatMessage> chatMessages = new ArrayList<>();
 
+    public ChatRoom (Long id){this.id = id;}
+
 
 
 
