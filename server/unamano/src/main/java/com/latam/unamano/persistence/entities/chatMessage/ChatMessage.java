@@ -24,5 +24,8 @@ public class ChatMessage {
     private String message;
     private String username;
     private LocalDateTime dateMessageCreated = LocalDateTime.now();
+    @ManyToOne
+    @JoinColumn(name = "chat_room_id")
+    private ChatRoom chatRoom;
 }
 

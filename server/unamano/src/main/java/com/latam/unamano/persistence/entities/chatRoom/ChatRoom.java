@@ -1,6 +1,7 @@
 package com.latam.unamano.persistence.entities.chatRoom;
 
 
+import com.latam.unamano.persistence.entities.chatMessage.ChatMessage;
 import com.latam.unamano.persistence.entities.client.Client;
 import com.latam.unamano.persistence.entities.workerEntity.Worker;
 import jakarta.persistence.*;
@@ -8,6 +9,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -27,6 +31,8 @@ public class ChatRoom {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "worker_id")
     private Worker worker;
+    @OneToMany(mappedBy = "chatRoom",cascade = CascadeType.ALL)
+    List<ChatMessage> chatMessages = new ArrayList<>();
 
 
 
