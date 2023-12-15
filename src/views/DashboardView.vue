@@ -67,7 +67,7 @@ const onSubmit = async () => {
 const fetchCards = async () => {
   await axios.get('task/published', { headers }).then((response) => {
     console.log('response:', response.data.content)
-    cards.value = response.data.content.filter((card) => card.id > 15)
+    cards.value = response.data.content.filter((card) => card.id > 0)
   })
 }
 
@@ -132,7 +132,7 @@ const onCardDelete = () => {
             <JobCard
               @onDelete="onCardDelete"
               :taskTitle="card.taskTitle"
-              :taskDate="card.taskDate.slice(0, 10).replace(/-/g, '/')"
+              :taskDate="card?.taskDate?.slice(0, 10).replace(/-/g, '/')"
               :category="card.occupations[0].occupationName"
               :description="card.description"
               :price="card.price"
@@ -143,14 +143,9 @@ const onCardDelete = () => {
             </JobCard>
           </div>
         </div>
-
-        <div v-else>
-          <!-- Handle the case when cards is null or empty -->
-          No cards available.
-        </div>
       </section>
       <section class="modal-info">
-        <p class="modal-info__text" v-if="!cards">
+        <p class="modal-info__text" v-if="!(cards && cards.length)">
           Crea tu primera publicación y <br />
           conecta con trabajadores
         </p>
@@ -363,7 +358,8 @@ li {
   right: 0;
   margin-left: auto;
   margin-right: auto;
-  bottom: 40%;
+  /* bottom: 40%; */
+  margin-bottom: -10px;
   display: flex;
   padding: 15px 10px;
   flex-direction: column;
@@ -372,6 +368,7 @@ li {
   gap: 25px;
   align-self: stretch;
   border-radius: 6px;
+  background-color: white;
 }
 .modal-info__button {
   color: var(--white, #fff);
