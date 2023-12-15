@@ -65,7 +65,11 @@ const useAuth = defineStore('auth', {
       this.feedback = ''
       this.feedbackError = ''
     }
-  }
+
+  },
+
+  persist:true
+
 })
 
 export default useAuth

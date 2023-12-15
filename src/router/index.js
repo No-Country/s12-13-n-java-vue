@@ -1,28 +1,55 @@
+import useAuth from '@/stores/auth'
 import { createRouter, createWebHistory } from 'vue-router'
 import DashboardView from '../views/DashboardView.vue'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
+import DashboardTrabajador from '../views/DashboardTrabajador.vue'
+import ChatView from '../views/ChatView.vue'
 
 const routes = [
  {
       path: '/login',
       name: 'login',
-      component: LoginView
+      component: LoginView,
+       meta: {
+        requereAuth: false
+      },
     },
 
     {
       path: '/dashboard',
       name: 'dashboard',
       component: DashboardView,
-     /*  meta: {
+      meta: {
         requereAuth: true
-      }, */
+      },
+    },
+
+    {
+      path: '/DashboardTrabajador',
+      name: 'DashboardTrabajador',
+      component: DashboardTrabajador,
+      meta: {
+        requereAuth: true
+      },
+    },
+
+    {
+      path: '/Chat',
+      name: 'Chat',
+      component: ChatView,
+      meta: {
+        requereAuth: true
+      },
     },
 
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+       meta: {
+        requereAuth: false
+      },
     }
 ]
 
@@ -31,7 +58,7 @@ const router = createRouter({
   routes
 })
 
-/* router.beforeEach((to, from, next)=>{
+router.beforeEach((to, from, next)=>{
 
   const auth = useAuth() 
   const isAuth = auth.token
@@ -42,6 +69,6 @@ const router = createRouter({
     next()
   }
   
-}) */
+})
 
 export default router

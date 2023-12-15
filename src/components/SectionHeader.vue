@@ -138,18 +138,24 @@
           </div>
         </section>
       </div>
-      <button v-if="$route.name === 'home'" class="sidebarbutton link" @click="navigateToLogin">
-        Iniciar sesión
-      </button>
-      <button v-if="$route.name === 'dashboard'" class="sidebarbutton link" @click="closeSesion">
-        Cerrar sesión
-      </button>
+      <button v-if="$route.name === 'home'" class=" sidebar__button link"  @click="navigateToLogin">Iniciar sesión</button>
+      <button v-if="$route.name === 'dashboard'" class="sidebar__button link"  @click="closeSesion">Cerrar sesión</button>
     </section>
   </section>
 </template>
+<script setup>
+  import useAuth from '@/stores/auth'
+  const store = useAuth()
 
+  const closeSesion=()=>{
+    store.reset()
+    router.push({ name: 'login' })
+  }
+
+</script>
 <script>
-import router from '@/router'
+  import router from '@/router'
+  
 
 export default {
   data() {
@@ -157,7 +163,8 @@ export default {
       isVisible: false,
       sliderValue: 25 / 16,
       minValue: 20 / 16,
-      maxValue: 30 / 16
+      maxValue: 30 / 16,
+      store: useAuth()
     }
   },
   methods: {
@@ -201,6 +208,7 @@ export default {
       // this.$router.push('/login')
       router.push({ name: 'login' })
     },
+    
     getSidebarStyles() {
       // Determine the route and set gap size accordingly
       const route = this.$route.name
