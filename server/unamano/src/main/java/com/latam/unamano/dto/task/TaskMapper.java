@@ -1,8 +1,12 @@
 package com.latam.unamano.dto.task;
 
+import com.latam.unamano.dto.clientDto.response.ClientData;
+import com.latam.unamano.dto.clientDto.response.GetClient;
 import com.latam.unamano.dto.occupationDto.OccupationMapper;
+import com.latam.unamano.persistence.entities.client.Client;
 import com.latam.unamano.persistence.entities.task.Task;
 import lombok.experimental.UtilityClass;
+import org.springframework.boot.autoconfigure.web.reactive.function.client.ReactorNettyHttpClientMapper;
 
 @UtilityClass
 public class TaskMapper {
@@ -18,7 +22,17 @@ public class TaskMapper {
                 .status(task.getStatus())
                 .occupations(task.getOccupations().stream().map(OccupationMapper::occupationToDto).toList())
                 .taskDate(task.getTaskDate())
-                //.client(task.getClient())
+                .client(new ClientData(
+                        task.getClient().getId(),
+                        task.getClient().getUser().getId(),
+                        task.getClient().getUser().getUsername(),
+                        task.getClient().getUser().getFirstName(),
+                        task.getClient().getUser().getLastName(),
+                        task.getClient().getUser().getEmail(),
+                        task.getClient().getUser().getRole(),
+                        task.getClient().getUser().getAddresses().getId(),
+                        task.getClient().getUser().getAddresses().getCity(),
+                        task.getClient().getUser().getAddresses().getCountry()))
                 .address(task.getAddress())
                 .build();
     }
@@ -33,7 +47,7 @@ public class TaskMapper {
                 .status(taskDTO.getStatus())
                 .occupations(taskDTO.getOccupations().stream().map(OccupationMapper::DtoToOccupation).toList())
                 .taskDate(taskDTO.getTaskDate())
-                .client(taskDTO.getClient())
+                .client(new Client(taskDTO.getClient().getId(), null, null))
                 .address(taskDTO.getAddress())
                 .build();
     }

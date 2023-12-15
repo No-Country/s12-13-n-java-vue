@@ -2,15 +2,18 @@ package com.latam.unamano.controller.postulationController;
 
 import com.latam.unamano.commons.controller.GenericRestController;
 import com.latam.unamano.commons.dto.response.CustomResponse;
+import com.latam.unamano.dto.postulationDto.request.AcceptPostulation;
 import com.latam.unamano.dto.postulationDto.request.CreatePostulation;
 import com.latam.unamano.dto.postulationDto.request.UpdatePostulation;
 import com.latam.unamano.dto.postulationDto.response.PostulationResponse;
+import com.latam.unamano.dto.task.TaskDTO;
 import com.latam.unamano.persistence.entities.postulationEntity.Postulation;
 import com.latam.unamano.service.postulationService.PostulationServiceInterface;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 import java.util.Optional;
 
@@ -30,7 +33,7 @@ public class PostulationControllerImp extends GenericRestController implements P
     @Override
     public ResponseEntity<CustomResponse> savePostulation(CreatePostulation createPostulation) {
         Optional<Postulation> postulation = postulationServiceInterface.save(createPostulation);
-        return ok(postulation,CREATED,REQUEST_POSTULATION);
+        return ok(new PostulationResponse(postulation.get()),CREATED,REQUEST_POSTULATION);
     }
 
     @Override
@@ -40,8 +43,8 @@ public class PostulationControllerImp extends GenericRestController implements P
     }
 
     @Override
-    public ResponseEntity<CustomResponse> getAllPostulations(Long idWorker) {
-        return ok(postulationServiceInterface.getAllByWorkerId(idWorker),null,REQUEST_POSTULATION);
+    public ResponseEntity<CustomResponse> getAllPostulations(Long id, Pageable pageable) {
+        return ok(postulationServiceInterface.getAllByWorkerId(id, pageable).map(PostulationResponse::new),null,REQUEST_POSTULATION);
     }
 
     @Override
@@ -66,5 +69,13 @@ public class PostulationControllerImp extends GenericRestController implements P
     public ResponseEntity<CustomResponse> deletePostulationById(Long id) {
         postulationServiceInterface.delete(id);
         return ok(null,DELETED_SUCCESSFULLY,REQUEST_POSTULATION);
+    }
+    @GetMapping("task_postulations/{idTask}")
+    public Page<PostulationResponse> getPostulationsByTaskId(Pageable pageable, @PathVariable Long idTask){
+        return postulationServiceInterface.getPostulationsByTaskId(pageable, idTask);
+    }
+    @PutMapping("accept_postulation/")
+    public TaskDTO acceptPostulation(@RequestBody AcceptPostulation acceptPostulation){
+        return postulationServiceInterface.acceptPostulation(acceptPostulation);
     }
 }

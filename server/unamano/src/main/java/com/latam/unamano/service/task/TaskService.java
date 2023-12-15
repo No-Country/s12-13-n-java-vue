@@ -1,12 +1,11 @@
 package com.latam.unamano.service.task;
 
 import com.latam.unamano.dto.occupationDto.OccupationDTO;
-import com.latam.unamano.dto.occupationDto.OccupationMapper;
 import com.latam.unamano.dto.task.TaskDTO;
 import com.latam.unamano.exceptions.BadDataEntryException;
 import com.latam.unamano.dto.task.TaskMapper;
-import com.latam.unamano.persistence.entities.ocupationEntity.Occupation;
 import com.latam.unamano.persistence.repositories.addressRespository.AddressRepository;
+import com.latam.unamano.persistence.repositories.clientRepository.ClientRepository;
 import com.latam.unamano.persistence.repositories.user.UserRepository;
 import com.latam.unamano.service.occupationService.OccupationService;
 import com.latam.unamano.utils.TaskStatus;
@@ -27,12 +26,14 @@ public class TaskService {
     private final UserRepository userRepository;
     private final OccupationService occupationService;
     private final AddressRepository addressRepository;
+    private final ClientRepository clientRepository;
 
-    public TaskService(TaskRepository taskRepository, OccupationService occupationService, UserRepository userRepository, AddressRepository addressRepository){
+    public TaskService(TaskRepository taskRepository, OccupationService occupationService, UserRepository userRepository, AddressRepository addressRepository, ClientRepository clientRepository){
         this.taskRepository = taskRepository;
         this.occupationService= occupationService;
         this.userRepository=userRepository;
         this.addressRepository=addressRepository;
+        this.clientRepository=clientRepository;
 
 
     }
@@ -55,13 +56,11 @@ public class TaskService {
                 .stream()
                 .map(occupationService::findByOccupationName)
                 .toList());
-
-
-
-        //task.setClient(userRepository.findById(taskDTO.getClient().getId()).get());
+        task.setClient(clientRepository.findById(taskDTO.getClient().getId()).get());
         task.setAddress(addressRepository.save(taskDTO.getAddress()));
 
         task = taskRepository.save(task);
+        System.out.println("Id del cliente " + task.getClient().getUser().getId());
         return TaskMapper.taskToTaskDTO(task);
     }
 
@@ -179,4 +178,11 @@ public class TaskService {
     }
 
 
+    public Page<TaskDTO> findByClientId(Pageable pageable, Long id) {
+        return taskRepository.findByClientId(pageable, id).map(TaskMapper::taskToTaskDTO);
+    }
+
+    public Page<TaskDTO> findByClientIdAndStatus(Pageable pageable, Long id, TaskStatus status) {
+        return taskRepository.findByClientIdAndStatus(pageable, id, status).map(TaskMapper::taskToTaskDTO);
+    }
 }

@@ -3,7 +3,9 @@ package com.latam.unamano.controller.task;
 import com.latam.unamano.dto.task.TaskDTO;
 import com.latam.unamano.dto.task.TaskMapper;
 import com.latam.unamano.service.task.TaskService;
+import com.latam.unamano.utils.TaskStatus;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.websocket.server.PathParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -72,6 +74,16 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(taskService.findTaskByStatusPUBLISHED(pageable)
                         .map(TaskMapper::taskToTaskDTO));
+    }
+
+    @GetMapping("/client/{id}")
+    public ResponseEntity<Page<TaskDTO>> findByClientID(Pageable pageable, @PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.findByClientId(pageable, id));
+    }
+
+    @GetMapping("/client/")
+    public ResponseEntity<Page<TaskDTO>> findByClientIDAndStatus(Pageable pageable, @PathParam("id") Long id, @PathParam("status") TaskStatus status){
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.findByClientIdAndStatus(pageable, id, status));
     }
 
 
