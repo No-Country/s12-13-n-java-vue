@@ -1,6 +1,6 @@
 <script setup>
 import SectionHeader from '../components/SectionHeader.vue'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import FooterPage from '@/components/SectionFooter.vue'
@@ -13,16 +13,16 @@ const headers = {
   Authorization: `Bearer ${token}`
 }
 import router from '@/router'
-  const chat = ()=>{
-    router.push({ name: 'Chat' })
-  }
+const chat = () => {
+  router.push({ name: 'Chat' })
+}
 
 const date = ref()
 const store = useFormContratador()
 
 const activeItems = ref([false, false, false])
 const isOpen = ref(false)
-
+let isCardExists = ref(true)
 let taskTitle = ref('')
 let category = ref('')
 let currency = ref('')
@@ -31,6 +31,13 @@ let taskLocation = ref('')
 let precio = ref(0)
 let cards = ref(null)
 
+isCardExists = computed(() => {
+  return !!(cards.value && cards.value.length)
+})
+
+isCardExists = computed(() => {
+  return !!(cards.value && cards.value.length)
+})
 
 const toggleNavItem = (index) => {
   activeItems.value[index] = !activeItems.value[index]
@@ -105,7 +112,7 @@ const onCardDelete = () => {
             <p class="nav__item-text" :class="{ active: isActive }">Inicio</p>
           </div>
         </li>
-        <li class="nav__item link" @click="toggleNavItem" @click.prevent="chat">  
+        <li class="nav__item link" @click="toggleNavItem" @click.prevent="chat">
           <div class="nav__item-container">
             <img
               class="nav__item-image"
@@ -147,8 +154,8 @@ const onCardDelete = () => {
           </div>
         </div>
       </section>
-      <section class="modal-info">
-        <p class="modal-info__text" v-if="cards && cards.length === 0">
+      <section class="modal-info" :style="{ padding: isCardExists ? '0' : '10px' }">
+        <p class="modal-info__text" v-if="!isCardExists">
           Crea tu primera publicación y <br />
           conecta con trabajadores
         </p>
@@ -354,6 +361,7 @@ li {
 
 .cards-container {
   background-color: #a9b8de;
+  padding-bottom: 30px;
 }
 .modal-info {
   width: 361px;
@@ -364,7 +372,6 @@ li {
   /* bottom: 40%; */
   margin-bottom: -10px;
   display: flex;
-  padding: 15px 10px;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
