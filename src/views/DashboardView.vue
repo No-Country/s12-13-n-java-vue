@@ -4,7 +4,7 @@ import { ref, onMounted } from 'vue'
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import FooterPage from '@/components/SectionFooter.vue'
-import JobCard from '../components/JobCard.vue'
+import JobCard from '@/components/JobCard.vue'
 import useFormContratador from '@/stores/formContratador'
 import { categorias, currencies } from '../utils/constants'
 import axios from '@/plugins/axios'
@@ -154,7 +154,7 @@ const onCardDelete = () => {
         </div>
       </section>
       <section class="modal-info">
-        <p class="modal-info__text" v-if="!cards">
+        <p class="modal-info__text" v-if="cards && cards.length === 0">
           Crea tu primera publicación y <br />
           conecta con trabajadores
         </p>

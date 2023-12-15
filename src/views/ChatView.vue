@@ -3,7 +3,7 @@ import SectionHeader from '../components/SectionHeader.vue'
 import { ref } from 'vue'
 import '@vuepic/vue-datepicker/dist/main.css'
 import FooterPage from '@/components/SectionFooter.vue'
-import ChatCard from '../components/ChatCard.vue'
+import ChatCard from '@/components/ChatCard.vue'
 import router from '@/router'
   const dashboard = ()=>{
     router.push({ name: 'dashboard' })
