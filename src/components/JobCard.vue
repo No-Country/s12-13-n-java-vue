@@ -12,6 +12,10 @@ function deleteTask(id) {
   })
 }
 
+// const editTask = () => {
+//   $emit('onEdit', props.id)
+// }
+
 const props = defineProps({
   taskTitle: String,
   taskDate: String,
@@ -86,7 +90,7 @@ const props = defineProps({
           {{ props.description }}
         </p>
         <div class="container_expanded buttons-container" :class="{ hidden: !isExpanded }">
-          <button class="edit-button link">Editar</button>
+          <button class="edit-button link" @click="$emit('onEdit', props.id)">Editar</button>
           <!-- <button class="delete-button link" @click="deleteTask({ id })">Del</button> -->
           <button class="applications-button link">
             <div class="users-container">

@@ -22,7 +22,9 @@ const store = useFormContratador()
 
 const activeItems = ref([false, false, false])
 const isOpen = ref(false)
+const isEditMode = ref(false)
 let isCardExists = ref(true)
+let actionName = ref('')
 let taskTitle = ref('')
 let category = ref('')
 let currency = ref('')
@@ -31,6 +33,17 @@ let taskLocation = ref('')
 let precio = ref(0)
 let cards = ref(null)
 const formRef = ref(null)
+
+const editedCard = ref(null)
+console.log('CARDCisEditMode:', isEditMode.value)
+const onCardEdit = (card) => {
+  isEditMode.value = true
+  console.log('CARDCcard:', card)
+  editedCard.value = card
+  console.log('CARDCisEditModeAfterClick:', isEditMode.value)
+  isOpen.value = true
+  actionName.value = 'Editar publicación'
+}
 
 isCardExists = computed(() => {
   return !!(cards.value && cards.value.length)
@@ -45,7 +58,9 @@ const toggleNavItem = (index) => {
 }
 
 const openPopup = () => {
+  isEditMode.value = false
   isOpen.value = true
+  console.log('CARDCisEditModeAfterClick:', isEditMode.value)
 }
 
 const closePopup = () => {
@@ -53,24 +68,46 @@ const closePopup = () => {
 }
 
 const onSubmit = async () => {
-  await store.submit(
-    taskTitle.value,
-    taskDescription.value,
-    precio.value,
-    currency.value,
-    [
+  if (isEditMode.value) {
+    await store.update(
+      taskTitle.value,
+      taskDescription.value,
+      precio.value,
+      currency.value,
+      [
+        {
+          occupationName: category.value
+        }
+      ],
+      date.value,
       {
-        occupationName: category.value
+        id: 1
+      },
+      {
+        street: taskLocation.value
       }
-    ],
-    date.value,
-    {
-      id: 1
-    },
-    {
-      street: taskLocation.value
-    }
-  )
+    )
+  } else {
+    await store.submit(
+      taskTitle.value,
+      taskDescription.value,
+      precio.value,
+      currency.value,
+      [
+        {
+          occupationName: category.value
+        }
+      ],
+      date.value,
+      {
+        id: 1
+      },
+      {
+        street: taskLocation.value
+      }
+    )
+  }
+
   fetchCards()
   formRef.value.reset()
   taskTitle.value = ''
@@ -81,6 +118,8 @@ const onSubmit = async () => {
   precio.value = ''
   date.value = ''
   closePopup()
+  editedCard.value = null
+  actionName.value = 'Crear publicación'
 }
 
 const fetchCards = async () => {
@@ -158,6 +197,7 @@ const onCardDelete = () => {
               :currencyType="card.currencyType"
               :address="card.address.street"
               :id="card.id"
+              @onEdit="onCardEdit(card)"
             >
             </JobCard>
           </div>
@@ -168,7 +208,7 @@ const onCardDelete = () => {
           Crea tu primera publicación y <br />
           conecta con trabajadores
         </p>
-        <button class="modal-info__button link" @click="openPopup">Crear publicación</button>
+        <button class="modal-info__button link" @click="openPopup">Crear nueva publicación</button>
       </section>
     </div>
 
@@ -179,7 +219,10 @@ const onCardDelete = () => {
       <modal class="popup" v-if="isOpen" :class="{ open: isOpen }">
         <div class="popup__container">
           <div class="popup__header">
-            <h3 class="popup__title">Crear nueva publicación</h3>
+            <h3 class="popup__title">
+              <span v-if="!isEditMode">Crear nueva publicación </span>
+              <span v-if="isEditMode">Editar publicación</span>
+            </h3>
             <button class="popup__close button" @click="closePopup">
               <img src="../assets/images/close-button-icon.svg" alt="Button Image" />
             </button>
@@ -424,7 +467,7 @@ li {
   width: 391px;
   height: 736px;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 100;
+  z-index: 100000;
   display: flex;
   justify-content: center;
   align-items: center;
