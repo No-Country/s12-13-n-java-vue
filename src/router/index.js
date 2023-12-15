@@ -28,13 +28,19 @@ const routes = [
     {
       path: '/DashboardTrabajador',
       name: 'DashboardTrabajador',
-      component: DashboardTrabajador
+      component: DashboardTrabajador,
+      meta: {
+        requereAuth: true
+      },
     },
 
     {
       path: '/Chat',
       name: 'Chat',
-      component: ChatView
+      component: ChatView,
+      meta: {
+        requereAuth: true
+      },
     },
 
     {

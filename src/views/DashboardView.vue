@@ -14,7 +14,7 @@ const headers = {
 }
 import router from '@/router'
   const chat = ()=>{
-    router.push({ name: 'chat' })
+    router.push({ name: 'Chat' })
   }
 
 const date = ref()
