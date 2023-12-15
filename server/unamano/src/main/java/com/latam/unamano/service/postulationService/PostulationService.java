@@ -1,6 +1,7 @@
 package com.latam.unamano.service.postulationService;
 
 import com.latam.unamano.dto.postulationDto.request.CreatePostulation;
+import com.latam.unamano.dto.postulationDto.request.CreatePostulationByUser;
 import com.latam.unamano.dto.postulationDto.request.UpdatePostulation;
 import com.latam.unamano.dto.postulationDto.response.PostulationResponse;
 import com.latam.unamano.persistence.entities.postulationEntity.Postulation;
@@ -8,6 +9,7 @@ import com.latam.unamano.persistence.entities.task.Task;
 import com.latam.unamano.persistence.entities.workerEntity.Worker;
 import com.latam.unamano.persistence.repositories.postulationRepository.PostulationRepository;
 import com.latam.unamano.persistence.repositories.task.TaskRepository;
+import com.latam.unamano.persistence.repositories.user.UserRepository;
 import com.latam.unamano.persistence.repositories.workerRepository.WorkerRepository;
 import com.latam.unamano.utils.PostulationStatus;
 import org.springframework.data.domain.Page;
@@ -22,25 +24,53 @@ import java.util.Optional;
 public class PostulationService implements PostulationServiceInterface{
 
     private PostulationRepository postulationRepository;
+    private UserRepository userRepository;
     private WorkerRepository workerRepository;
     private TaskRepository taskRepository;
 
     public PostulationService(PostulationRepository postulationRepository,
-                              WorkerRepository workerRepository, TaskRepository taskRepository){
+            UserRepository userRepository,WorkerRepository workerRepository, TaskRepository taskRepository){
         this.postulationRepository = postulationRepository;
+        this.userRepository = userRepository;
         this.workerRepository = workerRepository;
         this.taskRepository = taskRepository;
     }
 
+    /**
+     * Save new application by Worker ID and Task ID
+     * @param createPostulation
+     * @return Postulation
+     */
     @Override
     public Optional<Postulation> save(CreatePostulation createPostulation) {
         Optional<Worker> workerOptional = workerRepository.findById(createPostulation.worker_id());
-        Optional<Task> taskOptional = taskRepository.findById(createPostulation.worker_id());
+        Optional<Task> taskOptional = taskRepository.findById(createPostulation.task_id());
         if (workerOptional.isPresent() || taskOptional.isPresent()){
             Postulation postulation = new Postulation();
             postulation.setStatus(PostulationStatus.STARTED);
-                postulation.setWorker(workerOptional.get());
-                postulation.setTask(taskOptional.get());
+            postulation.setWorker(workerOptional.get());
+            postulation.setTask(taskOptional.get());
+            return Optional.of(postulationRepository.save(postulation));
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Save new application by User ID and Task ID
+     * @param createPostulationByUser
+     * @return Postulation
+     */
+    @Override
+    public Optional<Postulation> saveByUserId(CreatePostulationByUser createPostulationByUser) {
+        //search worker by user id
+        Optional<Worker> workerOptional = workerRepository.findByUserId(createPostulationByUser.user_id());
+        Optional<Task> taskOptional = taskRepository.findById(createPostulationByUser.task_id());
+        if (workerOptional.isPresent() || taskOptional.isPresent()){
+            Worker worker = workerOptional.get();
+            Postulation postulation = new Postulation();
+            postulation.setStatus(PostulationStatus.STARTED);
+            postulation.setWorker(worker);
+            postulation.setTask(taskOptional.get());
             return Optional.of(postulationRepository.save(postulation));
         }
         return Optional.empty();

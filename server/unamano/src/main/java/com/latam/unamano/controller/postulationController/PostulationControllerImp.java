@@ -3,6 +3,7 @@ package com.latam.unamano.controller.postulationController;
 import com.latam.unamano.commons.controller.GenericRestController;
 import com.latam.unamano.commons.dto.response.CustomResponse;
 import com.latam.unamano.dto.postulationDto.request.CreatePostulation;
+import com.latam.unamano.dto.postulationDto.request.CreatePostulationByUser;
 import com.latam.unamano.dto.postulationDto.request.UpdatePostulation;
 import com.latam.unamano.dto.postulationDto.response.PostulationResponse;
 import com.latam.unamano.persistence.entities.postulationEntity.Postulation;
@@ -30,6 +31,12 @@ public class PostulationControllerImp extends GenericRestController implements P
     @Override
     public ResponseEntity<CustomResponse> savePostulation(CreatePostulation createPostulation) {
         Optional<Postulation> postulation = postulationServiceInterface.save(createPostulation);
+        return ok(postulation,CREATED,REQUEST_POSTULATION);
+    }
+
+    @Override
+    public ResponseEntity<CustomResponse> savePostulationUser(CreatePostulationByUser createPostulationByUser) {
+        Optional<Postulation> postulation = postulationServiceInterface.saveByUserId(createPostulationByUser);
         return ok(postulation,CREATED,REQUEST_POSTULATION);
     }
 
