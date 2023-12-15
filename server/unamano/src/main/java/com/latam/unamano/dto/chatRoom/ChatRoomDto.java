@@ -1,4 +1,4 @@
-package com.latam.unamano.dto;
+package com.latam.unamano.dto.chatRoom;
 
 import com.latam.unamano.persistence.entities.chatRoom.ChatRoom;
 import com.latam.unamano.persistence.entities.client.Client;

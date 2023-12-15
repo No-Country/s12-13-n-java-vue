@@ -1,8 +1,9 @@
 package com.latam.unamano.service.chatRoom;
 
 
-import com.latam.unamano.dto.ChatRoomDto;
+import com.latam.unamano.dto.chatRoom.ChatRoomDto;
 import com.latam.unamano.dto.auth.UserResponseDto;
+import com.latam.unamano.dto.chatRoom.ChatRoomResponseDto;
 import com.latam.unamano.dto.clientDto.response.GetClient;
 import com.latam.unamano.dto.workerDto.reponse.GetWorker;
 import com.latam.unamano.exceptions.NoExistingChatRoomsException;
@@ -17,7 +18,6 @@ import com.latam.unamano.utils.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,14 +36,14 @@ public class ChatRoomService {
         chatRoomRepository.save(chatRoom);
     }
 
-    public List<ChatRoomDto>  getAllChatsRoomByUserid(String name){
+    public List<ChatRoomResponseDto>  getAllChatsRoomByUserid(){
         UserResponseDto userResponseDto = authService.getUserDetails();
         if(userResponseDto.role() == Role.ROLE_CLIENT){
            Optional<GetClient> clientOptional = clientService.getByUserId(userResponseDto.id());
             if(clientOptional.isPresent()){
                 GetClient clientDto = clientOptional.get();
                 List<ChatRoom> chatRooms = chatRoomRepository.getAllChatsRoomByClientId(clientDto.id_client());
-                return chatRooms.stream().map(ChatRoomDto::new).toList();
+                return chatRooms.stream().map(ChatRoomResponseDto::new).toList();
             }
         }
         if(userResponseDto.role() == Role.ROLE_WORKER){
@@ -51,7 +51,7 @@ public class ChatRoomService {
             if(workerOptional.isPresent()){
                 GetWorker workerDto = workerOptional.get();
                 List<ChatRoom> chatRooms = chatRoomRepository.getAllChatsRoomByWorkerId(workerDto.id_worker());
-                return chatRooms.stream().map(ChatRoomDto::new).toList();
+                return chatRooms.stream().map(ChatRoomResponseDto::new).toList();
             }
         }
         throw new NoExistingChatRoomsException("No hay chats");

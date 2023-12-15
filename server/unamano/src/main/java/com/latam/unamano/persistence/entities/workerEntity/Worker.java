@@ -1,5 +1,7 @@
 package com.latam.unamano.persistence.entities.workerEntity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.latam.unamano.persistence.entities.chatMessage.ChatMessage;
 import com.latam.unamano.persistence.entities.chatRoom.ChatRoom;
 import com.latam.unamano.persistence.entities.ocupationEntity.Occupation;
@@ -35,5 +37,9 @@ public class Worker {
     @OneToMany(mappedBy = "worker")
     private List<ChatRoom> chatMessagesAsWorker;
 
+    public Worker (Long id){
+        this.id = id;
+
+    }
 
 }
