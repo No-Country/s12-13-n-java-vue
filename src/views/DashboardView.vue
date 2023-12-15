@@ -30,6 +30,7 @@ let taskDescription = ref('')
 let taskLocation = ref('')
 let precio = ref(0)
 let cards = ref(null)
+const formRef = ref(null)
 
 isCardExists = computed(() => {
   return !!(cards.value && cards.value.length)
@@ -71,6 +72,14 @@ const onSubmit = async () => {
     }
   )
   fetchCards()
+  formRef.value.reset()
+  taskTitle.value = ''
+  category.value = ''
+  currency.value = ''
+  taskDescription.value = ''
+  taskLocation.value = ''
+  precio.value = ''
+  date.value = ''
   closePopup()
 }
 
@@ -175,7 +184,11 @@ const onCardDelete = () => {
               <img src="../assets/images/close-button-icon.svg" alt="Button Image" />
             </button>
           </div>
-          <form class="form" @submit.prevent="onSubmit({ taskTitle, taskDescription })">
+          <form
+            ref="formRef"
+            class="form"
+            @submit.prevent="onSubmit({ taskTitle, taskDescription })"
+          >
             <div class="form__labelBox">
               <label htmlFor="eventName" class="form__labelText"> Elige el tipo de servicio </label>
               <select
