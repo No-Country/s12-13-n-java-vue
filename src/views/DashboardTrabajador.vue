@@ -1,44 +1,48 @@
 <template>
     <main>
         <!--mobilebar-->
-        <div>
-            <div>
-                <img src="../assets/images/12_19.png" alt="hora">
-            </div>   
-            
-            <div class="referencias">
-                <img src="../assets/images/iconosmobilebar.svg" alt="frecuencia, wifi, bateria">
-            </div>
-        </div>
-        <!--navbar-->
-        <div>
-            <div>
-                <div class="isotipo">
-                    <div>
-                        <img src="../assets/images/isotipo.svg" alt="una mano">
-                    </div>
-                    <div>
-                        <img src="../assets/images/una mano.png" alt="una mano texto">
-                    </div>
-                </div>
+        <section>
+            <div class="navbar-div">
+                <div>
+                    <img src="../assets/images/12_19.png" alt="hora">
+                </div>   
+                
                 <div class="referencias">
-                    <img  src="../assets/images/frame.svg" alt="menú hamburguesa">
+                    <img src="../assets/images/iconosmobilebar.svg" alt="frecuencia, wifi, bateria">
                 </div>
             </div>
-        </div>
-        <!--navbar trabajador-->
-        <div class="navbar-trabajador">
-            <img src="../assets/images/home-icon.svg" alt="ícono home">
-            <img src="../assets/images/iconochat.svg" alt="ícono chat">
-            <img src="../assets/images/iconocalendario.png" alt="ícono calendario">
-        </div>
+        </section>    
+        <!--navbar-->
+        <section>
+            <div>
+                <div class="navbar-div">
+                    <div class="isotipo">
+                        <div>
+                            <img src="../assets/images/isotipo.svg" alt="una mano">
+                            <img src="../assets/images/una mano.png" alt="una mano texto">
+                        </div>      
+                    </div>
+                    <div clas="menuhamburguesa">
+                        <div>
+                            <img src="../assets/images/frame.svg" alt="menú hamburguesa">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--navbar trabajador-->
+            <div class="navbar-trabajador">
+                <img src="../assets/images/navbar icon component (5).svg" alt="ícono home">
+                <img src="../assets/images/navbar icon component.svg" alt="ícono chat">
+                <img src="../assets/images/iconocalendario.png" alt="ícono calendario">
+            </div>
+        </section>    
 
         <section class="fondo-card">
-            <div>
+            <div class="tarjeta-acordion">
                 <h3>Publicaciones activas</h3>
             </div>
             <!--Card trabajador-->
-            <section>
+            <section class="tarjeta-acordion">
                 <div class="accordion" id="accordionExample">
                     <div class="accordion-item">
                             <h2 class="accordion-header">
@@ -54,15 +58,36 @@
                                     <div>
                                         <strong><h4>Sesiones semanales</h4></strong>
                                     </div> 
-                                    <div>
+                                    <div class="tarea-de-florencia">
                                         <div class="perfil-florencia">
                                             <img src="../assets/images/contratadoraflorenciar.png" alt="contratadora">
-                                            <div class="info-florencia">
+                                            <div>
                                                 <p><strong>Florencia R.</strong></p>
                                                 <p class="contratador">Contratador</p>
+                                            </div>  
+                                        </div>    
+                                        <div class="info-florencia"> 
+                                                <div>
+                                                    <div> 
+                                                        <div>  
+                                                            <div>      
+                                                                <img src="../assets/images/estrellacompleta.svg" alt="estrella completa">
+                                                                <img src="../assets/images/estrellacompleta.svg" alt="estrella completa">
+                                                                <img src="../assets/images/estrellacompleta.svg" alt="estrella completa">
+                                                                <img src="../assets/images/estrellacompleta.svg" alt="estrella completa">
+                                                                <img src="../assets/images/mediaestrella.svg" alt="media estrella">
+                                                                <img src="../assets/images/4.5calificacion.svg" alt="4.5">
+                                                            </div>
+                                                        </div>   
+                                                    </div>
+                                                    <div>  
+                                                        <img src="../assets/images/16 calificaciones.svg" alt="16 calificaciones">
+                                                    </div>
+                                                </div>    
                                             </div>
-                                        </div>  
-                                        <div class="valoracion">  
+                                        </div>
+                                    </div>      
+                                       <!-- <div class="valoracion">  
                                             <div class="estrellas">
                                                 <img src="../assets/images/estrellacompleta.svg" alt="estrella completa">
                                                 <img src="../assets/images/estrellacompleta.svg" alt="estrella completa">
@@ -76,11 +101,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>    
+                                </div>-->
                                 <ul>
-                                    <div><strong>Fecha:<br class="referencias">8/12/2023</strong></div>
-                                    <div><strong>Dirección:<br class="referencias">Bogotá, Colombia</strong></div>
-                                    <div><strong>Precio:<br class="referencias">30 USD</strong></div>
+                                    <div><strong>Fecha:</strong><span class="referencias">8/12/2023</span></div>
+                                    <div><strong>Dirección:</strong><span class="referencias">Bogotá, Colombia</span></div>
+                                    <div><strong>Precio:</strong><span class="referencias">30 USD</span></div>
                                     <div><strong>Descripción:</strong></div>
                                     <div>
                                         <div class="descripcion">
@@ -137,8 +162,17 @@ import {ref} from 'vue'*/
 </script>
 
 <style scoped>
-.isotipo{
+.navbar-div{
     display:flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.isotipo{
+    display:inline-block;
     align-items: center;
     margin: 0;
 }
@@ -148,12 +182,19 @@ import {ref} from 'vue'*/
     align-content: center;
     display: flex;
     justify-content: center;
+    margin-bottom: 10px;
+}
+
+.menuhamburguesa{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .referencias{
     align-content: right;
     display: flex;
-    justify-content: right;
+    justify-content:flex-end;
 }
 
 .descripcion{
@@ -164,36 +205,45 @@ import {ref} from 'vue'*/
     margin: 0 auto;
 }
 
+.tarjeta-acordion{
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
 .kinesiologia{
     color:#1D3D8F;
     text-decoration: solid;
 }
 
+.tarea-de-florencia{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
 .perfil-florencia{
     display:flex;
     align-items: center;
-    background-color: violet;
 }
 
 .info-florencia{
-    margin-right: auto;
-    background-color: yellow;
+    display: flex;
+    align-items: center;
 }
 
 .valoracion{
     display: flex;
     flex-direction: column;
     align-items:flex-end;
-    background-color: orange;
 }
 
 .estrellas{
-    background-color: red;
+    display: flex;
+    margin-right: 10px;
 }
 
-.calificaciones{
-    margin-left: auto;
-    background-color: green;
+.calificacion-container{
+    justify-content: space-between;
 }
 
 .contratador{
@@ -207,7 +257,7 @@ import {ref} from 'vue'*/
 .container-description h3 {
     color: #fff;
     margin-top: 48px;
-    font-size: 20px;
+    font-size: 50px;
   }
  
   .container-description {
