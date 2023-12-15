@@ -31,7 +31,6 @@ let taskLocation = ref('')
 let precio = ref(0)
 let cards = ref(null)
 
-// let clientID = ref(0)
 
 const toggleNavItem = (index) => {
   activeItems.value[index] = !activeItems.value[index]
