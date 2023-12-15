@@ -4,7 +4,7 @@ import { ref, onMounted } from 'vue'
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import FooterPage from '@/components/SectionFooter.vue'
-import JobCard from '../components/JobCard.vue'
+import JobCard from '../components/JobCardWorker.vue'
 import useFormContratador from '@/stores/formContratador'
 import { categorias, currencies } from '../utils/constants'
 import axios from '@/plugins/axios'
@@ -67,7 +67,7 @@ const onSubmit = async () => {
 const fetchCards = async () => {
   await axios.get('task/published', { headers }).then((response) => {
     console.log('response:', response.data.content)
-    cards.value = response.data.content.filter((card) => card.id > 15)
+    cards.value = response.data.content
   })
 }
 
@@ -130,7 +130,7 @@ const onCardDelete = () => {
         <div v-if="cards && cards.length" class="tasks-container">
           <div v-for="card in cards" :key="card.id">
             <JobCard
-              @onDelete="onCardDelete"
+            
               :taskTitle="card.taskTitle"
               :taskDate="card.taskDate.slice(0, 10).replace(/-/g, '/')"
               :category="card.occupations[0].occupationName"
@@ -145,9 +145,10 @@ const onCardDelete = () => {
         </div>
 
         <div v-else>
-          <!-- Handle the case when cards is null or empty -->
+           Handle the case when cards is null or empty 
           No cards available.
         </div>
+
       </section>
       <section class="modal-info">
         <p class="modal-info__text" v-if="!cards">
