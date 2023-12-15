@@ -325,7 +325,9 @@ detalles de tu trabajo"
               <Datepicker v-model="date" class="date-picker" />
             </div>
 
-            <button class="form__submit-button link">Publicar</button>
+            <button v-if="!isEditMode" class="form__submit-button link">Publicar</button>
+            <button v-if="isEditMode" class="form__delete-button link">Eliminar</button>
+            <button v-if="isEditMode" class="form__submit-button link">Guardar</button>
           </form>
         </div>
       </modal>
@@ -465,7 +467,7 @@ li {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 391px;
-  height: 736px;
+  /* height: 736px; */
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 100000;
   display: flex;
@@ -565,6 +567,23 @@ li {
   font-family: 'Baloo 2';
   font-size: 20px;
   font-weight: 700;
+}
+
+.form__delete-button {
+  display: flex;
+  height: 51px;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+  border-radius: 6px;
+  border: 2px solid var(--delete-error, #e20c0c);
+  color: var(--delete-error, #e20c0c);
+  font-family: 'Baloo 2';
+  font-size: 20px;
+  font-weight: 700;
+  background-color: white;
+  margin-bottom: -11px;
 }
 
 .input-location {
