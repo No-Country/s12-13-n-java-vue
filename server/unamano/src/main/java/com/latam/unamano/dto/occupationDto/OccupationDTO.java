@@ -15,4 +15,5 @@ public class OccupationDTO {
     private String occupationName;
     private String description;
     private List<TaskDTO> task;
+    private String color;
 }

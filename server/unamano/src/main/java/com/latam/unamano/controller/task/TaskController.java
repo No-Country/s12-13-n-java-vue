@@ -1,7 +1,9 @@
 package com.latam.unamano.controller.task;
 
+import com.latam.unamano.dto.task.CreateTaskDTO;
 import com.latam.unamano.dto.task.TaskDTO;
 import com.latam.unamano.dto.task.TaskMapper;
+import com.latam.unamano.dto.task.UpdateTaskDTO;
 import com.latam.unamano.service.task.TaskService;
 import com.latam.unamano.utils.TaskStatus;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -45,17 +47,17 @@ public class TaskController {
 
     @PostMapping
     @Secured("ROLE_CLIENT")
-    public ResponseEntity<TaskDTO> createTask( @RequestBody TaskDTO taskDTO,
+    public ResponseEntity<TaskDTO> createTask( @RequestBody CreateTaskDTO createTaskDTO,
                                               UriComponentsBuilder uriComponentsBuilder){
-        TaskDTO task = taskService.createTask(taskDTO);
+        TaskDTO task = taskService.createTask(createTaskDTO);
         URI url = uriComponentsBuilder.path("/api/task/{id}").buildAndExpand(task.getId()).toUri();
         return ResponseEntity.created(url).body(task);
     }
 
     @PutMapping
     @Secured("ROLE_CLIENT")
-    public ResponseEntity<TaskDTO> updateTask(@RequestBody TaskDTO taskDTO){
-        return ResponseEntity.ok(taskService.updateTask(taskDTO));
+    public ResponseEntity<TaskDTO> updateTask(@RequestBody UpdateTaskDTO updateTaskDTO){
+        return ResponseEntity.ok(taskService.updateTask(updateTaskDTO));
     }
 
     @DeleteMapping("{id}")

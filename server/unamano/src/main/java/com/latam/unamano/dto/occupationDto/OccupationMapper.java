@@ -10,6 +10,7 @@ public class OccupationMapper {
         return Occupation.builder()
                 .occupationName(occupationDTO.getOccupationName())
                 .description(occupationDTO.getDescription())
+                .color((occupationDTO.getColor()))
                 //.task(occupationDTO.getTask())
                 .build();
     }
@@ -18,6 +19,7 @@ public class OccupationMapper {
                 .id(occupation.getId())
                 .occupationName(occupation.getOccupationName())
                 .description(occupation.getDescription())
+                .color(occupation.getColor())
                 //.task(occupation.getTask())
                 .build();
 

@@ -51,4 +51,17 @@ public class TaskMapper {
                 .address(taskDTO.getAddress())
                 .build();
     }
+
+    public static Task createTaskDTOToTask(CreateTaskDTO createTaskDTO) {
+        return Task.builder()
+                .taskTitle(createTaskDTO.getTaskTitle())
+                .description(createTaskDTO.getDescription())
+                .price(createTaskDTO.getPrice())
+                .currencyType(createTaskDTO.getCurrencyType())
+                .occupations(createTaskDTO.getOccupations().stream().map(OccupationMapper::DtoToOccupation).toList())
+                .taskDate(createTaskDTO.getTaskDate())
+                .client(new Client(createTaskDTO.getClient().getId(), null, null))
+                .address(createTaskDTO.getAddress())
+                .build();
+    }
 }
