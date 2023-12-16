@@ -9,6 +9,7 @@ import com.latam.unamano.dto.postulationDto.response.PostulationResponse;
 import com.latam.unamano.dto.task.TaskDTO;
 import com.latam.unamano.persistence.entities.postulationEntity.Postulation;
 import com.latam.unamano.service.postulationService.PostulationServiceInterface;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,7 @@ public class PostulationControllerImp extends GenericRestController implements P
     }
 
     @Override
+    @Operation(summary = "Endpoint que devuelve todas las postulaciones de un trabajador por su id, sin distinción de estado")
     public ResponseEntity<CustomResponse> getAllPostulations(Long id, Pageable pageable) {
         return ok(postulationServiceInterface.getAllByWorkerId(id, pageable).map(PostulationResponse::new),null,REQUEST_POSTULATION);
     }
@@ -71,10 +73,13 @@ public class PostulationControllerImp extends GenericRestController implements P
         return ok(null,DELETED_SUCCESSFULLY,REQUEST_POSTULATION);
     }
     @GetMapping("task_postulations/{idTask}")
+    @Operation(summary = "Endpoint para obtener las postulaciones de una tarea mediante su id")
     public Page<PostulationResponse> getPostulationsByTaskId(Pageable pageable, @PathVariable Long idTask){
         return postulationServiceInterface.getPostulationsByTaskId(pageable, idTask);
     }
     @PutMapping("accept_postulation/")
+    @Operation(summary = "Endpoint para aceptar la postulación de un usuario. Dentro del body es necesario ingresar el id de" +
+            "la postulación y de la tarea")
     public TaskDTO acceptPostulation(@RequestBody AcceptPostulation acceptPostulation){
         return postulationServiceInterface.acceptPostulation(acceptPostulation);
     }
