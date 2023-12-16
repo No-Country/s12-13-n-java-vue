@@ -1,16 +1,4 @@
 <script setup>
-import axios from '@/plugins/axios'
-const token = localStorage.getItem('token')
-const headers = {
-  Authorization: `Bearer ${token}`
-}
-
-function deleteTask(id) {
-  console.log('id:', id)
-  axios.delete(`task/${id}`, { headers }).then((response) => {
-    console.log('response:', response)
-  })
-}
 
 // const editTask = () => {
 //   $emit('onEdit', props.id)

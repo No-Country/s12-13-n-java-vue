@@ -47,8 +47,9 @@ const onCardEdit = (card) => {
   actionName.value = 'Editar publicación'
   currency.value = editedCard.value.currencyType
   date.value = editedCard.value.taskDate
-  category.value = editedCard.value.occupations[0].occupationName
-  console.log('editedCard.value.occupations[0].:', editedCard.value.occupations[0].occupationName)
+  category.value =
+    editedCard.value.occupations[0].occupationName.slice(0, 1).toUpperCase() +
+    editedCard.value.occupations[0].occupationName.slice(1)
 }
 
 isCardExists = computed(() => {
@@ -137,23 +138,23 @@ const fetchCards = async () => {
   })
 }
 
-// const fetchClient = async () => {
-//   await axios.get('auth/details', { headers }).then((response) => {
-//     console.log('response:', response.data.content)
-//     cards.value = response.data.content.filter((card) => card.username === 'abuelita')
-//   })
-// }
-
 onMounted(() => {
   // fetchClient()
   fetchCards()
   if (isEditMode.value && editedCard.value) {
     category.value = editedCard.value.occupations[0].occupationName
+    console.log('category.value:', category.value)
   }
+  fetchCards()
 })
 
-const onCardDelete = () => {
-  fetchCards()
+const deleteTask = async () => {
+  const id = editedCard.value.id
+  await axios.delete(`task/${id}`, { headers }).then((response) => {
+    console.log('response:', response)
+  })
+  closePopup()
+  await fetchCards()
 }
 </script>
 <template>
@@ -244,16 +245,23 @@ const onCardDelete = () => {
             @submit.prevent="onSubmit({ taskTitle, taskDescription })"
           >
             <div class="form__labelBox">
-              <label htmlFor="eventName" class="form__labelText"> Elige el tipo de servicio </label>
+              <label htmlFor="categoryName" class="form__labelText">
+                Elige el tipo de servicio
+              </label>
               <select
                 class="form__select"
-                id="eventName"
-                name="eventName"
+                id="categoryName"
+                name="categoryName"
                 v-model="category"
                 required
               >
-                <option class="form__optionText" v-for="(cat, index) in categorias" :key="index">
-                  {{ category }}
+                <option
+                  class="form__optionText"
+                  v-for="(cat, index) in categorias"
+                  :value="cat"
+                  :key="index"
+                >
+                  {{ cat }}
                 </option>
               </select>
               <img src="../assets/images/shevron.svg" alt="shevron" class="shevron" />
@@ -332,7 +340,9 @@ detalles de tu trabajo"
             </div>
 
             <button v-if="!isEditMode" class="form__submit-button link">Publicar</button>
-            <button v-if="isEditMode" class="form__delete-button link">Eliminar</button>
+            <button v-if="isEditMode" @click="deleteTask" class="form__delete-button link">
+              Eliminar
+            </button>
             <button v-if="isEditMode" class="form__submit-button link">Guardar</button>
           </form>
         </div>
