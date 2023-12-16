@@ -35,14 +35,9 @@ let cards = ref(null)
 const formRef = ref(null)
 
 const editedCard = ref(null)
-console.log('editedCard:', editedCard)
-console.log('CARDCisEditMode:', isEditMode.value)
 const onCardEdit = (card) => {
-  console.log('editedCard:', editedCard.value)
   isEditMode.value = true
-  console.log('CARDCcard:', card)
   editedCard.value = card
-  console.log('CARDCisEditModeAfterClick:', isEditMode.value)
   isOpen.value = true
   actionName.value = 'Editar publicación'
   currency.value = editedCard.value.currencyType
@@ -77,26 +72,42 @@ const closePopup = () => {
 }
 
 const onSubmit = async () => {
+  console.log('onSubmit:', onSubmit)
   if (isEditMode.value) {
-    await store.update(
-      taskTitle.value,
-      taskDescription.value,
-      precio.value,
-      currency.value,
-      [
+    console.log('onSubmit:', isEditMode.value, currency.value)
+
+    await axios
+      .put(
+        'task',
         {
-          occupationName: category.value
-        }
-      ],
-      date.value,
-      {
-        id: 1
-      },
-      {
-        street: taskLocation.value
-      }
-    )
+          id: editedCard.value.id,
+          taskTitle: taskTitle.value,
+          description: taskDescription.value,
+          price: precio.value,
+          currencyType: currency.value,
+          occupations: [
+            {
+              occupationName: category.value
+            }
+          ],
+          taskDate: date.value,
+          client: {
+            id: 1
+          },
+          address: {
+            street: taskLocation.value
+          }
+        },
+        { headers }
+      )
+      .then((response) => {
+        console.log('Response', response)
+      })
+      .catch((error) => {
+        console.log('Error en form', error)
+      })
   } else {
+    console.log('ELSEonSubmit')
     await store.submit(
       taskTitle.value,
       taskDescription.value,
@@ -139,7 +150,6 @@ const fetchCards = async () => {
 }
 
 onMounted(() => {
-  // fetchClient()
   fetchCards()
   if (isEditMode.value && editedCard.value) {
     category.value = editedCard.value.occupations[0].occupationName
