@@ -35,14 +35,20 @@ let cards = ref(null)
 const formRef = ref(null)
 
 const editedCard = ref(null)
+console.log('editedCard:', editedCard)
 console.log('CARDCisEditMode:', isEditMode.value)
 const onCardEdit = (card) => {
+  console.log('editedCard:', editedCard.value)
   isEditMode.value = true
   console.log('CARDCcard:', card)
   editedCard.value = card
   console.log('CARDCisEditModeAfterClick:', isEditMode.value)
   isOpen.value = true
   actionName.value = 'Editar publicación'
+  currency.value = editedCard.value.currencyType
+  date.value = editedCard.value.taskDate
+  category.value = editedCard.value.occupations[0].occupationName
+  console.log('editedCard.value.occupations[0].:', editedCard.value.occupations[0].occupationName)
 }
 
 isCardExists = computed(() => {
@@ -58,9 +64,11 @@ const toggleNavItem = (index) => {
 }
 
 const openPopup = () => {
+  currency.value = ''
+  date.value = ''
+  category.value = ''
   isEditMode.value = false
   isOpen.value = true
-  console.log('CARDCisEditModeAfterClick:', isEditMode.value)
 }
 
 const closePopup = () => {
@@ -139,6 +147,9 @@ const fetchCards = async () => {
 onMounted(() => {
   // fetchClient()
   fetchCards()
+  if (isEditMode.value && editedCard.value) {
+    category.value = editedCard.value.occupations[0].occupationName
+  }
 })
 
 const onCardDelete = () => {
@@ -241,12 +252,7 @@ const onCardDelete = () => {
                 v-model="category"
                 required
               >
-                <option class="form__optionText">Categorias</option>
-                <option
-                  class="form__optionText"
-                  v-for="(category, index) in categorias"
-                  :key="index"
-                >
+                <option class="form__optionText" v-for="(cat, index) in categorias" :key="index">
                   {{ category }}
                 </option>
               </select>
@@ -259,7 +265,7 @@ const onCardDelete = () => {
                 name="eventName"
                 placeholder="Escribe un título"
                 required
-                :value="taskTitle"
+                :value="isEditMode ? editedCard.taskTitle : taskTitle"
                 @input="(e) => (taskTitle = e.target.value)"
               />
             </div>
@@ -269,7 +275,7 @@ const onCardDelete = () => {
                 class="form__textarea"
                 type="select"
                 name="eventName"
-                :value="taskDescription"
+                :value="isEditMode ? editedCard.description : taskDescription"
                 @input="(e) => (taskDescription = e.target.value)"
                 placeholder="Agrega una descripción con los
 detalles de tu trabajo"
@@ -284,7 +290,7 @@ detalles de tu trabajo"
                   name="eventName"
                   placeholder="$"
                   type="number"
-                  :value="precio"
+                  :value="isEditMode ? editedCard.price : precio"
                   @input="(e) => (precio = Number(e.target.value))"
                 />
               </div>
