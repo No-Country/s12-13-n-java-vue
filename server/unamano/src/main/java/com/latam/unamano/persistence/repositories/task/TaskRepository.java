@@ -22,4 +22,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     Page<Task> findByClientId(Pageable pageable, @Param("id") Long id);
     @Query("SELECT t FROM Task t INNER JOIN t.client c WHERE c.id=:id AND t.status=:status")
     Page<Task> findByClientIdAndStatus(Pageable pageable,@Param("id") Long id, @Param("status") TaskStatus status);
+
+
+
 }

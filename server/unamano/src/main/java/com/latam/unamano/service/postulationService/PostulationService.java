@@ -6,6 +6,7 @@ import com.latam.unamano.dto.postulationDto.request.UpdatePostulation;
 import com.latam.unamano.dto.postulationDto.response.PostulationResponse;
 import com.latam.unamano.dto.task.TaskDTO;
 import com.latam.unamano.dto.task.TaskMapper;
+import com.latam.unamano.exceptions.PostulationDeniedException;
 import com.latam.unamano.persistence.entities.postulationEntity.Postulation;
 import com.latam.unamano.persistence.entities.task.Task;
 import com.latam.unamano.persistence.entities.workerEntity.Worker;
@@ -39,8 +40,17 @@ public class PostulationService implements PostulationServiceInterface{
 
     @Override
     public Optional<Postulation> save(CreatePostulation createPostulation) {
+        if(!postulationRepository.findByWorkerIdAndTaskId(createPostulation.worker_id(), createPostulation.task_id()).isEmpty()){
+           throw new PostulationDeniedException("El usuario con id " + createPostulation.worker_id() +
+                   " ya está postulado a la tarea con id : " + createPostulation.task_id());
+        }
         Optional<Worker> workerOptional = workerRepository.findById(createPostulation.worker_id());
         Optional<Task> taskOptional = taskRepository.findById(createPostulation.task_id());
+        if (!taskOptional.get().getStatus().equals(TaskStatus.PUBLISHED)){
+            throw new PostulationDeniedException("No puede postularse a la tarea, porque ya se eligió " +
+                    "un trabajador para realizarla, está terminada o fue cancelada. ");
+        }
+
         if (workerOptional.isPresent() && taskOptional.isPresent()){
             Postulation postulation = new Postulation();
             postulation.setStatus(PostulationStatus.STARTED);

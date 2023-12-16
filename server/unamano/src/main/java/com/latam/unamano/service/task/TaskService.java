@@ -7,10 +7,13 @@ import com.latam.unamano.dto.task.UpdateTaskDTO;
 import com.latam.unamano.exceptions.BadDataEntryException;
 import com.latam.unamano.dto.task.TaskMapper;
 import com.latam.unamano.exceptions.UpdateDeniedException;
+import com.latam.unamano.persistence.entities.postulationEntity.Postulation;
 import com.latam.unamano.persistence.repositories.addressRespository.AddressRepository;
 import com.latam.unamano.persistence.repositories.clientRepository.ClientRepository;
+import com.latam.unamano.persistence.repositories.postulationRepository.PostulationRepository;
 import com.latam.unamano.persistence.repositories.user.UserRepository;
 import com.latam.unamano.service.occupationService.OccupationService;
+import com.latam.unamano.utils.PostulationStatus;
 import com.latam.unamano.utils.TaskStatus;
 import com.latam.unamano.persistence.entities.task.Task;
 import com.latam.unamano.persistence.repositories.task.TaskRepository;
@@ -30,13 +33,20 @@ public class TaskService {
     private final OccupationService occupationService;
     private final AddressRepository addressRepository;
     private final ClientRepository clientRepository;
+    private final PostulationRepository postulationRepository;
 
-    public TaskService(TaskRepository taskRepository, OccupationService occupationService, UserRepository userRepository, AddressRepository addressRepository, ClientRepository clientRepository){
+    public TaskService(TaskRepository taskRepository
+            , OccupationService occupationService
+            , UserRepository userRepository
+            , AddressRepository addressRepository
+            , ClientRepository clientRepository
+    , PostulationRepository postulationRepository){
         this.taskRepository = taskRepository;
         this.occupationService= occupationService;
         this.userRepository=userRepository;
         this.addressRepository=addressRepository;
         this.clientRepository=clientRepository;
+        this.postulationRepository=postulationRepository;
 
 
     }
@@ -195,5 +205,9 @@ public class TaskService {
 
     public Page<TaskDTO> findByClientIdAndStatus(Pageable pageable, Long id, TaskStatus status) {
         return taskRepository.findByClientIdAndStatus(pageable, id, status).map(TaskMapper::taskToTaskDTO);
+    }
+
+    public Page<TaskDTO> findByWorkerIdAndStatus(Pageable pageable, Long id, TaskStatus task_status, PostulationStatus postulation_status) {
+        return postulationRepository.findByWorkerIdAndTaskStatusAndStatus(pageable, id, task_status, postulation_status).map(Postulation::getTask).map(TaskMapper::taskToTaskDTO);
     }
 }

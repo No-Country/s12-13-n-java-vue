@@ -5,6 +5,7 @@ import com.latam.unamano.dto.task.TaskDTO;
 import com.latam.unamano.dto.task.TaskMapper;
 import com.latam.unamano.dto.task.UpdateTaskDTO;
 import com.latam.unamano.service.task.TaskService;
+import com.latam.unamano.utils.PostulationStatus;
 import com.latam.unamano.utils.TaskStatus;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.websocket.server.PathParam;
@@ -12,12 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import java.net.URI;
 
 
@@ -88,6 +87,11 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.OK).body(taskService.findByClientIdAndStatus(pageable, id, status));
     }
 
+    @GetMapping("/worker/")
+    
+    public ResponseEntity<Page<TaskDTO>> findByWorkerIDAndStatus(Pageable pageable, @PathParam("id") Long id, @PathParam("task_status") TaskStatus task_status, @PathParam("postulation_status") PostulationStatus postulation_status){
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.findByWorkerIdAndStatus(pageable, id, task_status, postulation_status));
+    }
 
 
 

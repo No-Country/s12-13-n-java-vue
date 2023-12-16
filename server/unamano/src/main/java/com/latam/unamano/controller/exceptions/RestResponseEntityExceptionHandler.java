@@ -1,7 +1,6 @@
 package com.latam.unamano.controller.exceptions;
 
-import com.latam.unamano.exceptions.BadDataEntryException;
-import com.latam.unamano.exceptions.UpdateDeniedException;
+import com.latam.unamano.exceptions.*;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
 import com.latam.unamano.dto.exceptions.ErrorResponse;
-import com.latam.unamano.exceptions.IncorretRoleException;
-import com.latam.unamano.exceptions.UsernameOrPasswordIncorretException;
 
 import org.springframework.security.access.AccessDeniedException;
 
@@ -54,6 +51,10 @@ public class RestResponseEntityExceptionHandler {
     }
     @ExceptionHandler(UpdateDeniedException.class)
     public ResponseEntity<String> accessDenied(UpdateDeniedException e){
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+    }
+    @ExceptionHandler(PostulationDeniedException.class)
+    public ResponseEntity<String> accessDenied(PostulationDeniedException e){
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
     }
 }
