@@ -80,7 +80,7 @@ public class TaskService {
             throw new BadDataEntryException("La dirección en la que se va a realizar la tarea no puede estar vacía");
         if(taskDTO.getClient()==null|| taskDTO.getClient().getId()==null)
             throw new BadDataEntryException("Es requerido el id del cliente que desea realizar la tarea");
-        if(!userRepository.existsById(taskDTO.getClient().getId()))
+        if(!clientRepository.existsById(taskDTO.getClient().getId()))
             throw new EntityNotFoundException("No se encontró en la base de datos el cliente con el id " + taskDTO.getClient().getId());
         if (taskDTO.getOccupations()==null||taskDTO.getOccupations().isEmpty())
             throw new BadDataEntryException("Es requerido ingresar al menos una ocupación o categoría para crear una tarea");
