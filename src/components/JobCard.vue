@@ -199,6 +199,8 @@ p {
   cursor: pointer;
   border: none;
   border-radius: 6px;
+  font-family: 'Baloo 2';
+  font-size: 20px;
 }
 
 .link:hover {

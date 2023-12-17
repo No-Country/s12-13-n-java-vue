@@ -121,7 +121,7 @@
           <h3 class="config-title sidebar-title" id="city">TAMAÑO</h3>
           <div>
             <div class="slider-container">
-              <!-- <span class="circle start"></span> -->
+              <span class="circle start"></span>
               <input
                 class="range-slider"
                 type="range"
@@ -132,8 +132,8 @@
                 :min="minValue"
                 :max="maxValue"
               />
-              <!-- <span class="circle center"></span>
-              <span class="circle end"></span> -->
+              <span class="circle center"></span>
+              <span class="circle end"></span>
             </div>
           </div>
         </section>
@@ -296,6 +296,8 @@ li {
   border-radius: 20px;
 }
 .sidebar {
+  font-family: 'Baloo 2';
+  font-size: 20px;
   width: 289px;
   padding: 60.3904px 40.5008px;
   background-color: white;
@@ -345,6 +347,8 @@ li {
 
 .link {
   text-decoration: none;
+  font-family: 'Baloo 2';
+  font-size: 20px;
 }
 .link:hover {
   cursor: pointer;
@@ -448,6 +452,11 @@ li {
   z-index: 1;
   font-size: 0.625rem;
   margin-bottom: -1.125rem;
+  bottom: 159px;
+}
+
+.circle:hover {
+  cursor: pointer;
 }
 
 .circle.start {
