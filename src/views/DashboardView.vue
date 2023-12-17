@@ -280,6 +280,7 @@ const openDialog = () => {
                 id="categoryName"
                 name="categoryName"
                 v-model="category"
+                :disabled="isEditMode"
                 required
               >
                 <option
