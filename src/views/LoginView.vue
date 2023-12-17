@@ -32,8 +32,13 @@
 
   const logged_in = async () => {
     // Realizar el inicio de sesión
+    if (!email.value || !password.value) {
+      // Notificar al usuario que ambos campos son requeridos
+      store.notificationError('Por favor, completa todos los campos.');
+      return;
+    }
     await store.login(email.value, password.value, activeTab.value);
-
+  
     // Verificar si el usuario está autenticado
     if (store.token) {
       // Si está autenticado, redirigir a la página correspondiente
@@ -71,7 +76,6 @@
         <label style=" font-size: 20px; " for="email">Email o Usuario</label>
       </div>
       <input autocomplete="none" id="email" v-model="email" type="text">
-
       <div style="width: 85%; margin-top: 30px">
         <label style=" font-size: 20px; " for="password">Contraseña</label>
       </div>

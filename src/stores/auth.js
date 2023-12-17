@@ -20,6 +20,7 @@ const useAuth = defineStore('auth', {
       let role = tipo === 'contratador' ? CONTRATADOR_ROLE : TRABAJADOR_ROLE;
 
       try {
+        
         // Realizar la solicitud de inicio de sesión
         const response = await axios.post('auth/login', { username, password, role });
 
@@ -66,12 +67,12 @@ const useAuth = defineStore('auth', {
     },
 
     reset() {
-      token: null;
-      rol: null;
-      this.feedback = '';
-      this.feedbackError = '';
       localStorage.removeItem('token');
       localStorage.removeItem('userData');
+      this.token = null;
+      this.rol = null;
+      this.feedback = '';
+      this.feedbackError = '';
     }
   },
 });
