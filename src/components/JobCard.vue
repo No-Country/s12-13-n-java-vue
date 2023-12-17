@@ -1,12 +1,11 @@
 <script setup>
-// const editTask = () => {
-//   $emit('onEdit', props.id)
-// }
+
 
 const props = defineProps({
   taskTitle: String,
   taskDate: String,
   category: String,
+  color: String,
   description: String,
   address: String,
   price: String,
@@ -18,7 +17,8 @@ const props = defineProps({
 <template>
   <section
     class="card"
-    :class="{ unexpanded: !isExpanded, expanded: isExpanded, 'z-1000': isExpanded }"
+    :class="{ unexpanded: !isExpanded, expanded: isExpanded }"
+    :style="{ boxShadow: `0px 5px 0px 0px ${props.color} inset` }"
   >
     <div class="container">
       <div>

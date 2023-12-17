@@ -92,7 +92,7 @@ const onSubmit = async () => {
           currencyType: currency.value,
           occupations: [
             {
-              occupationName: category.value
+              occupationName: category.value.toLowerCase()
             }
           ],
           taskDate: date.value,
@@ -120,7 +120,7 @@ const onSubmit = async () => {
       currency.value,
       [
         {
-          occupationName: category.value
+          occupationName: category.value.toLowerCase()
         }
       ],
       date.value,
@@ -227,7 +227,10 @@ const openDialog = () => {
             <JobCard
               :taskTitle="card.taskTitle"
               :taskDate="card?.taskDate?.slice(0, 10).replace(/-/g, '/')"
-              :category="card.occupations[0].occupationName"
+              :category="`${card.occupations[0].occupationName
+                .slice(0, 1)
+                .toUpperCase()}${card.occupations[0].occupationName.slice(1)}`"
+              :color="card.occupations[0].color"
               :description="card.description"
               :price="card.price"
               :currencyType="card.currencyType"
