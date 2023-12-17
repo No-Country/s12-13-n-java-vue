@@ -10,6 +10,7 @@ import com.latam.unamano.utils.TaskStatus;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.websocket.server.PathParam;
+import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -181,6 +182,14 @@ public class TaskController {
     public ResponseEntity<Page<TaskDTO>> findByWorkerIDAndStatus(Pageable pageable, @PathParam("id") Long id, @PathParam("task_status") TaskStatus task_status, @PathParam("postulation_status") PostulationStatus postulation_status){
         return ResponseEntity.status(HttpStatus.OK).body(taskService.findByWorkerIdAndStatus(pageable, id, task_status, postulation_status));
     }
+
+    @PutMapping("/completed/{id}")
+    @Secured("ROLE_CLIENT")
+    @Operation(summary = "Endpoint para que un cliente marque una tarea o trabajo como completado o terminado. ")
+    public ResponseEntity<TaskDTO> completedById(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.completedTaskById(id));
+    }
+
 
 
 

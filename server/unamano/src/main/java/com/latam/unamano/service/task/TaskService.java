@@ -6,6 +6,7 @@ import com.latam.unamano.dto.task.TaskDTO;
 import com.latam.unamano.dto.task.UpdateTaskDTO;
 import com.latam.unamano.exceptions.BadDataEntryException;
 import com.latam.unamano.dto.task.TaskMapper;
+import com.latam.unamano.exceptions.OperationDeniedException;
 import com.latam.unamano.exceptions.UpdateDeniedException;
 import com.latam.unamano.persistence.entities.postulationEntity.Postulation;
 import com.latam.unamano.persistence.repositories.addressRespository.AddressRepository;
@@ -21,6 +22,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -209,5 +211,23 @@ public class TaskService {
 
     public Page<TaskDTO> findByWorkerIdAndStatus(Pageable pageable, Long id, TaskStatus task_status, PostulationStatus postulation_status) {
         return postulationRepository.findByWorkerIdAndTaskStatusAndStatus(pageable, id, task_status, postulation_status).map(Postulation::getTask).map(TaskMapper::taskToTaskDTO);
+    }
+
+    public TaskDTO completedTaskById(Long id) {
+        if(id==null) {
+            throw new BadDataEntryException("Es necesario un id para esta petición");
+        }
+        if(!taskRepository.existsById(id)){
+            throw new EntityNotFoundException("No existe la tarea con el id ingresado");
+        }
+        Task task = taskRepository.findById(id).get();
+        if(!task.getStatus().equals(TaskStatus.INPROGRESS)){
+            throw new OperationDeniedException("Unicamente pueden marcarse como completadas las tareas que tienen un trabajador asignado");
+        }
+        task.setStatus(TaskStatus.COMPLETED);
+        //TODO Acá quizás se pueda disparar algo para habilitar las calificaciones entre usuarios
+        return TaskMapper.taskToTaskDTO(taskRepository.save(task));
+
+
     }
 }

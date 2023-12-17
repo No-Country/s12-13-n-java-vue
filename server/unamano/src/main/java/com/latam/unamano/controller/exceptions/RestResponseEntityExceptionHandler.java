@@ -57,4 +57,8 @@ public class RestResponseEntityExceptionHandler {
     public ResponseEntity<String> accessDenied(PostulationDeniedException e){
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
     }
+    @ExceptionHandler(OperationDeniedException.class)
+    public ResponseEntity<String> accessDenied(OperationDeniedException e){
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+    }
 }
