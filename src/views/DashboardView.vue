@@ -378,7 +378,7 @@ detalles de tu trabajo"
       </modal>
     </Transition>
     <modal
-      class="dialog z-index-100000"
+      class="dialog"
       ref="dialogRef"
       v-if="isDialogOpen"
       @close="isDialogOpen = false"
@@ -694,6 +694,6 @@ li {
 }
 
 .dialog {
-  z-index: 100000;
+  z-index: 10000;
 }
 </style>
