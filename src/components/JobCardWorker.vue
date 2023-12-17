@@ -1,22 +1,12 @@
 <script setup>
 import axios from '@/plugins/axios'
+import { ref } from 'vue'
+
 const token = localStorage.getItem('token')
+const user = localStorage.getItem('userData')
 const headers = {
   Authorization: `Bearer ${token}`
 }
-
-
-
-//POST POSTULATION
-function postulation(id) {
-  console.log('task_id ->:', id )
-
-  /*axios.delete(`task/${id}`, { headers }).then((response) => {
-    console.log('response:', response)
-  })*/
-}
-
-
 
 const props = defineProps({
   taskTitle: String,
@@ -26,9 +16,33 @@ const props = defineProps({
   address: String,
   price: String,
   currencyType: String,
-  id: Number
+  id: Number,
+  postulated: Boolean
 })
+
+
+const emits = defineEmits()
+const postulated = ref(props.postulated)
+
+function handlePostulation() {
+  let dataUser = JSON.parse(user)
+  const worker_id = dataUser['id_worker']
+
+  axios.post(`postulations`, {
+    worker_id: worker_id,
+    task_id: props.id
+  }, {
+    headers: headers
+  }).then((response) => {
+    console.log(response)
+
+    postulated.value = true
+    // Emitir un evento al componente padre para informar sobre la acción de postulación
+    emits('postulation', props.id)
+  })
+}
 </script>
+
 
 <template>
   <section
@@ -49,6 +63,7 @@ const props = defineProps({
       <div class="data-container" :class="{ container_expanded: isExpanded }">
         <p class="data__title">Fecha:</p>
         <p class="data__value">{{ props.taskDate }}</p>
+
       </div>
       <div
         class="data-container"
@@ -61,6 +76,8 @@ const props = defineProps({
       >
         <p class="data__title">Dirección:</p>
         <p class="data__value">{{ props.address }}</p>
+  
+
       </div>
       <div
         class="data-container"
@@ -87,15 +104,19 @@ const props = defineProps({
           {{ props.description }}
         </p>
 
- 
-          <div class="container_expanded buttons-container" :class="{ hidden: !isExpanded }">
-           
-              <button class="postulation-button link" @click="postulation({ id })">
-                Postular
-              </button>
+
+        <div class="container_expanded buttons-container" :class="{ hidden: !isExpanded }">
+          <button
+            class="postulation-button link"
+            @click="handlePostulation"
+            :class="{ postulated: postulated }"
+            :disabled="postulated"
+          >
+            {{ postulated ? 'Postulado' : 'Postular' }}
+          </button>
         </div>
 
-  
+
       </div>
         <button class="expand-button link" :class="{ hidden: isExpanded }" @click="expand()">
           Ver más
@@ -107,14 +128,8 @@ const props = defineProps({
 </template>
 
 
-
-
 <script>
 export default {
-  // props: {
-  //   taskTitle: String,
-  //   id: Number
-  // },
   data() {
     return {
       isExpanded: false
@@ -123,10 +138,8 @@ export default {
   methods: {
     expand() {
       this.isExpanded = !this.isExpanded
-    },
+    }
   }
-
-
 }
 </script>
 
@@ -136,6 +149,15 @@ p {
   margin: 0;
   padding: 0;
 }
+
+
+  /* Agrega aquí los estilos que desees cuando el botón esté postulado */
+.postulated {
+  background-color: #ccc;
+  color: #888;
+  font-size: small;
+}
+
 
 .eventButtonTrash {
   background: url(../assets/images/trashbag-icon.svg);
@@ -204,8 +226,6 @@ p {
   flex-wrap: wrap;
 }
 
-/*.data-container {
-}*/
 
 .container_expanded {
   width: 100%;

@@ -2,70 +2,77 @@ import axios from '@/plugins/axios'
 import { defineStore } from 'pinia'
 
 const useAuth = defineStore('auth', {
-  state: () => {
-    return {
-      token: null,
-      rol: null,
-      feedback: '',
-      feedbackError: ''
-    }
-  },
+  state: () => ({
+    token: null,
+    rol: null,
+    feedback: '',
+    feedbackError: ''
+  }),
 
   actions: {
     async login(username, password, tipo) {
-      this.reset()
+      this.reset();
 
-      let role = 0
+      // Definir constantes para los roles
+      const CONTRATADOR_ROLE = 0;
+      const TRABAJADOR_ROLE = 1;
 
-      if (tipo == 'contratador') {
-        role = 0
+      let role = tipo === 'contratador' ? CONTRATADOR_ROLE : TRABAJADOR_ROLE;
+
+      try {
+        // Realizar la solicitud de inicio de sesión
+        const response = await axios.post('auth/login', { username, password, role });
+
+        // Verificar si la respuesta es exitosa
+        if (response.status === 200) {
+      
+          const { token } = response.data;
+
+          this.token = token;
+          localStorage.setItem('token', token);
+
+          this.notification('Acceso correcto');
+
+          // Obtener información del usuario
+          const headers = { Authorization: `Bearer ${this.token}` };
+          const userData = await axios.get('user/data', { headers });
+
+          // Verificar si la respuesta es exitosa
+          if (userData.status === 200) {
+            // Almacenar la información del usuario en localStorage
+            localStorage.setItem('userData', JSON.stringify(userData.data));
+          }
+        }
+      } catch (error) {
+        // Manejo de errores simplificado
+        console.error('Error al obtener el token o la información del usuario:', error);
+        // Notificación de error
+        this.notificationError(error.response?.data?.error || 'Error desconocido');
       }
-
-      if (tipo == 'trabajador') {
-        role = 1
-      }
-
-      await axios
-        .post('auth/login', {
-          username,
-          password,
-          role
-        })
-
-        .then((response) => {
-          this.token = response.data.token
-          localStorage.setItem('token', this.token)
-          this.notification('Acceso correcto')
-        })
-        .catch((error) => {
-          console.log('Error en login', error)
-          this.notificationError(error.response.data.error)
-        })
     },
 
-    notification(messaje) {
-      this.feedback = messaje
+    notification(message) {
+      this.feedback = message;
       setTimeout(() => {
-        this.feedback = ''
-      }, 4000)
-      return
+        this.feedback = '';
+      }, 4000);
     },
 
-    notificationError(messaje) {
-      this.feedbackError = messaje
+    notificationError(message) {
+      this.feedbackError = message;
       setTimeout(() => {
-        this.feedbackError = ''
-      }, 4000)
-      return
+        this.feedbackError = '';
+      }, 4000);
     },
 
     reset() {
-      this.token = null
-      this.rol = null
-      this.feedback = ''
-      this.feedbackError = ''
+      // Restablecer el estado
+      this.token = null;
+      this.rol = null;
+      this.feedback = '';
+      this.feedbackError = '';
     }
-  }
-})
+  },
+});
 
-export default useAuth
+export default useAuth;

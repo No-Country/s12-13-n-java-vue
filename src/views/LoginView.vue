@@ -34,10 +34,13 @@
   const logged_in = async () => {
     await store.login(email.value, password.value, activeTab.value)
 
-     //Acceso ok
-     if(store.token != null){
-       router.push({ name: 'dashboard' })
-     }
+
+      if(activeTab.value == 'trabajador'){
+        router.push({ name: 'worker' })
+      }else{
+        router.push({ name: 'dashboard' })
+      }
+
   }
 
   const handleEyes = () => {
