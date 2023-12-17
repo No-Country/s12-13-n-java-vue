@@ -452,7 +452,7 @@ li {
   z-index: 1;
   font-size: 0.625rem;
   margin-bottom: -1.125rem;
-  bottom: 159px;
+  top: 673px;
 }
 
 .circle:hover {
