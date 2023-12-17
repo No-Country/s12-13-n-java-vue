@@ -121,7 +121,10 @@
           <h3 class="config-title sidebar-title" id="city">TAMAÑO</h3>
           <div>
             <div class="slider-container">
-              <span class="circle start"></span>
+              <span
+                class="circle start"
+                :class="{ 'circle-dashboard': $route.name === 'dashboard' }"
+              ></span>
               <input
                 class="range-slider"
                 type="range"
@@ -132,8 +135,14 @@
                 :min="minValue"
                 :max="maxValue"
               />
-              <span class="circle center"></span>
-              <span class="circle end"></span>
+              <span
+                class="circle center"
+                :class="{ 'circle-dashboard': $route.name === 'dashboard' }"
+              ></span>
+              <span
+                class="circle end"
+                :class="{ 'circle-dashboard': $route.name === 'dashboard' }"
+              ></span>
             </div>
           </div>
         </section>
@@ -382,6 +391,7 @@ li {
   font-family: 'Baloo 2';
   /* font-size: 20px; */
   font-weight: 500;
+  font-size: 20px;
 }
 
 .social-list {
@@ -452,7 +462,11 @@ li {
   z-index: 1;
   font-size: 0.625rem;
   margin-bottom: -1.125rem;
-  top: 673px;
+  top: 634px;
+}
+
+.circle-dashboard {
+  top: 664px;
 }
 
 .circle:hover {

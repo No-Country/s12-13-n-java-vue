@@ -1,4 +1,5 @@
 <script setup>
+import router from '@/router'
 const props = defineProps({
   taskTitle: String,
   taskDate: String,
@@ -72,7 +73,7 @@ const props = defineProps({
         <div class="container_expanded buttons-container" :class="{ hidden: !isExpanded }">
           <button class="edit-button link" @click="$emit('onEdit', props.id)">Editar</button>
           <!-- <button class="delete-button link" @click="deleteTask({ id })">Del</button> -->
-          <button class="applications-button link">
+          <button class="applications-button link" @click="router.push({ name: 'postulations' })">
             <div class="users-container">
               <span>3</span>
               <img src="../assets/images/user-icon.svg" alt="user" class="applications-image" />
