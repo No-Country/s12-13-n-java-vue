@@ -66,11 +66,12 @@ const useAuth = defineStore('auth', {
     },
 
     reset() {
-      // Restablecer el estado
-      this.token = null;
-      this.rol = null;
+      token: null;
+      rol: null;
       this.feedback = '';
       this.feedbackError = '';
+      localStorage.removeItem('token');
+      localStorage.removeItem('userData');
     }
   },
 });

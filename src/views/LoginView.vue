@@ -1,4 +1,4 @@
-<script setup>
+<!--<script setup>
   import { ref } from 'vue'
   import useAuth from '@/stores/auth'
   import router from '@/router'
@@ -58,7 +58,70 @@
   }
 
 
+</script>-->
+
+
+<script setup>
+  import { ref } from 'vue'
+  import useAuth from '@/stores/auth'
+  import router from '@/router'
+
+  const store = useAuth()
+
+  const password = ref('')
+  const email = ref('')
+
+  // Para ver la contraseña
+  let eyes = ref(true)
+  let type = ref('password')
+
+  // Control del switch
+  let activeCont = true
+  let activeTrab = false
+  let activeTab = ref('contratador')
+
+  const setActiveTab = (tab) => {
+    activeTab.value = tab;
+
+    if (activeTab.value === 'contratador') {
+      activeCont = true
+      activeTrab = false
+    }
+    if (activeTab.value === 'trabajador') {
+      activeCont = false
+      activeTrab = true
+    }
+  };
+
+  const logged_in = async () => {
+    // Realizar el inicio de sesión
+    await store.login(email.value, password.value, activeTab.value);
+
+    // Verificar si el usuario está autenticado
+    if (store.token) {
+      // Si está autenticado, redirigir a la página correspondiente
+      if (activeTab.value === 'trabajador') {
+        router.push({ name: 'worker' });
+      } else {
+        router.push({ name: 'dashboard' });
+      }
+    } else {
+      // Si no está autenticado, puedes mostrar un mensaje de error o redirigir a la página de inicio de sesión
+      router.push({ name: 'login' });
+    }
+  }
+
+  const handleEyes = () => {
+    eyes.value = !eyes.value
+
+    if (type.value === 'password') {
+      type.value = 'text'
+    } else if (type.value === 'text') {
+      type.value = 'password'
+    }
+  }
 </script>
+
 
 
 <template>
