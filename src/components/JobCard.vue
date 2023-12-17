@@ -234,11 +234,6 @@ p {
 .hidden {
   display: none;
 }
-
-.z-1000 {
-  z-index: 1000;
-}
-
 .buttons-container {
   display: flex;
   gap: 12px;

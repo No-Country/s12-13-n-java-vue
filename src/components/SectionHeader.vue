@@ -13,7 +13,7 @@
         </li>
       </nav>
     </header>
-    <section :style="getSidebarStyles()" class="sidebar" :class="{ visible: isVisible }">
+    <modal :style="getSidebarStyles()" class="sidebar" :class="{ visible: isVisible }">
       <img class="sidebar-logo" src="../assets/logo.svg" />
       <section v-if="$route.name === 'dashboard'" class="profile">
         <div class="circle-container">
@@ -144,7 +144,7 @@
       <button v-if="$route.name === 'dashboard'" class="sidebar__button link" @click="closeSesion">
         Cerrar sesión
       </button>
-    </section>
+    </modal>
   </section>
 </template>
 <script setup>
@@ -163,7 +163,7 @@ export default {
   data() {
     return {
       isVisible: false,
-      sliderValue: 25 / 16,
+      sliderValue: 20 / 16,
       minValue: 20 / 16,
       maxValue: 30 / 16,
       store: useAuth()
@@ -298,7 +298,6 @@ li {
 .sidebar {
   width: 289px;
   padding: 60.3904px 40.5008px;
-
   background-color: white;
   min-height: 720px;
   overflow-x: visible;
@@ -319,6 +318,7 @@ li {
 
 .visible {
   transform: translateX(0);
+  z-index: 3;
 }
 
 .hidden {

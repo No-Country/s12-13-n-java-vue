@@ -528,7 +528,7 @@ li {
   width: 391px;
   /* height: 736px; */
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+  z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -692,7 +692,7 @@ li {
 }
 
 .dialog {
-  z-index: 10000;
+  z-index: 2;
   flex-direction: column;
   position: fixed;
   top: 50%;
@@ -745,7 +745,7 @@ li {
 
 .dialog-text {
   margin-top: 20px;
-  margin-bottom: 26px;
+  margin-bottom: 20px;
 }
 
 .dialog-subtext {
