@@ -209,24 +209,6 @@ p {
   cursor: pointer;
 }
 
-.edit-button {
-  border: 2px solid var(--blue1, #1d3d8f);
-  background-color: transparent;
-  color: var(--blue1, #1d3d8f);
-  font-family: 'Baloo 2';
-  font-weight: 700;
-  padding: 10px;
-  width: 100px;
-}
-
-.delete-button {
-  border: 2px solid var(--delete-error, #e20c0c);
-  background-color: transparent;
-  color: var(--delete-error, #e20c0c);
-  font-family: 'Baloo 2';
-  font-weight: 700;
-  padding: 10px;
-}
 .applications-button {
   background: var(--blue1, #1d3d8f);
   color: var(--white, #fff);
@@ -266,6 +248,16 @@ p {
 .users-container {
   display: flex;
   align-items: center;
+}
+
+.edit-button {
+  border: 2px solid var(--blue1, #1d3d8f);
+  background-color: transparent;
+  color: var(--blue1, #1d3d8f);
+  font-family: 'Baloo 2';
+  font-weight: 700;
+  padding: 10px;
+  width: 100px;
 }
 
 @keyframes expand {

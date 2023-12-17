@@ -22,7 +22,7 @@ const store = useFormContratador()
 
 const activeItems = ref([false, false, false])
 const isOpen = ref(false)
-let isDialogOpen = ref(false)
+let isDialogOpen = ref(true)
 const dialogRef = ref()
 console.log('dialogRef:', dialogRef.value)
 const isEditMode = ref(false)
@@ -377,20 +377,19 @@ detalles de tu trabajo"
         </div>
       </modal>
     </Transition>
-    <modal
-      class="dialog"
-      ref="dialogRef"
-      v-if="isDialogOpen"
-      @close="isDialogOpen = false"
-    >
+    <modal class="dialog" ref="dialogRef" v-if="isDialogOpen" @close="isDialogOpen = false">
       <h3>Eliminar publicación</h3>
-      <p>
+      <p class="dialog-text">
         Al presionar confirmar eliminarás la de publicación de forma definitiva. Esta acción no se
         puede deshacer. ¿Quieres eliminar la publicación?
       </p>
-      <p>¿Quieres eliminar la publicación?</p>
-      <button>Volver a editar</button>
-      <button @click="deleteTask">Confirmar</button>
+      <p class="dialog-subtext">¿Quieres eliminar la publicación?</p>
+      <div class="dialog-buttons">
+        <button class="edit-button link">Volver a editar</button>
+        <button class="form__delete-button delete-button link" @click="deleteTask">
+          Confirmar
+        </button>
+      </div>
     </modal>
     <FooterPage />
   </main>
@@ -534,7 +533,6 @@ li {
   justify-content: center;
   align-items: center;
   border-radius: 12px;
-
   /* overflow-x: visible;
   overflow-y: visible;
   transform: translateX(100%);
@@ -695,5 +693,62 @@ li {
 
 .dialog {
   z-index: 10000;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  border-radius: 12px;
+  box-shadow: 0px 4px 20.8px 0px rgba(16, 96, 217, 0.25);
+  border: 1px solid grey;
+  padding: 26px;
+  font-family: 'Baloo 2';
+  max-width: 500px;
+}
+
+.edit-button {
+  border: 2px solid var(--delete-error, #e20c0c);
+  background-color: transparent;
+  color: var(--delete-error, #e20c0c);
+  font-family: 'Baloo 2';
+  font-weight: 700;
+  padding: 10px;
+  width: 100%;
+  font-size: 20px;
+  border: 2px solid var(--blue1, #1d3d8f);
+  color: var(--blue1, #1d3d8f);
+  border-radius: 6px;
+}
+
+.delete-button {
+  border: 2px solid var(--delete-error, #e20c0c);
+  background-color: transparent;
+  color: var(--delete-error, #e20c0c);
+  font-family: 'Baloo 2';
+  font-weight: 700;
+  padding: 10px;
+  width: 100%;
+}
+
+.dialog-buttons {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dialog-text {
+  margin-top: 20px;
+  margin-bottom: 26px;
+}
+
+.dialog-subtext {
+  margin-bottom: 24px;
 }
 </style>
