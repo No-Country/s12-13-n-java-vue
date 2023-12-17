@@ -122,6 +122,7 @@
           <div>
             <div class="slider-container">
               <span
+                v-if="$route.name === 'dashboard' || $route.name === 'home'"
                 class="circle start"
                 :class="{ 'circle-dashboard': $route.name === 'dashboard' }"
               ></span>
@@ -136,10 +137,12 @@
                 :max="maxValue"
               />
               <span
+                v-if="$route.name === 'dashboard' || $route.name === 'home'"
                 class="circle center"
                 :class="{ 'circle-dashboard': $route.name === 'dashboard' }"
               ></span>
               <span
+                v-if="$route.name === 'dashboard' || $route.name === 'home'"
                 class="circle end"
                 :class="{ 'circle-dashboard': $route.name === 'dashboard' }"
               ></span>
