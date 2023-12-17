@@ -22,7 +22,7 @@ const store = useFormContratador()
 
 const activeItems = ref([false, false, false])
 const isOpen = ref(false)
-let isDialogOpen = ref(true)
+let isDialogOpen = ref(false)
 const dialogRef = ref()
 console.log('dialogRef:', dialogRef.value)
 const isEditMode = ref(false)
@@ -220,7 +220,7 @@ const openDialog = () => {
       </ul>
     </nav>
     <div class="cards-container">
-      <section class="container">
+      <section class="container" style="margin-bottom: 16px">
         <p>Publicaciones activas</p>
         <div v-if="cards && cards.length" class="tasks-container">
           <div v-for="card in cards" :key="card.id">
@@ -378,7 +378,12 @@ detalles de tu trabajo"
       </modal>
     </Transition>
     <modal class="dialog" ref="dialogRef" v-if="isDialogOpen" @close="isDialogOpen = false">
-      <h3>Eliminar publicación</h3>
+      <div class="popup__header">
+        <h3>Eliminar publicación</h3>
+        <button class="popup__close button" @click="isDialogOpen = false">
+          <img src="../assets/images/close-button-icon.svg" alt="Button Image" />
+        </button>
+      </div>
       <p class="dialog-text">
         Al presionar confirmar eliminarás la de publicación de forma definitiva. Esta acción no se
         puede deshacer. ¿Quieres eliminar la publicación?
@@ -557,6 +562,7 @@ li {
 .popup__header {
   display: flex;
   justify-content: space-between;
+  width: 100%;
 }
 .popup__close {
   border: none;
@@ -698,7 +704,7 @@ li {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100%;
+  width: 391px;
   background-color: white;
   display: flex;
   justify-content: center;
