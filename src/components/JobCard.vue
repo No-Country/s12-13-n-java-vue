@@ -117,12 +117,14 @@ p {
 .card {
   display: flex;
   min-height: 134px;
+  min-width: 361px;
   padding: 16px;
   flex-direction: column;
   align-items: flex-start;
   border-radius: 6px;
   background: #fff;
   box-shadow: 0px 5px 0px 0px #4dc9ff inset;
+  overflow: hidden;
 }
 
 .card.expanded {
@@ -236,6 +238,7 @@ p {
   display: flex;
   gap: 12px;
   margin-top: 23px;
+  max-width: 361px;
 }
 
 .users-container {
