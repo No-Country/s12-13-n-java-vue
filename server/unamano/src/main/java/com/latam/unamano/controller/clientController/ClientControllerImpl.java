@@ -7,6 +7,7 @@ import com.latam.unamano.dto.clientDto.request.ClientCreateDto;
 import com.latam.unamano.dto.clientDto.response.GetClient;
 import com.latam.unamano.dto.workerDto.reponse.GetWorker;
 import com.latam.unamano.service.clientService.ClientServiceInterface;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -66,6 +67,8 @@ public class ClientControllerImpl extends GenericRestController implements Clien
 
     @GetMapping("/data")
     @Secured("ROLE_CLIENT")
+    @Operation(summary = "Endpoint específico para los usuarios de tipo client que permite obtener" +
+            "sus datos incluído su id de client, el cual es diferente de su id de usuario. ")
     public GetClient getClientData(HttpServletRequest request){
         return clientServiceInterface.getClientData(request);
     }
