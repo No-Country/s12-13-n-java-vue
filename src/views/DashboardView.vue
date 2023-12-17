@@ -22,6 +22,9 @@ const store = useFormContratador()
 
 const activeItems = ref([false, false, false])
 const isOpen = ref(false)
+let isDialogOpen = ref(false)
+const dialogRef = ref()
+console.log('dialogRef:', dialogRef.value)
 const isEditMode = ref(false)
 let isCardExists = ref(true)
 let actionName = ref('')
@@ -36,6 +39,8 @@ const formRef = ref(null)
 
 const editedCard = ref(null)
 const onCardEdit = (card) => {
+  console.log('dialogRef:', dialogRef.value)
+
   isEditMode.value = true
   editedCard.value = card
   isOpen.value = true
@@ -150,6 +155,8 @@ const fetchCards = async () => {
 }
 
 onMounted(() => {
+  console.log('onMounteddialogRef:', dialogRef.value)
+
   fetchCards()
   if (isEditMode.value && editedCard.value) {
     category.value = editedCard.value.occupations[0].occupationName
@@ -159,12 +166,20 @@ onMounted(() => {
 })
 
 const deleteTask = async () => {
+  isDialogOpen.value = true
   const id = editedCard.value.id
   await axios.delete(`task/${id}`, { headers }).then((response) => {
     console.log('response:', response)
   })
   closePopup()
   await fetchCards()
+}
+
+const openDialog = () => {
+  console.log('openDialog:', openDialog)
+  // dialogRef.value.show()
+  isDialogOpen.value = 'true'
+  console.log('onMounteddialogRef:', dialogRef.value)
 }
 </script>
 <template>
@@ -210,7 +225,6 @@ const deleteTask = async () => {
         <div v-if="cards && cards.length" class="tasks-container">
           <div v-for="card in cards" :key="card.id">
             <JobCard
-              @onDelete="onCardDelete"
               :taskTitle="card.taskTitle"
               :taskDate="card?.taskDate?.slice(0, 10).replace(/-/g, '/')"
               :category="card.occupations[0].occupationName"
@@ -350,7 +364,12 @@ detalles de tu trabajo"
             </div>
 
             <button v-if="!isEditMode" class="form__submit-button link">Publicar</button>
-            <button v-if="isEditMode" @click="deleteTask" class="form__delete-button link">
+            <button
+              v-if="isEditMode"
+              @click="openDialog"
+              type="button"
+              class="form__delete-button link"
+            >
               Eliminar
             </button>
             <button v-if="isEditMode" class="form__submit-button link">Guardar</button>
@@ -358,6 +377,21 @@ detalles de tu trabajo"
         </div>
       </modal>
     </Transition>
+    <modal
+      class="dialog z-index-100000"
+      ref="dialogRef"
+      v-if="isDialogOpen"
+      @close="isDialogOpen = false"
+    >
+      <h3>Eliminar publicación</h3>
+      <p>
+        Al presionar confirmar eliminarás la de publicación de forma definitiva. Esta acción no se
+        puede deshacer. ¿Quieres eliminar la publicación?
+      </p>
+      <p>¿Quieres eliminar la publicación?</p>
+      <button>Volver a editar</button>
+      <button @click="deleteTask">Confirmar</button>
+    </modal>
     <FooterPage />
   </main>
 </template>
@@ -495,10 +529,12 @@ li {
   width: 391px;
   /* height: 736px; */
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 100000;
+  z-index: 1000;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 12px;
+
   /* overflow-x: visible;
   overflow-y: visible;
   transform: translateX(100%);
@@ -655,5 +691,9 @@ li {
 
 .z-index--10 {
   z-index: -10;
+}
+
+.dialog {
+  z-index: 100000;
 }
 </style>
