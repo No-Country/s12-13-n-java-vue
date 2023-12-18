@@ -29,13 +29,30 @@ onMounted(() => {
     <SectionHeader />
     <NavigationDashboard />
 
-    <div class="cards-container">
+    <div class="wrapper">
       <section class="container" style="margin-bottom: 16px">
         <p>Publicaciones activas <strong>/ Postulaciones</strong></p>
         <section class="card" :style="{ boxShadow: `0px 5px 0px 0px ${$route.query.color} inset` }">
           <div>
             <h3 class="card__category">{{ $route.query.category }}</h3>
             <p class="card__title">{{ $route.query.taskTitle }}</p>
+          </div>
+        </section>
+        <section class="posts-container">
+          <div class="post">
+            <div class="post-info">
+              <div class="circle-container">
+                <img src="../assets/images/post-avatar.svg" alt="avatar" class="avatar" />
+              </div>
+              <div class="profile__info">
+                <p class="profile__name">Florencia R.</p>
+                <p class="profile__role">Contratador</p>
+              </div>
+              <div class="ranking">
+                <p class="ranking-text">21 calificaciones</p>
+              </div>
+            </div>
+            <button class="post-button link">Contratar</button>
           </div>
         </section>
       </section>
@@ -71,6 +88,9 @@ li {
   width: 100%;
   height: 653px;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 ::-webkit-scrollbar {
@@ -79,6 +99,10 @@ li {
   border: 0px solid #fff;
 }
 
+.wrapper {
+  overflow: auto;
+  background-color: #a9b8de;
+}
 .tasks-container {
   display: flex;
   flex-direction: column;
@@ -92,7 +116,7 @@ li {
 
 .card {
   display: flex;
-  min-height: 134px;
+  min-height: 73px;
   min-width: 361px;
   padding: 16px;
   flex-direction: column;
@@ -114,5 +138,84 @@ li {
   font-family: 'Baloo 2';
   font-weight: 400;
   margin-bottom: 8px;
+}
+
+.posts-container {
+  display: flex;
+  min-height: 156px;
+  min-width: 361px;
+  padding: 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 6px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.post {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  width: 100%;
+}
+
+.circle-container {
+  width: 55px;
+  height: 55px;
+  overflow: hidden;
+  border-radius: 50%;
+  background-color: #149ed7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.post-info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.avatar {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+
+.profile {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.profile__name {
+  font-family: 'Baloo 2';
+  font-weight: 500;
+}
+
+.profile__role {
+  color: var(--blue2, #1d3d8f);
+  font-family: 'Baloo 2';
+  font-weight: 400;
+}
+.profile__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.post-button {
+  color: var(--white, #fff);
+  font-family: 'Baloo 2';
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  height: 51px;
+  padding: 10px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  background: #149ed7;
+  border: none;
 }
 </style>
