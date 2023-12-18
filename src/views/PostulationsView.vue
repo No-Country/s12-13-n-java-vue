@@ -2,24 +2,16 @@
 import router from '@/router'
 import SectionHeader from '../components/SectionHeader.vue'
 import { ref, onMounted, computed } from 'vue'
-import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import FooterPage from '@/components/SectionFooter.vue'
-import useFormContratador from '@/stores/formContratador'
+import NavigationDashboard from '../components/NavigationDashboard.vue'
 import { categorias, currencies } from '../utils/constants'
 import axios from '@/plugins/axios'
 const token = localStorage.getItem('token')
 const headers = {
   Authorization: `Bearer ${token}`
 }
-const chat = () => {
-  router.push({ name: 'Chat' })
-}
 
-const date = ref()
-const store = useFormContratador()
-
-const activeItems = ref([false, false, false])
 const isOpen = ref(false)
 let isDialogOpen = ref(false)
 const dialogRef = ref()
@@ -36,21 +28,6 @@ let precio = ref(0)
 let cards = ref(null)
 const formRef = ref(null)
 
-const editedCard = ref(null)
-const onCardEdit = (card) => {
-  console.log('dialogRef:', dialogRef.value)
-
-  isEditMode.value = true
-  editedCard.value = card
-  isOpen.value = true
-  actionName.value = 'Editar publicación'
-  currency.value = editedCard.value.currencyType
-  date.value = editedCard.value.taskDate
-  category.value =
-    editedCard.value.occupations[0].occupationName.slice(0, 1).toUpperCase() +
-    editedCard.value.occupations[0].occupationName.slice(1)
-}
-
 isCardExists = computed(() => {
   return !!(cards.value && cards.value.length)
 })
@@ -58,14 +35,9 @@ isCardExists = computed(() => {
 isCardExists = computed(() => {
   return !!(cards.value && cards.value.length)
 })
-
-const toggleNavItem = (index) => {
-  activeItems.value[index] = !activeItems.value[index]
-}
 
 const openPopup = () => {
   currency.value = ''
-  date.value = ''
   category.value = ''
   isEditMode.value = false
   isOpen.value = true
@@ -73,77 +45,6 @@ const openPopup = () => {
 
 const closePopup = () => {
   isOpen.value = false
-}
-
-const onSubmit = async () => {
-  console.log('onSubmit:', onSubmit)
-  if (isEditMode.value) {
-    console.log('onSubmit:', isEditMode.value, currency.value)
-
-    await axios
-      .put(
-        'task',
-        {
-          id: editedCard.value.id,
-          taskTitle: taskTitle.value,
-          description: taskDescription.value,
-          price: precio.value,
-          currencyType: currency.value,
-          occupations: [
-            {
-              occupationName: category.value.toLowerCase()
-            }
-          ],
-          taskDate: date.value,
-          client: {
-            id: 1
-          },
-          address: {
-            street: taskLocation.value
-          }
-        },
-        { headers }
-      )
-      .then((response) => {
-        console.log('Response', response)
-      })
-      .catch((error) => {
-        console.log('Error en form', error)
-      })
-  } else {
-    console.log('ELSEonSubmit')
-    await store.submit(
-      taskTitle.value,
-      taskDescription.value,
-      precio.value,
-      currency.value,
-      [
-        {
-          occupationName: category.value.toLowerCase()
-        }
-      ],
-      date.value,
-      {
-        id: 1
-      },
-      {
-        street: taskLocation.value
-      }
-    )
-  }
-
-  fetchCards()
-  formRef.value.reset()
-  taskTitle.value = ''
-  category.value = ''
-  currency.value = ''
-  taskDescription.value = ''
-  taskLocation.value = ''
-  precio.value = ''
-  date.value = ''
-  closePopup()
-  editedCard.value = null
-  actionName.value = 'Crear publicación'
 }
 
 const fetchCards = async () => {
@@ -154,25 +55,8 @@ const fetchCards = async () => {
 }
 
 onMounted(() => {
-  console.log('onMounteddialogRef:', dialogRef.value)
-
-  fetchCards()
-  if (isEditMode.value && editedCard.value) {
-    category.value = editedCard.value.occupations[0].occupationName
-    console.log('category.value:', category.value)
-  }
   fetchCards()
 })
-
-const deleteTask = async () => {
-  isDialogOpen.value = true
-  const id = editedCard.value.id
-  await axios.delete(`task/${id}`, { headers }).then((response) => {
-    console.log('response:', response)
-  })
-  closePopup()
-  await fetchCards()
-}
 
 const openDialog = () => {
   console.log('openDialog:', openDialog)
@@ -184,62 +68,11 @@ const openDialog = () => {
 <template>
   <main>
     <SectionHeader />
-    <nav class="nav">
-      <ul class="nav__list">
-        <li class="nav__item link" @click="toggleNavItem">
-          <div class="nav__item-container">
-            <img
-              class="nav__item-image"
-              :class="{ active: isActive }"
-              src="../assets/images/home-icon.svg"
-            />
-            <p class="nav__item-text" :class="{ active: isActive }">Inicio</p>
-          </div>
-        </li>
-        <li class="nav__item link" @click="toggleNavItem" @click.prevent="chat">
-          <div class="nav__item-container">
-            <img
-              class="nav__item-image"
-              :class="{ active: !isActive }"
-              src="../assets/images/comment-icon.svg"
-            />
-            <p class="nav__item-text" :class="{ active: !isActive }">Chats</p>
-          </div>
-        </li>
-        <li class="nav__item link" @click="toggleNavItem">
-          <div class="nav__item-container">
-            <img
-              class="nav__item-image"
-              :class="{ active: !isActive }"
-              src="../assets/images/history-icon.svg"
-            />
-            <p class="nav__item-text" :class="{ active: !isActive }">Historial</p>
-          </div>
-        </li>
-      </ul>
-    </nav>
+    <NavigationDashboard />
+
     <div class="cards-container">
       <section class="container" style="margin-bottom: 16px">
-        <p>Publicaciones activas</p>
-        <!-- <div v-if="cards && cards.length" class="tasks-container">
-          <div v-for="card in cards" :key="card.id">
-            <JobCard
-              :taskTitle="card.taskTitle"
-              :taskDate="card?.taskDate?.slice(0, 10).replace(/-/g, '/')"
-              :category="`${card.occupations[0].occupationName
-                .slice(0, 1)
-                .toUpperCase()}${card.occupations[0].occupationName.slice(1)}`"
-              :color="card.occupations[0].color"
-              :description="card.description"
-              :price="card.price"
-              :currencyType="card.currencyType"
-              :address="card.address.street"
-              :id="card.id"
-              @onEdit="onCardEdit(card)"
-            >
-            </JobCard>
-          </div>
-        </div> -->
+        <p>Publicaciones activas <strong>/ Postulaciones</strong></p>
       </section>
       <section class="modal-info" :style="{ padding: isCardExists ? '0' : '10px' }">
         <p class="modal-info__text" v-if="!isCardExists">
