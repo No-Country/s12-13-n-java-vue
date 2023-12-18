@@ -6,6 +6,7 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import FooterPage from '@/components/SectionFooter.vue'
 import NavigationDashboard from '../components/NavigationDashboard.vue'
 import axios from '@/plugins/axios'
+
 const token = localStorage.getItem('token')
 const headers = {
   Authorization: `Bearer ${token}`
@@ -48,7 +49,17 @@ onMounted(() => {
                 <p class="profile__name">Florencia R.</p>
                 <p class="profile__role">Contratador</p>
               </div>
+
               <div class="ranking">
+                <v-rating
+                  hover
+                  half-increments
+                  :length="5"
+                  :size="22"
+                  :model-value="3"
+                  color="#1D3D8F"
+                  active-color="#1D3D8F"
+                />
                 <p class="ranking-text">21 calificaciones</p>
               </div>
             </div>
@@ -65,7 +76,17 @@ onMounted(() => {
                 <p class="profile__name">Florencia R.</p>
                 <p class="profile__role">Contratador</p>
               </div>
+
               <div class="ranking">
+                <v-rating
+                  hover
+                  half-increments
+                  :length="5"
+                  :size="22"
+                  :model-value="3"
+                  color="#1D3D8F"
+                  active-color="#1D3D8F"
+                />
                 <p class="ranking-text">21 calificaciones</p>
               </div>
             </div>
@@ -194,6 +215,7 @@ li {
   display: flex;
   justify-content: space-between;
   width: 100%;
+  align-items: center;
 }
 .avatar {
   width: 100%;
@@ -205,6 +227,13 @@ li {
   display: flex;
   gap: 14px;
   align-items: center;
+}
+
+.ranking {
+  margin-top: -10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .profile__name {
@@ -245,5 +274,11 @@ li {
 
 .button-finalize {
   background: var(--disabled, #c7c7c7);
+}
+
+.ranking-text {
+  font-size: 16px;
+  font-family: 'Baloo 2';
+  font-weight: 500;
 }
 </style>
