@@ -16,12 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ChatRoomController {
     private final ChatRoomService chatRoomService;
-    @PostMapping
-    public ResponseEntity<String> createChatRoom(@RequestBody ChatRoomDto chatRoomDto){
-        chatRoomService.createChatRoom(chatRoomDto.name(),chatRoomDto.client(),chatRoomDto.worker());
-        return ResponseEntity.ok("Creado");
 
-    }
     @GetMapping
     public ResponseEntity<List<ChatRoomResponseDto>> getAllChatsByUserId(){
         return ResponseEntity.ok(chatRoomService.getAllChatsRoomByUserid());
