@@ -55,6 +55,25 @@ onMounted(() => {
             <button class="post-button link">Contratar</button>
           </div>
         </section>
+        <section class="posts-container">
+          <div class="post">
+            <div class="post-info">
+              <div class="circle-container">
+                <img src="../assets/images/post-avatar.svg" alt="avatar" class="avatar" />
+              </div>
+              <div class="profile__info">
+                <p class="profile__name">Florencia R.</p>
+                <p class="profile__role">Contratador</p>
+              </div>
+              <div class="ranking">
+                <p class="ranking-text">21 calificaciones</p>
+              </div>
+            </div>
+            <button class="post-button link">Contratar</button>
+          </div>
+        </section>
+        <button class="button-back link post-button">Volver a publicaciones</button>
+        <button class="button-finalize link post-button">Finalizar publicación</button>
       </section>
     </div>
     <section class="section-blog">
@@ -150,6 +169,7 @@ li {
   border-radius: 6px;
   background: #fff;
   overflow: hidden;
+  gap: 10px;
 }
 
 .post {
@@ -217,5 +237,13 @@ li {
   border-radius: 6px;
   background: #149ed7;
   border: none;
+}
+.button-back {
+  margin-top: 6px;
+  background: var(--blue1, #1d3d8f);
+}
+
+.button-finalize {
+  background: var(--disabled, #c7c7c7);
 }
 </style>
