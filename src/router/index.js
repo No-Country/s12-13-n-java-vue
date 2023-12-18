@@ -29,6 +29,9 @@ const routes = [
     path: '/posts',
     name: 'postulations',
     component: PostulationsView,
+    query: {
+      category: ''
+    },
     meta: {
       requereAuth: true
     }

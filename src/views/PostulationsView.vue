@@ -32,10 +32,10 @@ onMounted(() => {
     <div class="cards-container">
       <section class="container" style="margin-bottom: 16px">
         <p>Publicaciones activas <strong>/ Postulaciones</strong></p>
-        <section class="card">
+        <section class="card" :style="{ boxShadow: `0px 5px 0px 0px ${$route.query.color} inset` }">
           <div>
-            <h3 class="card__category">Kinesiólogía</h3>
-            <p class="card__title">Sesiones semanales</p>
+            <h3 class="card__category">{{ $route.query.category }}</h3>
+            <p class="card__title">{{ $route.query.taskTitle }}</p>
           </div>
         </section>
       </section>
@@ -43,7 +43,6 @@ onMounted(() => {
     <section class="section-blog">
       <!-- contenido de la segunda tarjeta -->
     </section>
-
     <FooterPage />
   </main>
 </template>
