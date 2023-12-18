@@ -1,9 +1,9 @@
 <script setup>
-import SectionHeader from '../components/SectionHeader.vue'
+import SectionHeader from '@/components/SectionHeader.vue'
 import { ref, onMounted } from 'vue'
 import '@vuepic/vue-datepicker/dist/main.css'
 import FooterPage from '@/components/SectionFooter.vue'
-import JobCard from '../components/JobCardWorker.vue'
+import JobCard from '@/components/JobCardWorker.vue'
 import axios from '@/plugins/axios'
 
 const token = localStorage.getItem('token')
