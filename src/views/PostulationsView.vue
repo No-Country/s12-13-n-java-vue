@@ -74,13 +74,10 @@ const openDialog = () => {
       <section class="container" style="margin-bottom: 16px">
         <p>Publicaciones activas <strong>/ Postulaciones</strong></p>
       </section>
-      <section class="modal-info" :style="{ padding: isCardExists ? '0' : '10px' }">
-        <p class="modal-info__text" v-if="!isCardExists">
-          Crea tu primera publicación y <br />
-          conecta con trabajadores
-        </p>
-        <button class="modal-info__button link" @click="openPopup">Crear nueva publicación</button>
-      </section>
+      <div>
+        <h3 class="card__category">Kinesiólogía</h3>
+        <p class="card__title">Sesiones semanales</p>
+      </div>
     </div>
 
     <section class="section-blog">
@@ -255,49 +252,6 @@ li {
 
 .active {
   color: #149ed7;
-}
-.nav {
-  padding: 8px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.nav__list {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-}
-.nav__item {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.nav__item-image {
-  width: 35px;
-  height: 31px;
-  color: #3960c2;
-}
-
-.nav__item-container {
-  display: flex;
-  align-items: baseline;
-  flex-direction: column;
-  align-items: center;
-  gap: 13px;
-  width: 120.333px;
-  color: #3960c2;
-}
-
-.nav__item-text {
-  font-family: 'Yaldevi';
-  font-size: 27.683px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 67%;
-  letter-spacing: 2.215px;
-}
-.nav__item-text_home {
-  color: var(--blue1, #3960c2);
 }
 .container {
   width: 100%;
