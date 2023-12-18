@@ -93,7 +93,9 @@ onMounted(() => {
             <button class="post-button link">Contratar</button>
           </div>
         </section>
-        <button class="button-back link post-button">Volver a publicaciones</button>
+        <button class="button-back link post-button" @click="router.back()">
+          Volver a publicaciones
+        </button>
         <button class="button-finalize link post-button">Finalizar publicación</button>
       </section>
     </div>
