@@ -14,8 +14,6 @@ const headers = {
 
 
 const activeItems = ref([false, false, false])
-
-
 const postulations = ref([]);
 let cards = ref(null)
 
@@ -106,77 +104,7 @@ onMounted(() => {
       <section class="container">
         <div>
           <p>Publicaciones activas</p>
-        </div>
-        <div>
-          <div>
-            <div class="accordion" id="accordionExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        <div>
-                            <strong><p class="kinesiologia">Kinesiología</p></strong>
-                        </div>
-                    </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                          <div>
-                            <div>
-                                <strong><h4>Sesiones semanales</h4></strong>
-                            </div> 
-                            <div>
-                                <div class="perfil-florencia">
-                                    <img src="../assets/images/contratadoraflorenciar.png" alt="contratadora">
-                                    <div class="info-florencia">
-                                        <p><strong>Florencia R.</strong></p>
-                                        <p class="contratador">Contratador</p>
-                                    </div>
-                                </div>  
-                                <div class="valoracion">  
-                                    <div class="estrellas">
-                                        <img src="../assets/images/estrellacompleta.svg" alt="estrella completa">
-                                        <img src="../assets/images/estrellacompleta.svg" alt="estrella completa">
-                                        <img src="../assets/images/estrellacompleta.svg" alt="estrella completa">
-                                        <img src="../assets/images/estrellacompleta.svg" alt="estrella completa">
-                                        <img src="../assets/images/mediaestrella.svg" alt="media estrella">
-                                        <img src="../assets/images/4.5calificacion.svg" alt="4.5">
-                                    </div>
-                                    <div class="calificaciones">
-                                        <img src="../assets/images/16 calificaciones.svg" alt="16 calificaciones">
-                                    </div>
-                                </div>
-                            </div>
-                            <div>    
-                              <ul>
-                                <div>
-                                  <div>
-                                      <div>
-                                          <p><strong>Fecha:</strong><span class="referencias">8/12/2023</span></p>
-                                      </div>
-                                      <div>
-                                          <p><strong>Dirección:</strong><span class="referencias">Bogotá, Colombia</span></p>
-                                      </div>
-                                      <div>
-                                          <p><strong>Precio:</strong><span class="referencias">30 USD</span></p>
-                                      </div>
-                                      <div>
-                                        <p><strong>Descripción:</strong></p>
-                                      </div>
-                                  </div>
-                                    <div class="descripcion">
-                                        <p>Necesito tres sesiones semanales a domicilio <br> durante las tardes para tratar una lesión a <br> la rodilla. Precio sugerido por sesión.</p>
-                                    </div>
-                                </div>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-          </div>
-        </div>
-                   
+        </div>         
         <div v-if="cards && cards.length" class="tasks-container">
           <div v-for="card in cards" :key="card.id">
   
@@ -196,13 +124,7 @@ onMounted(() => {
         </div>
       </section>
 
-      <!--<section class="modal-info">
-        <p class="modal-info__text" v-if="!cards">
-          Crea tu primera publicación y <br />
-          conecta con contratadores
-        </p>
-       
-      </section>-->
+
     </div>
 
     <FooterPage />
@@ -293,44 +215,6 @@ li {
 .cards-container {
   background-color: #a9b8de;
 }
-/*.modal-info {
-  width: 361px;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  bottom: 40%;
-  display: flex;
-  padding: 15px 10px;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 25px;
-  align-self: stretch;
-  border-radius: 6px;
-}*/
-/*.modal-info__button {
-  color: var(--white, #fff);
-  font-family: 'Baloo 2';
-  font-size: 20px;
-  font-weight: 700;
-  display: flex;
-  height: 51px;
-  padding: 10px;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  border-radius: 6px;
-  background: var(--blue1, #1d3d8f);
-  border: none;
-}*/
-
-/*.modal-info__text {
-  text-align: center;
-  font-family: 'Baloo 2';
-  font-size: 20px;
-  font-weight: 600;
-}*/
 
 .popup {
   position: fixed;
