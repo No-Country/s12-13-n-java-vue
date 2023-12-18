@@ -1,92 +1,71 @@
 <script setup>
 import SectionHeader from '../components/SectionHeader.vue'
 import { ref, onMounted } from 'vue'
-import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import FooterPage from '@/components/SectionFooter.vue'
-import JobCard from '../components/JobCard.vue'
-import useFormContratador from '@/stores/formContratador'
-import { categorias, currencies } from '../utils/constants'
+import JobCard from '../components/JobCardWorker.vue'
 import axios from '@/plugins/axios'
+
 const token = localStorage.getItem('token')
+const user = localStorage.getItem('userData')
 const headers = {
   Authorization: `Bearer ${token}`
 }
 
-const date = ref()
-const store = useFormContratador()
 
 const activeItems = ref([false, false, false])
 const isOpen = ref(false)
 
-let taskTitle = ref('')
-let category = ref('')
-let currency = ref('')
-let taskDescription = ref('')
-let taskLocation = ref('')
-let precio = ref(0)
-let cards = ref(null)
 
-// let clientID = ref(0)
+const postulations = ref([]);
+let cards = ref(null)
 
 const toggleNavItem = (index) => {
   activeItems.value[index] = !activeItems.value[index]
 }
 
-const openPopup = () => {
-  isOpen.value = true
-}
 
-const closePopup = () => {
-  isOpen.value = false
-}
+const fetchPostulations = async () => {
+  try {
+    let dataUser = JSON.parse(user);
+    const worker_id = dataUser['id_worker'];
+    const response = await axios.get('postulations/all/' + worker_id, { headers });
 
-const onSubmit = async () => {
-  await store.submit(
-    taskTitle.value,
-    taskDescription.value,
-    precio.value,
-    currency.value,
-    [
-      {
-        occupationName: category.value
-      }
-    ],
-    date.value,
-    {
-      id: 1
-    },
-    {
-      street: taskLocation.value
+    if (response.data && response.data.response && response.data.response.content) {
+      const idTasks = response.data.response.content.map(postulation => postulation.idTask);
+      console.log('Task IDs:', idTasks);
+      postulations.value = response.data.response.content;
     }
-  )
-  fetchCards()
-  closePopup()
-}
+  } catch (error) {
+    console.error('Error fetching postulations:', error);
+  }
+};
 
 const fetchCards = async () => {
-  await axios.get('task/published', { headers }).then((response) => {
-    console.log('response:', response.data.content)
-    cards.value = response.data.content.filter((card) => card.id > 15)
-  })
-}
+  try {
+    const response = await axios.get('task/published', { headers });
+    console.log('response:', response.data.content);
 
-// const fetchClient = async () => {
-//   await axios.get('auth/details', { headers }).then((response) => {
-//     console.log('response:', response.data.content)
-//     cards.value = response.data.content.filter((card) => card.username === 'abuelita')
-//   })
-// }
+    cards.value = response.data.content.map((card) => {
+      const postulation = postulations.value.find((postulation) => postulation.idTask === card.id);
+      return {
+        ...card,
+        postulated: postulation !== undefined,
+      };
+    });
+  } catch (error) {
+    console.error('Error fetching cards:', error);
+  }
+};
 
 onMounted(() => {
-  // fetchClient()
-  fetchCards()
-})
+  fetchPostulations();
+  fetchCards();
+});
 
-const onCardDelete = () => {
-  fetchCards()
-}
 </script>
+
+
 <template>
   <main>
     <SectionHeader />
@@ -202,18 +181,19 @@ const onCardDelete = () => {
       </section>                    
         <div v-if="cards && cards.length" class="tasks-container">
           <div v-for="card in cards" :key="card.id">
+  
             <JobCard
-              @onDelete="onCardDelete"
-              :taskTitle="card.taskTitle"
-              :taskDate="card.taskDate.slice(0, 10).replace(/-/g, '/')"
-              :category="card.occupations[0].occupationName"
-              :description="card.description"
-              :price="card.price"
-              :currencyType="card.currencyType"
-              :address="card.address.street"
-              :id="card.id"
-            >
-            </JobCard>
+              :taskTitle="card.taskTitle ?? ''"
+              :taskDate="(card.taskDate ? card.taskDate.slice(0, 10).replace(/-/g, '/') : '') ?? ''"
+              :category="(card.occupations && card.occupations[0] && card.occupations[0].occupationName) ?? ''"
+              :description="card.description ?? ''"
+              :price="card.price ?? ''"
+              :currencyType="card.currencyType ?? ''"
+              :address="(card.address && card.address.street) ?? ''"
+              :id="card.id ?? 0"
+              :postulated="card.postulated ?? false"
+            ></JobCard>
+
           </div>
         </div>
       </section>
@@ -227,117 +207,6 @@ const onCardDelete = () => {
       </section>
     </div>
 
-    <section class="section-blog">
-      <!-- contenido de la segunda tarjeta -->
-    </section>
-    <Transition>
-      <modal class="popup" v-if="isOpen" :class="{ open: isOpen }">
-        <div class="popup__container">
-          <div class="popup__header">
-            <h3 class="popup__title">Crear nueva publicación</h3>
-            <button class="popup__close button" @click="closePopup">
-              <img src="../assets/images/close-button-icon.svg" alt="Button Image" />
-            </button>
-          </div>
-          <form class="form" @submit.prevent="onSubmit({ taskTitle, taskDescription })">
-            <div class="form__labelBox">
-              <label htmlFor="eventName" class="form__labelText"> Elige el tipo de servicio </label>
-              <select
-                class="form__select"
-                id="eventName"
-                name="eventName"
-                v-model="category"
-                required
-              >
-                <option class="form__optionText">Categorias</option>
-                <option
-                  class="form__optionText"
-                  v-for="(category, index) in categorias"
-                  :key="index"
-                >
-                  {{ category }}
-                </option>
-              </select>
-              <img src="../assets/images/shevron.svg" alt="shevron" class="shevron" />
-            </div>
-            <div class="form__labelBox">
-              <label htmlFor="taskTitle" class="form__labelText">Título</label>
-              <input
-                class="form__input"
-                name="eventName"
-                placeholder="Escribe un título"
-                required
-                :value="taskTitle"
-                @input="(e) => (taskTitle = e.target.value)"
-              />
-            </div>
-            <div class="form__labelBox">
-              <label htmlFor="eventName" class="form__labelText">Descripción</label>
-              <textarea
-                class="form__textarea"
-                type="select"
-                name="eventName"
-                :value="taskDescription"
-                @input="(e) => (taskDescription = e.target.value)"
-                placeholder="Agrega una descripción con los
-detalles de tu trabajo"
-                required
-              ></textarea>
-            </div>
-            <div class="labelBox-container">
-              <div class="form__labelBox">
-                <label htmlFor="eventName" class="form__labelText">Precio</label>
-                <input
-                  class="form__input"
-                  name="eventName"
-                  placeholder="$"
-                  type="number"
-                  :value="precio"
-                  @input="(e) => (precio = Number(e.target.value))"
-                />
-              </div>
-              <div class="form__labelBox">
-                <label htmlFor="eventName" class="form__labelText">Moneda</label>
-                <select
-                  class="form__select select-currency"
-                  id="eventName"
-                  name="eventName"
-                  v-model="currency"
-                >
-                  <option
-                    class="form__optionText"
-                    v-for="(currency, index) in currencies"
-                    :key="index"
-                  >
-                    {{ currency }}
-                  </option>
-                </select>
-                <img src="../assets/images/shevron.svg" alt="shevron" class="shevron" />
-              </div>
-            </div>
-
-            <div class="form__labelBox">
-              <label htmlFor="eventName" class="form__labelText">Ubicación</label>
-              <img src="../assets/images/location-icon.svg" alt="" class="location-img" />
-
-              <input
-                class="form__input input-location"
-                name="eventName"
-                placeholder="Ingresa tu dirección"
-                :value="taskLocation"
-                @input="(e) => (taskLocation = e.target.value)"
-              />
-            </div>
-            <div class="form__labelBox">
-              <label htmlFor="eventName" class="form__labelText">Fecha de la tarea</label>
-              <Datepicker v-model="date" class="date-picker" />
-            </div>
-
-            <button class="form__submit-button link">Publicar</button>
-          </form>
-        </div>
-      </modal>
-    </Transition>
     <FooterPage />
   </main>
 </template>
@@ -477,10 +346,6 @@ li {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* overflow-x: visible;
-  overflow-y: visible;
-  transform: translateX(100%);
-  transition: transform 0.3s ease; Include transform in the transition property */
 }
 
 .popup__container {
