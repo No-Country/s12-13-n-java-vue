@@ -108,76 +108,76 @@ onMounted(() => {
         <div>
           <p>Publicaciones activas</p>
         </div>
-      <div>
         <div>
-          <div class="accordion" id="accordionExample">
-              <div class="accordion-item">
-                  <h2 class="accordion-header">
-                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                      <div>
-                          <strong><p class="kinesiologia">Kinesiología</p></strong>
-                      </div>
-                  </button>
-                  </h2>
-                  <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                      <div class="accordion-body">
+          <div>
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                         <div>
+                            <strong><p class="kinesiologia">Kinesiología</p></strong>
+                        </div>
+                    </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
                           <div>
-                              <strong><h4>Sesiones semanales</h4></strong>
-                          </div> 
-                          <div>
-                              <div class="perfil-florencia">
-                                  <img src="../assets/images/contratadoraflorenciar.png" alt="contratadora">
-                                  <div class="info-florencia">
-                                      <p><strong>Florencia R.</strong></p>
-                                      <p class="contratador">Contratador</p>
-                                  </div>
-                              </div>  
-                              <div class="valoracion">  
-                                  <div class="estrellas">
-                                      <img src="../assets/images/estrellacompleta.svg" alt="estrella completa">
-                                      <img src="../assets/images/estrellacompleta.svg" alt="estrella completa">
-                                      <img src="../assets/images/estrellacompleta.svg" alt="estrella completa">
-                                      <img src="../assets/images/estrellacompleta.svg" alt="estrella completa">
-                                      <img src="../assets/images/mediaestrella.svg" alt="media estrella">
-                                      <img src="../assets/images/4.5calificacion.svg" alt="4.5">
-                                  </div>
-                                  <div class="calificaciones">
-                                      <img src="../assets/images/16 calificaciones.svg" alt="16 calificaciones">
-                                  </div>
-                              </div>
-                          </div>
-                          </div>    
-                            <ul>
-                              <div>
-                                <div>
-                                    <div>
-                                        <p><strong>Fecha:</strong><span class="referencias">8/12/2023</span></p>
+                            <div>
+                                <strong><h4>Sesiones semanales</h4></strong>
+                            </div> 
+                            <div>
+                                <div class="perfil-florencia">
+                                    <img src="../assets/images/contratadoraflorenciar.png" alt="contratadora">
+                                    <div class="info-florencia">
+                                        <p><strong>Florencia R.</strong></p>
+                                        <p class="contratador">Contratador</p>
                                     </div>
-                                    <div>
-                                        <p><strong>Dirección:</strong><span class="referencias">Bogotá, Colombia</span></p>
+                                </div>  
+                                <div class="valoracion">  
+                                    <div class="estrellas">
+                                        <img src="../assets/images/estrellacompleta.svg" alt="estrella completa">
+                                        <img src="../assets/images/estrellacompleta.svg" alt="estrella completa">
+                                        <img src="../assets/images/estrellacompleta.svg" alt="estrella completa">
+                                        <img src="../assets/images/estrellacompleta.svg" alt="estrella completa">
+                                        <img src="../assets/images/mediaestrella.svg" alt="media estrella">
+                                        <img src="../assets/images/4.5calificacion.svg" alt="4.5">
                                     </div>
-                                    <div>
-                                        <p><strong>Precio:</strong><span class="referencias">30 USD</span></p>
-                                    </div>
-                                    <div>
-                                      <p><strong>Descripción:</strong></p>
+                                    <div class="calificaciones">
+                                        <img src="../assets/images/16 calificaciones.svg" alt="16 calificaciones">
                                     </div>
                                 </div>
-                                  <div class="descripcion">
-                                      <p>Necesito tres sesiones semanales a domicilio <br> durante las tardes para tratar una lesión a <br> la rodilla. Precio sugerido por sesión.</p>
+                            </div>
+                            </div>    
+                              <ul>
+                                <div>
+                                  <div>
+                                      <div>
+                                          <p><strong>Fecha:</strong><span class="referencias">8/12/2023</span></p>
+                                      </div>
+                                      <div>
+                                          <p><strong>Dirección:</strong><span class="referencias">Bogotá, Colombia</span></p>
+                                      </div>
+                                      <div>
+                                          <p><strong>Precio:</strong><span class="referencias">30 USD</span></p>
+                                      </div>
+                                      <div>
+                                        <p><strong>Descripción:</strong></p>
+                                      </div>
                                   </div>
-                              </div>
-                            </ul>
+                                    <div class="descripcion">
+                                        <p>Necesito tres sesiones semanales a domicilio <br> durante las tardes para tratar una lesión a <br> la rodilla. Precio sugerido por sesión.</p>
+                                    </div>
+                                </div>
+                              </ul>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                  </div>
+                    </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
       </section>                    
         <div v-if="cards && cards.length" class="tasks-container">
           <div v-for="card in cards" :key="card.id">
@@ -201,7 +201,7 @@ onMounted(() => {
       <section class="modal-info">
         <p class="modal-info__text" v-if="!cards">
           Crea tu primera publicación y <br />
-          conecta con trabajadores
+          conecta con contratadores
         </p>
         <button class="modal-info__button link" @click="openPopup">Crear publicación</button>
       </section>
