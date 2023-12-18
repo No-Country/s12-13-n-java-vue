@@ -1,3 +1,5 @@
+<!-- eslint-disable no-unused-vars -->
+<!-- eslint-disable vue/no-parsing-error -->
 <template>
     <main>
         <!--mobilebar-->
@@ -35,7 +37,7 @@
 
         <section class="fondo-card">
             <div>
-                <h3>Publicaciones activas</h3>
+                <p>Publicaciones activas</p>
             </div>
             <!--Card trabajador-->
             <section>
@@ -77,24 +79,25 @@
                                         </div>
                                     </div>
                                 </div>    
-                                <ul>
-                                    <div>
+                                    <ul>
                                         <div>
-                                            <p><strong>Fecha:</strong><span class="referencias">8/12/2023</span></p>
+                                            <div>
+                                                <p><strong>Fecha:</strong><span class="referencias">8/12/2023</span></p>
+                                            </div>
+                                            <div>
+                                                <p><strong>Dirección:</strong><span class="referencias">Bogotá, Colombia</span></p>
+                                            </div>
+                                            <div>
+                                                <p><strong>Precio:</strong><span class="referencias">30 USD</span></p>
+                                            </div>
+                                            <div><p><strong>Descripción:</strong></p></div>
                                         </div>
-                                        <div>
-                                            <p><strong>Dirección:</strong><span class="referencias">Bogotá, Colombia</span></p>
+                                            <div class="descripcion">
+                                                <p>Necesito tres sesiones semanales a domicilio <br> durante las tardes para tratar una lesión a <br> la rodilla. Precio sugerido por sesión.</p>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <p><strong>Precio:</strong><span class="referencias">30 USD</span></p>
-                                        </div>
-                                        <div><p><strong>Descripción:</strong></p></div>
-                                    </div>
-                                        <div class="descripcion">
-                                            <p>Necesito tres sesiones semanales a domicilio <br> durante las tardes para tratar una lesión a <br> la rodilla. Precio sugerido por sesión.</p>
-                                        </div>
-                                    </div>
-                                </ul>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -136,6 +139,7 @@
 </template>
 
 <script lang="js" setup>
+// eslint-disable-next-line no-unused-vars
 import {ref} from 'vue'
 /*import Footer from '../components/Footer.vue';
 import SectionHeader from '../components/SectionHeader.vue';
