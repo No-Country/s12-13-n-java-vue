@@ -14,7 +14,6 @@ const headers = {
 
 
 const activeItems = ref([false, false, false])
-const isOpen = ref(false)
 
 
 const postulations = ref([]);
@@ -147,7 +146,7 @@ onMounted(() => {
                                     </div>
                                 </div>
                             </div>
-                            </div>    
+                            <div>    
                               <ul>
                                 <div>
                                   <div>
@@ -174,11 +173,10 @@ onMounted(() => {
                         </div>
                     </div>
                 </div>
-              </div>
             </div>
           </div>
         </div>
-      </section>                    
+                   
         <div v-if="cards && cards.length" class="tasks-container">
           <div v-for="card in cards" :key="card.id">
   
@@ -198,13 +196,13 @@ onMounted(() => {
         </div>
       </section>
 
-      <section class="modal-info">
+      <!--<section class="modal-info">
         <p class="modal-info__text" v-if="!cards">
           Crea tu primera publicación y <br />
           conecta con contratadores
         </p>
-        <button class="modal-info__button link" @click="openPopup">Crear publicación</button>
-      </section>
+       
+      </section>-->
     </div>
 
     <FooterPage />
@@ -295,7 +293,7 @@ li {
 .cards-container {
   background-color: #a9b8de;
 }
-.modal-info {
+/*.modal-info {
   width: 361px;
   left: 0;
   right: 0;
@@ -310,8 +308,8 @@ li {
   gap: 25px;
   align-self: stretch;
   border-radius: 6px;
-}
-.modal-info__button {
+}*/
+/*.modal-info__button {
   color: var(--white, #fff);
   font-family: 'Baloo 2';
   font-size: 20px;
@@ -325,14 +323,14 @@ li {
   border-radius: 6px;
   background: var(--blue1, #1d3d8f);
   border: none;
-}
+}*/
 
-.modal-info__text {
+/*.modal-info__text {
   text-align: center;
   font-family: 'Baloo 2';
   font-size: 20px;
   font-weight: 600;
-}
+}*/
 
 .popup {
   position: fixed;
@@ -518,28 +516,22 @@ li {
 .perfil-florencia{
     display:flex;
     align-items: center;
-    background-color: violet;
 }
 
 .info-florencia{
     margin-right: auto;
-    background-color: yellow;
+    
 }
 
 .valoracion{
     display: flex;
     flex-direction: column;
     align-items:flex-end;
-    background-color: orange;
-}
-
-.estrellas{
-    background-color: red;
+    
 }
 
 .calificaciones{
     margin-left: auto;
-    background-color: green;
 }
 
 .contratador{
