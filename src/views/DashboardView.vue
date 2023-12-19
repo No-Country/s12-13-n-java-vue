@@ -469,7 +469,7 @@ li {
 }
 .container {
   width: 100%;
-  height: 653px;
+  height: 527px;
   overflow: auto;
 }
 
