@@ -28,6 +28,7 @@ console.log('dialogRef:', dialogRef.value)
 const isEditMode = ref(false)
 let isCardExists = ref(true)
 let actionName = ref('')
+let profile = ref(null)
 let taskTitle = ref('')
 let category = ref('')
 let currency = ref('')
@@ -133,7 +134,7 @@ const onSubmit = async () => {
     )
   }
 
-  fetchCards()
+  fetchProfileAndCards()
   formRef.value.reset()
   taskTitle.value = ''
   category.value = ''
@@ -147,32 +148,61 @@ const onSubmit = async () => {
   actionName.value = 'Crear publicación'
 }
 
-const fetchCards = async () => {
-  await axios.get('task/published', { headers }).then((response) => {
-    console.log('response:', response.data.content)
-    cards.value = response.data.content.filter((card) => card.id > 0)
-  })
+// const fetchProfileInfo = async () => {
+//   console.log('fetchProfileInfo:', fetchProfileInfo)
+//   await axios.get('auth/details', { headers }).then((response) => {
+//     profile.value = response.data
+//     console.log('profile:', profile.value.id)
+//   })
+// }
+
+// const fetchCards = async () => {
+//   await axios.get(`task/client/${profile.value.id}`, { headers }).then((response) => {
+//     console.log('response:', response.data.content)
+//     cards.value = response.data.content.filter((card) => card.id > 0)
+//   })
+// }
+
+const fetchProfileAndCards = async () => {
+  try {
+    const fetchProfileInfo = await axios.get('auth/details', { headers })
+    profile.value = fetchProfileInfo.data
+
+    const fetchCards = await axios.get('task/client/', {
+      headers,
+      params: {
+        id: 1,
+        status: 'PUBLISHED'
+      }
+    })
+
+    cards.value = fetchCards.data.content
+  } catch (error) {
+    console.error('Error fetching data:', error)
+    // Handle errors if needed
+  }
 }
 
-onMounted(() => {
-  console.log('onMounteddialogRef:', dialogRef.value)
+// Usage
+fetchProfileAndCards()
 
-  fetchCards()
+onMounted(() => {
+  fetchProfileAndCards()
   if (isEditMode.value && editedCard.value) {
     category.value = editedCard.value.occupations[0].occupationName
-    console.log('category.value:', category.value)
   }
-  fetchCards()
 })
 
 const deleteTask = async () => {
-  isDialogOpen.value = true
-  const id = editedCard.value.id
-  await axios.delete(`task/${id}`, { headers }).then((response) => {
+  isDialogOpen.value = false
+  const cardID = editedCard.value.id
+  console.log('editedCard:', editedCard)
+  console.log('id:', cardID)
+  await axios.delete(`task/delete/${cardID}`, { headers }).then((response) => {
     console.log('response:', response)
   })
   closePopup()
-  await fetchCards()
+  await fetchProfileAndCards()
 }
 
 const openDialog = () => {
@@ -394,7 +424,7 @@ detalles de tu trabajo"
       </p>
       <p class="dialog-subtext">¿Quieres eliminar la publicación?</p>
       <div class="dialog-buttons">
-        <button class="edit-button link">Volver a editar</button>
+        <button class="edit-button link" @click="isDialogOpen = false">Volver a editar</button>
         <button class="form__delete-button delete-button link" @click="deleteTask">
           Confirmar
         </button>
