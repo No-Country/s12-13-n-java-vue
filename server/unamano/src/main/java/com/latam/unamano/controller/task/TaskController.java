@@ -108,14 +108,14 @@ public class TaskController {
     @Secured("ROLE_CLIENT")
     @Operation(summary = "Endpoint que elimina definitivamente de la base de datos la tarea con el id ingresado")
     public ResponseEntity<String> deleteTaskById(@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(taskService.deleteTaskById(id));
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.deleteTaskById(id));
     }
     @DeleteMapping("delete/{id}")
     @Secured("ROLE_CLIENT")
     @Operation(summary = "Endpoint que cambia el status de una tarea en la base de datos con el id ingresado. " +
             "Simula la eliminación de la tarea, dejándola deshabilitada para ser usada en otros endpoints")
     public ResponseEntity<String> hideTaskById(@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(taskService.hideTaskById(id));
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.hideTaskById(id));
     }
 
     @GetMapping("/published")
