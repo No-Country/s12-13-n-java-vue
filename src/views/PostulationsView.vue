@@ -12,12 +12,12 @@ const headers = {
   Authorization: `Bearer ${token}`
 }
 
-let cards = ref(null)
+let posts = ref(null)
 
 const fetchCards = async () => {
-  await axios.get('task/published', { headers }).then((response) => {
-    console.log('response:', response.data.content)
-    cards.value = response.data.content.filter((card) => card.id > 0)
+  await axios.get('postulations/task_postulations/18', { headers }).then((response) => {
+    posts.value = response.data.content
+    console.log('postulations:', posts.value)
   })
 }
 
@@ -39,17 +39,17 @@ onMounted(() => {
             <p class="card__title">{{ $route.query.taskTitle }}</p>
           </div>
         </section>
-        <section class="posts-container">
-          <div class="post">
+
+        <section v-if="posts && posts.length" class="post-container">
+          <div class="post" v-for="post in posts" :key="post.id">
             <div class="post-info">
               <div class="circle-container">
                 <img src="../assets/images/post-avatar.svg" alt="avatar" class="avatar" />
               </div>
               <div class="profile__info">
-                <p class="profile__name">Florencia R.</p>
+                <p class="profile__name">{{ post.firstname }} {{ post.lastname.slice(0, 1) }}.</p>
                 <p class="profile__role">Contratador</p>
               </div>
-
               <div class="ranking">
                 <v-rating
                   hover
@@ -66,7 +66,8 @@ onMounted(() => {
             <button class="post-button link">Contratar</button>
           </div>
         </section>
-        <section class="posts-container">
+
+        <section class="post-container">
           <div class="post">
             <div class="post-info">
               <div class="circle-container">
@@ -158,7 +159,7 @@ li {
 
 .card {
   display: flex;
-  min-height: 73px;
+  min-height: 90px;
   min-width: 361px;
   padding: 16px;
   flex-direction: column;
@@ -182,7 +183,7 @@ li {
   margin-bottom: 8px;
 }
 
-.posts-container {
+.post-container {
   display: flex;
   min-height: 156px;
   min-width: 361px;
