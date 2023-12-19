@@ -14,6 +14,8 @@ const headers = {
 
 let posts = ref(null)
 
+let isActive = ref(false)
+
 const fetchCards = async () => {
   await axios.get('postulations/task_postulations/18', { headers }).then((response) => {
     posts.value = response.data.content
@@ -24,6 +26,11 @@ const fetchCards = async () => {
 onMounted(() => {
   fetchCards()
 })
+
+const contract = () => {
+  console.log('contract:', contract)
+  isActive.value = true
+}
 </script>
 <template>
   <main>
@@ -63,7 +70,13 @@ onMounted(() => {
                 <p class="ranking-text">21 calificaciones</p>
               </div>
             </div>
-            <button class="post-button link">Contratar</button>
+            <button
+              class="post-button link"
+              :style="{ background: isActive ? '#1b9964' : '#149ed7' }"
+              @click="contract()"
+            >
+              <span v-if="isActive">Contratado</span> <span v-else>Contratar</span>
+            </button>
           </div>
         </section>
 
@@ -97,7 +110,9 @@ onMounted(() => {
         <button class="button-back link post-button" @click="router.back()">
           Volver a publicaciones
         </button>
-        <button class="button-finalize link post-button">Finalizar publicación</button>
+        <button class="button-finalize link post-button" :class="{ buttonActive: isActive }">
+          Finalizar publicación
+        </button>
       </section>
     </div>
     <section class="section-blog">
