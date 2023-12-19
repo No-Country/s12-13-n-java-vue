@@ -9,7 +9,7 @@ import com.latam.unamano.utils.Role;
 import java.util.List;
 
 public record GetWorker(Long id_worker, Long id_user, String username, String firstName, String lastName, String email, Role rol,
-                        Long id_address, String city, String country, List<OccupationDTO> occupationList) {
+                        Long id_address, String city, String country, List<OccupationDTO> occupationList, String profilePicture) {
 
     public GetWorker(Worker worker){
         this(worker.getId(),worker.getUser().getId()
@@ -21,6 +21,7 @@ public record GetWorker(Long id_worker, Long id_user, String username, String fi
                 worker.getUser().getAddresses().getId(),
                 worker.getUser().getAddresses().getCity(),
                 worker.getUser().getAddresses().getCountry(),
-                worker.getOccupations().stream().map(OccupationMapper::occupationToDto).toList());
+                worker.getOccupations().stream().map(OccupationMapper::occupationToDto).toList(),
+                worker.getUser().getProfilePicture());
     }
 }

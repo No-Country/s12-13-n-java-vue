@@ -1,5 +1,6 @@
 package com.latam.unamano.service.task;
 
+import com.latam.unamano.dto.addressDto.AddressDto;
 import com.latam.unamano.dto.occupationDto.OccupationDTO;
 import com.latam.unamano.dto.task.CreateTaskDTO;
 import com.latam.unamano.dto.task.TaskDTO;
@@ -8,6 +9,7 @@ import com.latam.unamano.exceptions.BadDataEntryException;
 import com.latam.unamano.dto.task.TaskMapper;
 import com.latam.unamano.exceptions.OperationDeniedException;
 import com.latam.unamano.exceptions.UpdateDeniedException;
+import com.latam.unamano.persistence.entities.addressEntity.Address;
 import com.latam.unamano.persistence.entities.postulationEntity.Postulation;
 import com.latam.unamano.persistence.repositories.addressRespository.AddressRepository;
 import com.latam.unamano.persistence.repositories.clientRepository.ClientRepository;
@@ -38,12 +40,14 @@ public class TaskService {
     private final ClientRepository clientRepository;
     private final PostulationRepository postulationRepository;
 
+
     public TaskService(TaskRepository taskRepository
             , OccupationService occupationService
             , UserRepository userRepository
             , AddressRepository addressRepository
             , ClientRepository clientRepository
-    , PostulationRepository postulationRepository){
+    , PostulationRepository postulationRepository
+    ){
         this.taskRepository = taskRepository;
         this.occupationService= occupationService;
         this.userRepository=userRepository;
@@ -145,6 +149,11 @@ public class TaskService {
             taskUpdated.setDateUpdated(LocalDateTime.now());
         }
 
+        if(updateTaskDTO.getAddress()!=null){
+            updateAddress(taskUpdated.getAddress().getId(), updateTaskDTO.getAddress());
+            taskUpdated.setDateUpdated(LocalDateTime.now());
+        }
+
         //update Occupations
         //TODO IN PROGRESS
 /*
@@ -161,6 +170,26 @@ public class TaskService {
         return TaskMapper.taskToTaskDTO(taskUpdated);
 
 
+    }
+
+    private void updateAddress(Long id, AddressDto address) {
+        Address addressUpdated = addressRepository.findById(id).get();
+        if(address.street()!=null&&!address.street().isBlank()){
+            addressUpdated.setStreet(address.street());
+        }
+        if(address.number()!=null&&!address.number().isBlank()){
+            addressUpdated.setNumber(address.number());
+        }
+        if(address.state()!=null&&!address.state().isBlank()){
+            addressUpdated.setState(address.state());
+        }
+        if(address.city()!=null&&!address.city().isBlank()){
+            addressUpdated.setCity(address.city());
+        }
+        if(address.country()!=null&&!address.country().isBlank()){
+            addressUpdated.setCountry(address.country());
+        }
+        addressRepository.save(addressUpdated);
     }
 
     public TaskDTO findTaskById(Long id) {

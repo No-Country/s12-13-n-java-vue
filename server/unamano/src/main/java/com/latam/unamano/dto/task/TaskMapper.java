@@ -30,7 +30,9 @@ public class TaskMapper {
                         task.getClient().getUser().getRole(),
                         task.getClient().getUser().getAddresses().getId(),
                         task.getClient().getUser().getAddresses().getCity(),
-                        task.getClient().getUser().getAddresses().getCountry()))
+                        task.getClient().getUser().getAddresses().getCountry(),
+                        task.getClient().getUser().getProfilePicture())
+                        )
                 .address(task.getAddress())
                 .build();
     }
