@@ -128,7 +128,7 @@ li {
 }
 .container {
   width: 100%;
-  height: 653px;
+  height: 592px;
   overflow: auto;
   display: flex;
   flex-direction: column;

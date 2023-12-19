@@ -28,6 +28,7 @@ console.log('dialogRef:', dialogRef.value)
 const isEditMode = ref(false)
 let isCardExists = ref(true)
 let actionName = ref('')
+let profile = ref(null)
 let taskTitle = ref('')
 let category = ref('')
 let currency = ref('')
@@ -39,12 +40,12 @@ const formRef = ref(null)
 
 const editedCard = ref(null)
 const onCardEdit = (card) => {
-  console.log('dialogRef:', dialogRef.value)
-
   isEditMode.value = true
   editedCard.value = card
   isOpen.value = true
   actionName.value = 'Editar publicación'
+  taskLocation.value = editedCard.value.address.street
+
   currency.value = editedCard.value.currencyType
   date.value = editedCard.value.taskDate
   category.value =
@@ -67,6 +68,7 @@ const toggleNavItem = (index) => {
 const openPopup = () => {
   currency.value = ''
   date.value = ''
+  taskLocation.value = ''
   category.value = ''
   isEditMode.value = false
   isOpen.value = true
@@ -133,7 +135,7 @@ const onSubmit = async () => {
     )
   }
 
-  fetchCards()
+  fetchProfileAndCards()
   formRef.value.reset()
   taskTitle.value = ''
   category.value = ''
@@ -147,39 +149,50 @@ const onSubmit = async () => {
   actionName.value = 'Crear publicación'
 }
 
-const fetchCards = async () => {
-  await axios.get('task/published', { headers }).then((response) => {
-    console.log('response:', response.data.content)
-    cards.value = response.data.content.filter((card) => card.id > 0)
-  })
+const fetchProfileAndCards = async () => {
+  try {
+    const fetchProfileInfo = await axios.get('user/data', { headers })
+    console.log('fetchProfileInfo.data:', fetchProfileInfo.data)
+    profile.value = fetchProfileInfo.data
+
+    const fetchCards = await axios.get('task/client/', {
+      headers,
+      params: {
+        id: profile.value.id_client,
+        status: 'PUBLISHED'
+      }
+    })
+
+    cards.value = fetchCards.data.content
+  } catch (error) {
+    console.error('Error fetching data:', error)
+  }
 }
 
-onMounted(() => {
-  console.log('onMounteddialogRef:', dialogRef.value)
+fetchProfileAndCards()
 
-  fetchCards()
+onMounted(() => {
+  fetchProfileAndCards()
   if (isEditMode.value && editedCard.value) {
     category.value = editedCard.value.occupations[0].occupationName
-    console.log('category.value:', category.value)
+    taskLocation.value = editedCard.value.address.street
   }
-  fetchCards()
 })
 
 const deleteTask = async () => {
-  isDialogOpen.value = true
-  const id = editedCard.value.id
-  await axios.delete(`task/${id}`, { headers }).then((response) => {
+  isDialogOpen.value = false
+  const cardID = editedCard.value.id
+  console.log('editedCard:', editedCard)
+  console.log('id:', cardID)
+  await axios.delete(`task/delete/${cardID}`, { headers }).then((response) => {
     console.log('response:', response)
   })
   closePopup()
-  await fetchCards()
+  await fetchProfileAndCards()
 }
 
 const openDialog = () => {
-  console.log('openDialog:', openDialog)
-  // dialogRef.value.show()
   isDialogOpen.value = 'true'
-  console.log('onMounteddialogRef:', dialogRef.value)
 }
 </script>
 <template>
@@ -234,7 +247,7 @@ const openDialog = () => {
               :description="card.description"
               :price="card.price"
               :currencyType="card.currencyType"
-              :address="card.address.street"
+              :taskLocation="card.address.street"
               :id="card.id"
               @onEdit="onCardEdit(card)"
             >
@@ -280,6 +293,7 @@ const openDialog = () => {
                 id="categoryName"
                 name="categoryName"
                 v-model="category"
+                :value="isEditMode ? editedCard.category : category"
                 :disabled="isEditMode"
                 required
               >
@@ -298,7 +312,7 @@ const openDialog = () => {
               <label htmlFor="taskTitle" class="form__labelText">Título</label>
               <input
                 class="form__input"
-                name="eventName"
+                name="taskTitle"
                 placeholder="Escribe un título"
                 required
                 :value="isEditMode ? editedCard.taskTitle : taskTitle"
@@ -351,15 +365,18 @@ detalles de tu trabajo"
             </div>
 
             <div class="form__labelBox">
-              <label htmlFor="eventName" class="form__labelText">Ubicación</label>
+              <label htmlFor="eventLocation" class="form__labelText">Ubicación</label>
               <img src="../assets/images/location-icon.svg" alt="" class="location-img" />
 
               <input
                 class="form__input input-location"
-                name="eventName"
+                id="eventLocation"
+                name="eventLocation"
                 placeholder="Ingresa tu dirección"
                 :value="taskLocation"
                 @input="(e) => (taskLocation = e.target.value)"
+                :disabled="isEditMode"
+                required
               />
             </div>
             <div class="form__labelBox">
@@ -394,7 +411,7 @@ detalles de tu trabajo"
       </p>
       <p class="dialog-subtext">¿Quieres eliminar la publicación?</p>
       <div class="dialog-buttons">
-        <button class="edit-button link">Volver a editar</button>
+        <button class="edit-button link" @click="isDialogOpen = false">Volver a editar</button>
         <button class="form__delete-button delete-button link" @click="deleteTask">
           Confirmar
         </button>
@@ -469,7 +486,7 @@ li {
 }
 .container {
   width: 100%;
-  height: 653px;
+  height: 527px;
   overflow: auto;
 }
 

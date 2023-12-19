@@ -6,7 +6,7 @@ const props = defineProps({
   category: String,
   color: String,
   description: String,
-  address: String,
+  taskLocation: String,
   price: String,
   currencyType: String,
   id: Number
@@ -44,7 +44,7 @@ const props = defineProps({
         }"
       >
         <p class="data__title">Dirección:</p>
-        <p class="data__value">{{ props.address }}</p>
+        <p class="data__value">{{ props.taskLocation }}</p>
       </div>
       <div
         class="data-container"

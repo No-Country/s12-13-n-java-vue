@@ -459,7 +459,7 @@ li {
   appearance: none;
   width: 200px;
   margin-left: 7px;
-  z-index: 1000;
+  position: relative;
 }
 
 .slider-container {
@@ -487,6 +487,19 @@ li {
   font-size: 0.625rem;
   margin-bottom: -1.125rem;
   top: 634px;
+}
+
+.range-slider::after {
+  content: '';
+  position: absolute;
+  top: -20px;
+  bottom: -20px;
+  left: -20px;
+  right: -20px;
+}
+
+.circle:hover {
+  cursor: pointer;
 }
 
 .circle-dashboard {
