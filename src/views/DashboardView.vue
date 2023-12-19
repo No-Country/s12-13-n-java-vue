@@ -40,12 +40,12 @@ const formRef = ref(null)
 
 const editedCard = ref(null)
 const onCardEdit = (card) => {
-  console.log('dialogRef:', dialogRef.value)
-
   isEditMode.value = true
   editedCard.value = card
   isOpen.value = true
   actionName.value = 'Editar publicación'
+  taskLocation.value = editedCard.value.address.street
+
   currency.value = editedCard.value.currencyType
   date.value = editedCard.value.taskDate
   category.value =
@@ -68,6 +68,7 @@ const toggleNavItem = (index) => {
 const openPopup = () => {
   currency.value = ''
   date.value = ''
+  taskLocation.value = ''
   category.value = ''
   isEditMode.value = false
   isOpen.value = true
@@ -174,6 +175,7 @@ onMounted(() => {
   fetchProfileAndCards()
   if (isEditMode.value && editedCard.value) {
     category.value = editedCard.value.occupations[0].occupationName
+    taskLocation.value = editedCard.value.address.street
   }
 })
 
@@ -190,7 +192,6 @@ const deleteTask = async () => {
 }
 
 const openDialog = () => {
-  // dialogRef.value.show()
   isDialogOpen.value = 'true'
 }
 </script>
@@ -246,7 +247,7 @@ const openDialog = () => {
               :description="card.description"
               :price="card.price"
               :currencyType="card.currencyType"
-              :address="card.address.street"
+              :taskLocation="card.address.street"
               :id="card.id"
               @onEdit="onCardEdit(card)"
             >
@@ -292,6 +293,7 @@ const openDialog = () => {
                 id="categoryName"
                 name="categoryName"
                 v-model="category"
+                :value="isEditMode ? editedCard.category : category"
                 :disabled="isEditMode"
                 required
               >
@@ -310,7 +312,7 @@ const openDialog = () => {
               <label htmlFor="taskTitle" class="form__labelText">Título</label>
               <input
                 class="form__input"
-                name="eventName"
+                name="taskTitle"
                 placeholder="Escribe un título"
                 required
                 :value="isEditMode ? editedCard.taskTitle : taskTitle"
@@ -363,15 +365,18 @@ detalles de tu trabajo"
             </div>
 
             <div class="form__labelBox">
-              <label htmlFor="eventName" class="form__labelText">Ubicación</label>
+              <label htmlFor="eventLocation" class="form__labelText">Ubicación</label>
               <img src="../assets/images/location-icon.svg" alt="" class="location-img" />
 
               <input
                 class="form__input input-location"
-                name="eventName"
+                id="eventLocation"
+                name="eventLocation"
                 placeholder="Ingresa tu dirección"
                 :value="taskLocation"
                 @input="(e) => (taskLocation = e.target.value)"
+                :disabled="isEditMode"
+                required
               />
             </div>
             <div class="form__labelBox">
