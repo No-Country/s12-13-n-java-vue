@@ -85,14 +85,12 @@ p {
 .card__category {
   color: var(--blue1, #1d3d8f);
   font-family: 'Baloo 2';
-  font-size: 20px;
   font-weight: 600;
 }
 
 .card__title {
   white-space: nowrap;
   font-family: 'Baloo 2';
-  font-size: 20px;
   font-weight: 400;
   margin-bottom: 8px;
 }

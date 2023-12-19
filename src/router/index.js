@@ -1,56 +1,67 @@
 import useAuth from '@/stores/auth'
 import { createRouter, createWebHistory } from 'vue-router'
-import DashboardView from '../views/DashboardView.vue'
-import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import DashboardTrabajador from '../views/DashboardTrabajador.vue'
+import PostulationsView from '../views/PostulationsView.vue'
 import ChatView from '../views/ChatView.vue'
+import DashboardView from '../views/DashboardView.vue'
+import HomeView from '../views/HomeView.vue'
 
 const routes = [
- {
-      path: '/login',
-      name: 'login',
-      component: LoginView,
-       meta: {
-        requereAuth: false
-      },
-    },
-
-    {
-      path: '/dashboard',
-      name: 'dashboard',
-      component: DashboardView,
-      meta: {
-        requereAuth: true
-      },
-    },
-
-    {
-      path: '/DashboardTrabajador',
-      name: 'DashboardTrabajador',
-      component: DashboardTrabajador,
-      meta: {
-        requereAuth: true
-      },
-    },
-
-    {
-      path: '/Chat',
-      name: 'Chat',
-      component: ChatView,
-      meta: {
-        requereAuth: true
-      },
-    },
-
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView,
-       meta: {
-        requereAuth: false
-      },
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginView,
+    meta: {
+      requereAuth: false
     }
+  },
+
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: DashboardView,
+    meta: {
+      requereAuth: true
+    }
+  },
+  {
+    path: '/posts',
+    name: 'postulations',
+    component: PostulationsView,
+    query: {
+      category: ''
+    },
+    meta: {
+      requereAuth: true
+    }
+  },
+  {
+    path: '/DashboardTrabajador',
+    name: 'DashboardTrabajador',
+    component: DashboardTrabajador,
+    meta: {
+      requereAuth: true
+    }
+  },
+
+  {
+    path: '/Chat',
+    name: 'Chat',
+    component: ChatView,
+    meta: {
+      requereAuth: true
+    }
+  },
+
+  {
+    path: '/',
+    name: 'home',
+    component: HomeView,
+    meta: {
+      requereAuth: false
+    }
+  }
 ]
 
 const router = createRouter({
@@ -58,17 +69,15 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next)=>{
-
-  const auth = useAuth() 
+router.beforeEach((to, from, next) => {
+  const auth = useAuth()
   const isAuth = auth.token
 
-  if((to.meta.requereAuth) && (isAuth == null)){
+  if (to.meta.requereAuth && isAuth == null) {
     next('login')
-  }else{
+  } else {
     next()
   }
-  
 })
 
 export default router
