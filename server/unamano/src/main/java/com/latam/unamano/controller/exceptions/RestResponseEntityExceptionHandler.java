@@ -14,6 +14,8 @@ import com.latam.unamano.dto.exceptions.ErrorResponse;
 
 import org.springframework.security.access.AccessDeniedException;
 
+import org.springframework.security.access.AccessDeniedException;
+
 @RestControllerAdvice
 public class RestResponseEntityExceptionHandler {
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -49,6 +51,7 @@ public class RestResponseEntityExceptionHandler {
     public ResponseEntity<String> accessDenied(AccessDeniedException e){
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
     }
+
     @ExceptionHandler(UpdateDeniedException.class)
     public ResponseEntity<String> accessDenied(UpdateDeniedException e){
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
@@ -61,4 +64,5 @@ public class RestResponseEntityExceptionHandler {
     public ResponseEntity<String> accessDenied(OperationDeniedException e){
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
     }
+
 }

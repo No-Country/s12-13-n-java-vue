@@ -30,6 +30,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http
+
 				.csrf(csrf ->
 						csrf
 								.disable())
@@ -38,6 +39,7 @@ public class SecurityConfig {
 								.requestMatchers("api/auth/**", "api/workers/register/**", "api/clients/register/**" ,"/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html","/chat-socket/**").permitAll()
 								.anyRequest().authenticated()
 				).exceptionHandling(customizer -> customizer.accessDeniedHandler((request, response, accessDeniedException) -> {throw new AccessDeniedException("Acceso denegado");}))
+
 			.sessionManagement(sessionManager -> sessionManager
 					.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authenticationProvider(authProvider)
