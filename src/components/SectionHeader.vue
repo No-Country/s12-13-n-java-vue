@@ -153,7 +153,9 @@
       <button v-if="$route.name === 'home'" class="sidebar__button link" @click="navigateToLogin">
         Iniciar sesión
       </button>
-      <!--<button  v-if="showLogoutButton" class="sidebarbutton link" @click="closeSession">-->
+      <button  v-if="showLogoutButton" class="sidebar__button link" @click="closeSession">
+        Cerrar sesión
+      </button>
       <button v-if="$route.name === 'dashboard'" class="sidebar__button link" @click="closeSesion">
         Cerrar sesión
       </button>
@@ -161,11 +163,7 @@
   </section>
 </template>
 <script setup>
-import useAuth from '@/stores/auth'
-const store = useAuth()
-
 const closeSesion = () => {
-  store.reset()
   router.push({ name: 'login' })
 }
 </script>
@@ -184,13 +182,13 @@ export default {
     }
   },
 
-  /*computed: {
+  computed: {
     showLogoutButton() {
       return this.$route.name === 'dashboard' ||
       this.$route.name === 'worker';
     },
   },
-*/
+
 
 
 
