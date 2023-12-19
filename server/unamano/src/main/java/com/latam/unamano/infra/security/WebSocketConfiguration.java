@@ -18,7 +18,7 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/chat-socket")
-                .setAllowedOrigins("http://localhost:8080","https://s12-13-n-java-vue.vercel.app", "http://localhost:4200")
+                .setAllowedOrigins("http://localhost:8080","http://localhost:5173","https://s12-13-n-java-vue.vercel.app", "http://localhost:4200")
                 .withSockJS();
 
     }
