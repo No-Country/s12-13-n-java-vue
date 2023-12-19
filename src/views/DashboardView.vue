@@ -148,30 +148,16 @@ const onSubmit = async () => {
   actionName.value = 'Crear publicación'
 }
 
-// const fetchProfileInfo = async () => {
-//   console.log('fetchProfileInfo:', fetchProfileInfo)
-//   await axios.get('auth/details', { headers }).then((response) => {
-//     profile.value = response.data
-//     console.log('profile:', profile.value.id)
-//   })
-// }
-
-// const fetchCards = async () => {
-//   await axios.get(`task/client/${profile.value.id}`, { headers }).then((response) => {
-//     console.log('response:', response.data.content)
-//     cards.value = response.data.content.filter((card) => card.id > 0)
-//   })
-// }
-
 const fetchProfileAndCards = async () => {
   try {
-    const fetchProfileInfo = await axios.get('auth/details', { headers })
+    const fetchProfileInfo = await axios.get('user/data', { headers })
+    console.log('fetchProfileInfo.data:', fetchProfileInfo.data)
     profile.value = fetchProfileInfo.data
 
     const fetchCards = await axios.get('task/client/', {
       headers,
       params: {
-        id: 1,
+        id: profile.value.id_client,
         status: 'PUBLISHED'
       }
     })
@@ -179,11 +165,9 @@ const fetchProfileAndCards = async () => {
     cards.value = fetchCards.data.content
   } catch (error) {
     console.error('Error fetching data:', error)
-    // Handle errors if needed
   }
 }
 
-// Usage
 fetchProfileAndCards()
 
 onMounted(() => {
@@ -206,10 +190,8 @@ const deleteTask = async () => {
 }
 
 const openDialog = () => {
-  console.log('openDialog:', openDialog)
   // dialogRef.value.show()
   isDialogOpen.value = 'true'
-  console.log('onMounteddialogRef:', dialogRef.value)
 }
 </script>
 <template>
