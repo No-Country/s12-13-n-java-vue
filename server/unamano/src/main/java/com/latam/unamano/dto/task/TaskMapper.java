@@ -1,12 +1,10 @@
 package com.latam.unamano.dto.task;
 
 import com.latam.unamano.dto.clientDto.response.ClientData;
-import com.latam.unamano.dto.clientDto.response.GetClient;
 import com.latam.unamano.dto.occupationDto.OccupationMapper;
 import com.latam.unamano.persistence.entities.client.Client;
 import com.latam.unamano.persistence.entities.task.Task;
 import lombok.experimental.UtilityClass;
-import org.springframework.boot.autoconfigure.web.reactive.function.client.ReactorNettyHttpClientMapper;
 
 @UtilityClass
 public class TaskMapper {
@@ -47,7 +45,7 @@ public class TaskMapper {
                 .status(taskDTO.getStatus())
                 .occupations(taskDTO.getOccupations().stream().map(OccupationMapper::DtoToOccupation).toList())
                 .taskDate(taskDTO.getTaskDate())
-                .client(new Client(taskDTO.getClient().getId(), null, null))
+                .client(new Client(taskDTO.getClient().getId(), null, null,null))
                 .address(taskDTO.getAddress())
                 .build();
     }
@@ -60,7 +58,7 @@ public class TaskMapper {
                 .currencyType(createTaskDTO.getCurrencyType())
                 .occupations(createTaskDTO.getOccupations().stream().map(OccupationMapper::DtoToOccupation).toList())
                 .taskDate(createTaskDTO.getTaskDate())
-                .client(new Client(createTaskDTO.getClient().getId(), null, null))
+                .client(new Client(createTaskDTO.getClient().getId(), null, null,null))
                 .address(createTaskDTO.getAddress())
                 .build();
     }

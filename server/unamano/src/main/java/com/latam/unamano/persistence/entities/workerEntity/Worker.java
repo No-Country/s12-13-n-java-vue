@@ -1,5 +1,9 @@
 package com.latam.unamano.persistence.entities.workerEntity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.latam.unamano.persistence.entities.chatMessage.ChatMessage;
+import com.latam.unamano.persistence.entities.chatRoom.ChatRoom;
 import com.latam.unamano.persistence.entities.ocupationEntity.Occupation;
 import com.latam.unamano.persistence.entities.user.User;
 import jakarta.persistence.*;
@@ -30,5 +34,12 @@ public class Worker {
             joinColumns = @JoinColumn(name = "worker_id"),
             inverseJoinColumns = @JoinColumn(name = "occupation_id"))
     private List<Occupation> occupations;
+    @OneToMany(mappedBy = "worker")
+    private List<ChatRoom> chatMessagesAsWorker;
+
+    public Worker (Long id){
+        this.id = id;
+
+    }
 
 }
