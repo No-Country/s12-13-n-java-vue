@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class TaskService {
@@ -169,26 +170,32 @@ public class TaskService {
             throw new EntityNotFoundException("No existe la tarea con el id: " + id);
         }
     }
-
+    @Transactional
     public String deleteTaskById(Long id) {
-        try {
-            taskRepository.deleteById(id);
-            return "La tarea con id: " + id + " fue eliminada";
-        }catch(Exception e){
+        if(!taskRepository.existsById(id))
             throw new EntityNotFoundException("No existe la tarea con el id: " + id);
+        Task task = taskRepository.findById(id).get();
+        if(!task.getStatus().equals(TaskStatus.PUBLISHED))
+            throw new OperationDeniedException("No está permitido eliminar tareas que ya están siendo realizadas, fueron canceladas o fueron terminadas");
+        List<Postulation> postulations = postulationRepository.findByTaskId(id);
+        for (Postulation p: postulations) {
+            postulationRepository.deleteById(p.getId());
         }
+        taskRepository.deleteById(id);
+        return "La tarea con id: " + id + " fue eliminada";
     }
 
-
+    @Transactional
     public String hideTaskById(Long id) {
-        try {
-            Task task = taskRepository.findById(id).get();
-            task.setStatus(TaskStatus.REMOVED);
-            taskRepository.save(task);
-            return "La tarea con id: " + id + " fue eliminada";
-        }catch(Exception e){
+        if(!taskRepository.existsById(id))
             throw new EntityNotFoundException("No existe la tarea con el id: " + id);
-        }
+        Task task = taskRepository.findById(id).get();
+        if(!task.getStatus().equals(TaskStatus.PUBLISHED))
+            throw new OperationDeniedException("No está permitido eliminar tareas que ya están siendo realizadas, fueron canceladas o fueron terminadas");
+        task.setStatus(TaskStatus.REMOVED);
+        taskRepository.save(task);
+        return "La tarea con id: " + id + " fue eliminada";
+
     }
 
     public Page<Task> findTaskByStatusPUBLISHED(Pageable pageable) {

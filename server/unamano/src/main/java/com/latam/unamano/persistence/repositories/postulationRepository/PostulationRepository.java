@@ -27,4 +27,6 @@ public interface PostulationRepository extends JpaRepository<Postulation, Long> 
 
     Page<Postulation> findByWorkerIdAndTaskStatusAndStatus(Pageable pageable, @Param("worker_id")Long worker_id, @Param("task_status")TaskStatus task_status
     , @Param("status") PostulationStatus status);
+
+    List<Postulation> findByTaskId(@Param("id")Long id);
 }

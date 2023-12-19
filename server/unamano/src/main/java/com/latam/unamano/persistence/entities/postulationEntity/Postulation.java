@@ -23,7 +23,7 @@ public class Postulation {
     @ManyToOne
     @JoinColumn(name = "worker_id")
     private Worker worker;
-
+//TODO Acá está el problema
     @ManyToOne
     @JoinColumn(name = "task_id")
     private Task task;
