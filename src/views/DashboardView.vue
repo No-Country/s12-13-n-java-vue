@@ -1,6 +1,6 @@
 <script setup>
 import SectionHeader from '../components/SectionHeader.vue'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import FooterPage from '@/components/SectionFooter.vue'
@@ -13,16 +13,21 @@ const headers = {
   Authorization: `Bearer ${token}`
 }
 import router from '@/router'
-  const chat = ()=>{
-    router.push({ name: 'Chat' })
-  }
+const chat = () => {
+  router.push({ name: 'Chat' })
+}
 
 const date = ref()
 const store = useFormContratador()
 
 const activeItems = ref([false, false, false])
 const isOpen = ref(false)
-
+let isDialogOpen = ref(false)
+const dialogRef = ref()
+console.log('dialogRef:', dialogRef.value)
+const isEditMode = ref(false)
+let isCardExists = ref(true)
+let actionName = ref('')
 let taskTitle = ref('')
 let category = ref('')
 let currency = ref('')
@@ -30,13 +35,40 @@ let taskDescription = ref('')
 let taskLocation = ref('')
 let precio = ref(0)
 let cards = ref(null)
+const formRef = ref(null)
 
+const editedCard = ref(null)
+const onCardEdit = (card) => {
+  console.log('dialogRef:', dialogRef.value)
+
+  isEditMode.value = true
+  editedCard.value = card
+  isOpen.value = true
+  actionName.value = 'Editar publicación'
+  currency.value = editedCard.value.currencyType
+  date.value = editedCard.value.taskDate
+  category.value =
+    editedCard.value.occupations[0].occupationName.slice(0, 1).toUpperCase() +
+    editedCard.value.occupations[0].occupationName.slice(1)
+}
+
+isCardExists = computed(() => {
+  return !!(cards.value && cards.value.length)
+})
+
+isCardExists = computed(() => {
+  return !!(cards.value && cards.value.length)
+})
 
 const toggleNavItem = (index) => {
   activeItems.value[index] = !activeItems.value[index]
 }
 
 const openPopup = () => {
+  currency.value = ''
+  date.value = ''
+  category.value = ''
+  isEditMode.value = false
   isOpen.value = true
 }
 
@@ -45,49 +77,109 @@ const closePopup = () => {
 }
 
 const onSubmit = async () => {
-  await store.submit(
-    taskTitle.value,
-    taskDescription.value,
-    precio.value,
-    currency.value,
-    [
+  console.log('onSubmit:', onSubmit)
+  if (isEditMode.value) {
+    console.log('onSubmit:', isEditMode.value, currency.value)
+
+    await axios
+      .put(
+        'task',
+        {
+          id: editedCard.value.id,
+          taskTitle: taskTitle.value,
+          description: taskDescription.value,
+          price: precio.value,
+          currencyType: currency.value,
+          occupations: [
+            {
+              occupationName: category.value.toLowerCase()
+            }
+          ],
+          taskDate: date.value,
+          client: {
+            id: 1
+          },
+          address: {
+            street: taskLocation.value
+          }
+        },
+        { headers }
+      )
+      .then((response) => {
+        console.log('Response', response)
+      })
+      .catch((error) => {
+        console.log('Error en form', error)
+      })
+  } else {
+    console.log('ELSEonSubmit')
+    await store.submit(
+      taskTitle.value,
+      taskDescription.value,
+      precio.value,
+      currency.value,
+      [
+        {
+          occupationName: category.value.toLowerCase()
+        }
+      ],
+      date.value,
       {
-        occupationName: category.value
+        id: 1
+      },
+      {
+        street: taskLocation.value
       }
-    ],
-    date.value,
-    {
-      id: 1
-    },
-    {
-      street: taskLocation.value
-    }
-  )
+    )
+  }
+
   fetchCards()
+  formRef.value.reset()
+  taskTitle.value = ''
+  category.value = ''
+  currency.value = ''
+  taskDescription.value = ''
+  taskLocation.value = ''
+  precio.value = ''
+  date.value = ''
   closePopup()
+  editedCard.value = null
+  actionName.value = 'Crear publicación'
 }
 
 const fetchCards = async () => {
   await axios.get('task/published', { headers }).then((response) => {
     console.log('response:', response.data.content)
-    cards.value = response.data.content.filter((card) => card.id > 15)
+    cards.value = response.data.content.filter((card) => card.id > 0)
   })
 }
 
-// const fetchClient = async () => {
-//   await axios.get('auth/details', { headers }).then((response) => {
-//     console.log('response:', response.data.content)
-//     cards.value = response.data.content.filter((card) => card.username === 'abuelita')
-//   })
-// }
-
 onMounted(() => {
-  // fetchClient()
+  console.log('onMounteddialogRef:', dialogRef.value)
+
+  fetchCards()
+  if (isEditMode.value && editedCard.value) {
+    category.value = editedCard.value.occupations[0].occupationName
+    console.log('category.value:', category.value)
+  }
   fetchCards()
 })
 
-const onCardDelete = () => {
-  fetchCards()
+const deleteTask = async () => {
+  isDialogOpen.value = true
+  const id = editedCard.value.id
+  await axios.delete(`task/${id}`, { headers }).then((response) => {
+    console.log('response:', response)
+  })
+  closePopup()
+  await fetchCards()
+}
+
+const openDialog = () => {
+  console.log('openDialog:', openDialog)
+  // dialogRef.value.show()
+  isDialogOpen.value = 'true'
+  console.log('onMounteddialogRef:', dialogRef.value)
 }
 </script>
 <template>
@@ -105,7 +197,7 @@ const onCardDelete = () => {
             <p class="nav__item-text" :class="{ active: isActive }">Inicio</p>
           </div>
         </li>
-        <li class="nav__item link" @click="toggleNavItem" @click.prevent="chat">  
+        <li class="nav__item link" @click="toggleNavItem" @click.prevent="chat">
           <div class="nav__item-container">
             <img
               class="nav__item-image"
@@ -128,36 +220,34 @@ const onCardDelete = () => {
       </ul>
     </nav>
     <div class="cards-container">
-      <section class="container">
+      <section class="container" style="margin-bottom: 16px">
         <p>Publicaciones activas</p>
         <div v-if="cards && cards.length" class="tasks-container">
           <div v-for="card in cards" :key="card.id">
             <JobCard
-              @onDelete="onCardDelete"
               :taskTitle="card.taskTitle"
-              :taskDate="card.taskDate.slice(0, 10).replace(/-/g, '/')"
-              :category="card.occupations[0].occupationName"
+              :taskDate="card?.taskDate?.slice(0, 10).replace(/-/g, '/')"
+              :category="`${card.occupations[0].occupationName
+                .slice(0, 1)
+                .toUpperCase()}${card.occupations[0].occupationName.slice(1)}`"
+              :color="card.occupations[0].color"
               :description="card.description"
               :price="card.price"
               :currencyType="card.currencyType"
               :address="card.address.street"
               :id="card.id"
+              @onEdit="onCardEdit(card)"
             >
             </JobCard>
           </div>
         </div>
-
-        <div v-else>
-          <!-- Handle the case when cards is null or empty -->
-          No cards available.
-        </div>
       </section>
-      <section class="modal-info">
-        <p class="modal-info__text" v-if="cards && cards.length === 0">
+      <section class="modal-info" :style="{ padding: isCardExists ? '0' : '10px' }">
+        <p class="modal-info__text" v-if="!isCardExists">
           Crea tu primera publicación y <br />
           conecta con trabajadores
         </p>
-        <button class="modal-info__button link" @click="openPopup">Crear publicación</button>
+        <button class="modal-info__button link" @click="openPopup">Crear nueva publicación</button>
       </section>
     </div>
 
@@ -168,28 +258,38 @@ const onCardDelete = () => {
       <modal class="popup" v-if="isOpen" :class="{ open: isOpen }">
         <div class="popup__container">
           <div class="popup__header">
-            <h3 class="popup__title">Crear nueva publicación</h3>
+            <h3 class="popup__title">
+              <span v-if="!isEditMode">Crear nueva publicación </span>
+              <span v-if="isEditMode">Editar publicación</span>
+            </h3>
             <button class="popup__close button" @click="closePopup">
               <img src="../assets/images/close-button-icon.svg" alt="Button Image" />
             </button>
           </div>
-          <form class="form" @submit.prevent="onSubmit({ taskTitle, taskDescription })">
+          <form
+            ref="formRef"
+            class="form"
+            @submit.prevent="onSubmit({ taskTitle, taskDescription })"
+          >
             <div class="form__labelBox">
-              <label htmlFor="eventName" class="form__labelText"> Elige el tipo de servicio </label>
+              <label htmlFor="categoryName" class="form__labelText">
+                Elige el tipo de servicio
+              </label>
               <select
                 class="form__select"
-                id="eventName"
-                name="eventName"
+                id="categoryName"
+                name="categoryName"
                 v-model="category"
+                :disabled="isEditMode"
                 required
               >
-                <option class="form__optionText">Categorias</option>
                 <option
                   class="form__optionText"
-                  v-for="(category, index) in categorias"
+                  v-for="(cat, index) in categorias"
+                  :value="cat"
                   :key="index"
                 >
-                  {{ category }}
+                  {{ cat }}
                 </option>
               </select>
               <img src="../assets/images/shevron.svg" alt="shevron" class="shevron" />
@@ -201,7 +301,7 @@ const onCardDelete = () => {
                 name="eventName"
                 placeholder="Escribe un título"
                 required
-                :value="taskTitle"
+                :value="isEditMode ? editedCard.taskTitle : taskTitle"
                 @input="(e) => (taskTitle = e.target.value)"
               />
             </div>
@@ -211,7 +311,7 @@ const onCardDelete = () => {
                 class="form__textarea"
                 type="select"
                 name="eventName"
-                :value="taskDescription"
+                :value="isEditMode ? editedCard.description : taskDescription"
                 @input="(e) => (taskDescription = e.target.value)"
                 placeholder="Agrega una descripción con los
 detalles de tu trabajo"
@@ -226,7 +326,7 @@ detalles de tu trabajo"
                   name="eventName"
                   placeholder="$"
                   type="number"
-                  :value="precio"
+                  :value="isEditMode ? editedCard.price : precio"
                   @input="(e) => (precio = Number(e.target.value))"
                 />
               </div>
@@ -267,11 +367,39 @@ detalles de tu trabajo"
               <Datepicker v-model="date" class="date-picker" />
             </div>
 
-            <button class="form__submit-button link">Publicar</button>
+            <button v-if="!isEditMode" class="form__submit-button link">Publicar</button>
+            <button
+              v-if="isEditMode"
+              @click="openDialog"
+              type="button"
+              class="form__delete-button link"
+            >
+              Eliminar
+            </button>
+            <button v-if="isEditMode" class="form__submit-button link">Guardar</button>
           </form>
         </div>
       </modal>
     </Transition>
+    <modal class="dialog" ref="dialogRef" v-if="isDialogOpen" @close="isDialogOpen = false">
+      <div class="popup__header">
+        <h3>Eliminar publicación</h3>
+        <button class="popup__close button" @click="isDialogOpen = false">
+          <img src="../assets/images/close-button-icon.svg" alt="Button Image" />
+        </button>
+      </div>
+      <p class="dialog-text">
+        Al presionar confirmar eliminarás la de publicación de forma definitiva. Esta acción no se
+        puede deshacer. ¿Quieres eliminar la publicación?
+      </p>
+      <p class="dialog-subtext">¿Quieres eliminar la publicación?</p>
+      <div class="dialog-buttons">
+        <button class="edit-button link">Volver a editar</button>
+        <button class="form__delete-button delete-button link" @click="deleteTask">
+          Confirmar
+        </button>
+      </div>
+    </modal>
     <FooterPage />
   </main>
 </template>
@@ -359,6 +487,7 @@ li {
 
 .cards-container {
   background-color: #a9b8de;
+  padding-bottom: 30px;
 }
 .modal-info {
   width: 361px;
@@ -366,15 +495,16 @@ li {
   right: 0;
   margin-left: auto;
   margin-right: auto;
-  bottom: 40%;
+  /* bottom: 40%; */
+  margin-bottom: -10px;
   display: flex;
-  padding: 15px 10px;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
   gap: 25px;
   align-self: stretch;
   border-radius: 6px;
+  background-color: white;
 }
 .modal-info__button {
   color: var(--white, #fff);
@@ -401,16 +531,17 @@ li {
 
 .popup {
   position: fixed;
-  top: 50%;
+  top: 73px;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   width: 391px;
-  height: 736px;
+  /* height: 736px; */
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 100;
+  z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 12px;
   /* overflow-x: visible;
   overflow-y: visible;
   transform: translateX(100%);
@@ -435,6 +566,7 @@ li {
 .popup__header {
   display: flex;
   justify-content: space-between;
+  width: 100%;
 }
 .popup__close {
   border: none;
@@ -507,6 +639,23 @@ li {
   font-weight: 700;
 }
 
+.form__delete-button {
+  display: flex;
+  height: 51px;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+  border-radius: 6px;
+  border: 2px solid var(--delete-error, #e20c0c);
+  color: var(--delete-error, #e20c0c);
+  font-family: 'Baloo 2';
+  font-size: 20px;
+  font-weight: 700;
+  background-color: white;
+  margin-bottom: -11px;
+}
+
 .input-location {
   position: relative;
 }
@@ -550,5 +699,66 @@ li {
 
 .z-index--10 {
   z-index: -10;
+}
+
+.dialog {
+  z-index: 2;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 391px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  border-radius: 12px;
+  box-shadow: 0px 4px 20.8px 0px rgba(16, 96, 217, 0.25);
+  border: 1px solid grey;
+  padding: 26px;
+  font-family: 'Baloo 2';
+  max-width: 500px;
+}
+
+.edit-button {
+  border: 2px solid var(--delete-error, #e20c0c);
+  background-color: transparent;
+  color: var(--delete-error, #e20c0c);
+  font-family: 'Baloo 2';
+  font-weight: 700;
+  padding: 10px;
+  width: 100%;
+  font-size: 20px;
+  border: 2px solid var(--blue1, #1d3d8f);
+  color: var(--blue1, #1d3d8f);
+  border-radius: 6px;
+}
+
+.delete-button {
+  border: 2px solid var(--delete-error, #e20c0c);
+  background-color: transparent;
+  color: var(--delete-error, #e20c0c);
+  font-family: 'Baloo 2';
+  font-weight: 700;
+  padding: 10px;
+  width: 100%;
+}
+
+.dialog-buttons {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dialog-text {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.dialog-subtext {
+  margin-bottom: 24px;
 }
 </style>
