@@ -6,6 +6,9 @@ import com.latam.unamano.dto.postulationDto.request.UpdatePostulation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 
 import static com.latam.unamano.commons.constants.GlobalApiConstant.*;
 
@@ -19,7 +22,7 @@ public interface PostulationControllerInterface {
 
     @GetMapping(GET_ALL_BY_ID)
     @Secured("ROLE_WORKER")
-    ResponseEntity<CustomResponse> getAllPostulations(@PathVariable Long idWorker);
+    ResponseEntity<CustomResponse> getAllPostulations(@PathVariable Long id, Pageable pageable);
 
     @GetMapping(ID_PARAM)
     ResponseEntity<CustomResponse> getPostulationById(@PathVariable Long id);

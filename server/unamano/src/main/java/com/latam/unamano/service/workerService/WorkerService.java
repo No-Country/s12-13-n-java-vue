@@ -11,9 +11,12 @@ import com.latam.unamano.persistence.repositories.occupationRepository.Occupatio
 import com.latam.unamano.persistence.repositories.user.UserRepository;
 import com.latam.unamano.persistence.repositories.workerRepository.WorkerRepository;
 import com.latam.unamano.service.encript.Encryptor;
+import com.latam.unamano.service.jwt.JwtService;
 import com.latam.unamano.utils.Role;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -27,13 +30,16 @@ public class WorkerService implements WorkerServiceInterface{
     private WorkerRepository workerRepository;
     private OccupationRepository occupationRepository;
     private Encryptor encryptorPassword;
+    private final JwtService jwtService;
 
     public WorkerService (UserRepository userRepository,WorkerRepository workerRepository,
-                          OccupationRepository occupationRepository, Encryptor encryptor){
+                          OccupationRepository occupationRepository, Encryptor encryptor,
+                          JwtService jwtService){
         this.userRepository = userRepository;
         this.workerRepository = workerRepository;
         this.occupationRepository = occupationRepository;
         this.encryptorPassword = encryptor;
+        this.jwtService=jwtService;
     }
 
 
@@ -120,5 +126,17 @@ public class WorkerService implements WorkerServiceInterface{
     public Optional<GetWorker> getByUserId(Long userId) {
         Optional<Worker> clientOptional = workerRepository.findByUserId(userId);
         return clientOptional.map(GetWorker::new);
+    }
+  
+    public GetWorker getWorkerData(HttpServletRequest request) {
+
+        return new GetWorker(getWorkerByJWT(request));
+    }
+    private Worker getWorkerByJWT(HttpServletRequest request) {
+        String header = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String token = header.substring(7);
+        String username = jwtService.getUsernameFromToken(token);
+        return workerRepository.findByUserUsername(username);
+
     }
 }

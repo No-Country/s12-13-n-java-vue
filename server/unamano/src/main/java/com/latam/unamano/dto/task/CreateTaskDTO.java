@@ -1,47 +1,26 @@
 package com.latam.unamano.dto.task;
 
-
 import com.latam.unamano.dto.clientDto.response.ClientData;
-import com.latam.unamano.dto.clientDto.response.GetClient;
 import com.latam.unamano.dto.occupationDto.OccupationDTO;
 import com.latam.unamano.persistence.entities.addressEntity.Address;
-import com.latam.unamano.persistence.entities.client.Client;
-import com.latam.unamano.persistence.entities.user.User;
 import com.latam.unamano.utils.TaskStatus;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TaskDTO {
-    private Long id;
+public class CreateTaskDTO {
     private String taskTitle;
     private String description;
-    private LocalDateTime dateCreated;
-    private LocalDateTime dateUpdated;
     private BigDecimal price;
     private String currencyType;
-    private TaskStatus status;
     private List<OccupationDTO> occupations;
     private LocalDateTime taskDate;
     private ClientData client;
     private Address address;
-
-    //TODO Relaciones entre clases
-    /*
-    private Client client;
-    private Worker worker;
-    private List<Occupation> occupations;
-    private Address address;
-    private Rating workerRating;
-    private Rating clientRating;
-    private List<Postulation> postulations;
-    private List<WorkingDay> workingDay;
-    */
 }

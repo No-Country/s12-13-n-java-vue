@@ -7,8 +7,12 @@ import com.latam.unamano.dto.workerDto.request.WorkerCreateDto;
 import com.latam.unamano.dto.workerDto.request.WorkerUpdateDto;
 
 import com.latam.unamano.service.workerService.WorkerServiceInterface;
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -61,4 +65,12 @@ public class WorkerControllerImpl extends GenericRestController implements Worke
         workerServiceInterface.delete(id);
         return ok(null,DELETED_SUCCESSFULLY,REQUEST_WORKER);
     }
+    @GetMapping("/data")
+    @Secured("ROLE_WORKER")
+    @Operation(summary = "Endpoint específico para los usuarios de tipo worker que permite obtener" +
+            "sus datos incluído su id de worker, el cual es diferente de su id de usuario. ")
+    public GetWorker getWorkerData( HttpServletRequest request){
+        return workerServiceInterface.getWorkerData(request);
+    }
+
 }

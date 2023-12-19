@@ -22,6 +22,15 @@ public class Occupation {
     @Column(name = "occupation_name")
     private String occupationName;
     private String description;
+	private String color;
+/* #53BCFF Kinesiólogía
+#FF4C4C Enfermería
+#26C255 Transporte
+#A51ABC Cuidador
+#4462FF Tramites
+#26C255 Transporte
+#FFF848 Delivery
+#FF9243 Extraccionista */ 
     @ManyToMany(mappedBy = "occupations")
     private List<Task> task;
 }
