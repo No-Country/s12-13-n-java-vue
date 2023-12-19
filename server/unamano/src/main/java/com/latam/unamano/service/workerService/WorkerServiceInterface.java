@@ -16,6 +16,6 @@ public interface WorkerServiceInterface {
     Optional<GetWorker> getById(Long id);
     Optional<GetWorker> update(WorkerUpdateDto workerUpdateDto);
     void delete(Long id);
-
+    Optional<GetWorker> getByUserId(Long id);
     GetWorker getWorkerData(HttpServletRequest request);
 }
