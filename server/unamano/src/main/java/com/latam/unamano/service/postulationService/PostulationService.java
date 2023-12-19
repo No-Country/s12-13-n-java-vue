@@ -7,12 +7,15 @@ import com.latam.unamano.dto.postulationDto.response.PostulationResponse;
 import com.latam.unamano.dto.task.TaskDTO;
 import com.latam.unamano.dto.task.TaskMapper;
 import com.latam.unamano.exceptions.PostulationDeniedException;
+import com.latam.unamano.persistence.entities.client.Client;
 import com.latam.unamano.persistence.entities.postulationEntity.Postulation;
 import com.latam.unamano.persistence.entities.task.Task;
 import com.latam.unamano.persistence.entities.workerEntity.Worker;
+import com.latam.unamano.persistence.repositories.clientRepository.ClientRepository;
 import com.latam.unamano.persistence.repositories.postulationRepository.PostulationRepository;
 import com.latam.unamano.persistence.repositories.task.TaskRepository;
 import com.latam.unamano.persistence.repositories.workerRepository.WorkerRepository;
+import com.latam.unamano.service.chatRoom.ChatRoomService;
 import com.latam.unamano.utils.PostulationStatus;
 import com.latam.unamano.utils.TaskStatus;
 import jakarta.persistence.EntityNotFoundException;
@@ -30,12 +33,17 @@ public class PostulationService implements PostulationServiceInterface{
     private PostulationRepository postulationRepository;
     private WorkerRepository workerRepository;
     private TaskRepository taskRepository;
+    private ChatRoomService chatRoomService;
+
+    private ClientRepository clientRepository;
 
     public PostulationService(PostulationRepository postulationRepository,
-                              WorkerRepository workerRepository, TaskRepository taskRepository){
+                              WorkerRepository workerRepository, TaskRepository taskRepository, ChatRoomService chatRoomService ,ClientRepository clientRepository){
         this.postulationRepository = postulationRepository;
         this.workerRepository = workerRepository;
         this.taskRepository = taskRepository;
+        this.chatRoomService = chatRoomService;
+        this.clientRepository = clientRepository;
     }
 
     @Override
@@ -142,10 +150,21 @@ public class PostulationService implements PostulationServiceInterface{
             }
             Task task = taskRepository.findById(acceptPostulation.task_id()).get();
             c_id= task.getClient().getId();
-            if(w_id!=null&&c_id!=null)
+            if(w_id!=null&&c_id!=null) {
                 System.out.println("Id del worker: " + w_id + " id del cliente " + c_id);
-            task.setStatus(TaskStatus.INPROGRESS);
-            taskRepository.save(task);
+                task.setStatus(TaskStatus.INPROGRESS);
+                taskRepository.save(task);
+                Optional<Worker> workerOptional = workerRepository.findById(w_id);
+                Optional<Client> clientOptional = clientRepository.findById(c_id);
+                if(workerOptional.isPresent() && clientOptional.isPresent()){
+                    Worker worker = workerOptional.get();
+                    Client client = clientOptional.get();
+                    chatRoomService.createChatRoom(task.getTaskTitle(),client,worker);
+                }
+
+
+
+            }
 		//sale el chat
             return TaskMapper.taskToTaskDTO(task);
         }catch (Exception e){

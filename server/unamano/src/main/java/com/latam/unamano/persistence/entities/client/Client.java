@@ -1,5 +1,9 @@
 package com.latam.unamano.persistence.entities.client;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.latam.unamano.persistence.entities.chatMessage.ChatMessage;
+import com.latam.unamano.persistence.entities.chatRoom.ChatRoom;
 import com.latam.unamano.persistence.entities.task.Task;
 import com.latam.unamano.persistence.entities.user.User;
 import jakarta.persistence.*;
@@ -24,53 +28,12 @@ public class Client {
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Task> requestedTasks;
+    @OneToMany(mappedBy = "client")
+    private List<ChatRoom> chatMessagesAsClient;
 
+    public Client(Long id) {
+        this.id = id;
+    }
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//******************************************************/
-/*package com.latam.unamano.persistence.entities.client;
-
-import com.latam.unamano.persistence.entities.task.Task;
-import com.latam.unamano.persistence.entities.user.User;
-
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.List;
-
-
-@Getter
-@Setter
-@Builder
-public class Client extends User {
-
-	
-}*/

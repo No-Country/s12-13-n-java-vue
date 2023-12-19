@@ -53,7 +53,6 @@ public class AuthService {
 		String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Optional<UserDetails> userOptional = userRepository.findByUsername(username);
 		if (!userOptional.isPresent()) {
-
 			throw new UsernameNotFoundException("user not found");
 		}
 		User user = (User) userOptional.get();
