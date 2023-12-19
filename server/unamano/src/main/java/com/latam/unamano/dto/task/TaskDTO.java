@@ -1,6 +1,8 @@
 package com.latam.unamano.dto.task;
 
 
+import com.latam.unamano.dto.clientDto.response.ClientData;
+import com.latam.unamano.dto.clientDto.response.GetClient;
 import com.latam.unamano.dto.occupationDto.OccupationDTO;
 import com.latam.unamano.persistence.entities.addressEntity.Address;
 import com.latam.unamano.persistence.entities.client.Client;
@@ -28,7 +30,7 @@ public class TaskDTO {
     private TaskStatus status;
     private List<OccupationDTO> occupations;
     private LocalDateTime taskDate;
-    private User client;
+    private ClientData client;
     private Address address;
 
     //TODO Relaciones entre clases

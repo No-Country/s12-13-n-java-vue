@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
-import static com.latam.unamano.commons.constants.GlobalApiConstant.DELETED_SUCCESSFULLY;
-import static com.latam.unamano.commons.constants.GlobalApiConstant.NOT_FOUND;
+import static com.latam.unamano.commons.constants.GlobalApiConstant.*;
 import static com.latam.unamano.controller.occupationController.constanst.OccupationConstants.REQUEST_OCCUPATION;
 
 @RestController
@@ -30,7 +29,7 @@ public class OccupationControllerImp extends GenericRestController implements Oc
 
     @Override
     public ResponseEntity<CustomResponse> saveOccupation(Occupation occupation) {
-        return ok(occupationServiceInterface.save(occupation),null,REQUEST_OCCUPATION);
+        return ok(occupationServiceInterface.save(occupation),CREATED,REQUEST_OCCUPATION);
     }
 
     @Override
