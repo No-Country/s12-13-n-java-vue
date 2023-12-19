@@ -1,21 +1,10 @@
 <script setup>
-import axios from '@/plugins/axios'
-const token = localStorage.getItem('token')
-const headers = {
-  Authorization: `Bearer ${token}`
-}
-
-function deleteTask(id) {
-  console.log('id:', id)
-  axios.delete(`task/${id}`, { headers }).then((response) => {
-    console.log('response:', response)
-  })
-}
-
+import router from '@/router'
 const props = defineProps({
   taskTitle: String,
   taskDate: String,
   category: String,
+  color: String,
   description: String,
   address: String,
   price: String,
@@ -27,13 +16,9 @@ const props = defineProps({
 <template>
   <section
     class="card"
-    :class="{ unexpanded: !isExpanded, expanded: isExpanded, 'z-1000': isExpanded }"
+    :class="{ unexpanded: !isExpanded, expanded: isExpanded }"
+    :style="{ boxShadow: `0px 5px 0px 0px ${props.color} inset` }"
   >
-    <button
-      type="button"
-      className="eventButtonTrash"
-      @click="$emit('onDelete', deleteTask(props.id))"
-    ></button>
     <div class="container">
       <div>
         <h3 class="card__category">{{ props.category }}</h3>
@@ -86,9 +71,17 @@ const props = defineProps({
           {{ props.description }}
         </p>
         <div class="container_expanded buttons-container" :class="{ hidden: !isExpanded }">
-          <button class="edit-button link">Editar</button>
+          <button class="edit-button link" @click="$emit('onEdit', props.id)">Editar</button>
           <!-- <button class="delete-button link" @click="deleteTask({ id })">Del</button> -->
-          <button class="applications-button link">
+          <button
+            class="applications-button link"
+            @click="
+              router.push({
+                name: 'postulations',
+                query: { category: props.category, taskTitle: props.taskTitle, color: props.color }
+              })
+            "
+          >
             <div class="users-container">
               <span>3</span>
               <img src="../assets/images/user-icon.svg" alt="user" class="applications-image" />
@@ -130,29 +123,17 @@ p {
   padding: 0;
 }
 
-.eventButtonTrash {
-  background: url(../assets/images/trashbag-icon.svg);
-  background-size: contain;
-  width: 20px;
-  height: 20px;
-  appearance: auto;
-  border: initial;
-  outline: initial;
-  cursor: pointer;
-  position: absolute;
-  right: 70px;
-  top: 21px;
-}
-
 .card {
   display: flex;
   min-height: 134px;
+  min-width: 361px;
   padding: 16px;
   flex-direction: column;
   align-items: flex-start;
   border-radius: 6px;
   background: #fff;
   box-shadow: 0px 5px 0px 0px #4dc9ff inset;
+  overflow: hidden;
 }
 
 .card.expanded {
@@ -179,14 +160,12 @@ p {
 .card__category {
   color: var(--blue1, #1d3d8f);
   font-family: 'Baloo 2';
-  font-size: 20px;
   font-weight: 600;
 }
 
 .card__title {
   white-space: nowrap;
   font-family: 'Baloo 2';
-  font-size: 20px;
   font-weight: 400;
   margin-bottom: 8px;
 }
@@ -231,30 +210,14 @@ p {
   cursor: pointer;
   border: none;
   border-radius: 6px;
+  font-family: 'Baloo 2';
+  font-size: 20px;
 }
 
 .link:hover {
   cursor: pointer;
 }
 
-.edit-button {
-  border: 2px solid var(--blue1, #1d3d8f);
-  background-color: transparent;
-  color: var(--blue1, #1d3d8f);
-  font-family: 'Baloo 2';
-  font-weight: 700;
-  padding: 10px;
-  width: 100px;
-}
-
-.delete-button {
-  border: 2px solid var(--delete-error, #e20c0c);
-  background-color: transparent;
-  color: var(--delete-error, #e20c0c);
-  font-family: 'Baloo 2';
-  font-weight: 700;
-  padding: 10px;
-}
 .applications-button {
   background: var(--blue1, #1d3d8f);
   color: var(--white, #fff);
@@ -280,20 +243,26 @@ p {
 .hidden {
   display: none;
 }
-
-.z-1000 {
-  z-index: 1000;
-}
-
 .buttons-container {
   display: flex;
   gap: 12px;
   margin-top: 23px;
+  max-width: 361px;
 }
 
 .users-container {
   display: flex;
   align-items: center;
+}
+
+.edit-button {
+  border: 2px solid var(--blue1, #1d3d8f);
+  background-color: transparent;
+  color: var(--blue1, #1d3d8f);
+  font-family: 'Baloo 2';
+  font-weight: 700;
+  padding: 10px;
+  width: 100px;
 }
 
 @keyframes expand {

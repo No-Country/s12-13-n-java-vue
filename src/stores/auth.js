@@ -74,7 +74,8 @@ const useAuth = defineStore('auth', {
       this.feedback = '';
       this.feedbackError = '';
     }
-  },
-});
 
+  }
+
+})
 export default useAuth;

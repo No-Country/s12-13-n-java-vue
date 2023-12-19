@@ -13,7 +13,7 @@
         </li>
       </nav>
     </header>
-    <section :style="getSidebarStyles()" class="sidebar" :class="{ visible: isVisible }">
+    <modal :style="getSidebarStyles()" class="sidebar" :class="{ visible: isVisible }">
       <img class="sidebar-logo" src="../assets/logo.svg" />
       <section v-if="$route.name === 'dashboard'" class="profile">
         <div class="circle-container">
@@ -121,7 +121,11 @@
           <h3 class="config-title sidebar-title" id="city">TAMAÑO</h3>
           <div>
             <div class="slider-container">
-              <!-- <span class="circle start"></span> -->
+              <span
+                v-if="$route.name === 'dashboard' || $route.name === 'home'"
+                class="circle start"
+                :class="{ 'circle-dashboard': $route.name === 'dashboard' }"
+              ></span>
               <input
                 class="range-slider"
                 type="range"
@@ -132,22 +136,39 @@
                 :min="minValue"
                 :max="maxValue"
               />
-              <!-- <span class="circle center"></span>
-              <span class="circle end"></span> -->
+              <span
+                v-if="$route.name === 'dashboard' || $route.name === 'home'"
+                class="circle center"
+                :class="{ 'circle-dashboard': $route.name === 'dashboard' }"
+              ></span>
+              <span
+                v-if="$route.name === 'dashboard' || $route.name === 'home'"
+                class="circle end"
+                :class="{ 'circle-dashboard': $route.name === 'dashboard' }"
+              ></span>
             </div>
           </div>
         </section>
       </div>
-      <button v-if="$route.name === 'home'" class="sidebarbutton link" @click="navigateToLogin">
+      <button v-if="$route.name === 'home'" class="sidebar__button link" @click="navigateToLogin">
         Iniciar sesión
       </button>
-      <button  v-if="showLogoutButton" class="sidebarbutton link" @click="closeSession">
+      <!--<button  v-if="showLogoutButton" class="sidebarbutton link" @click="closeSession">-->
+      <button v-if="$route.name === 'dashboard'" class="sidebar__button link" @click="closeSesion">
         Cerrar sesión
       </button>
-    </section>
+    </modal>
   </section>
 </template>
+<script setup>
+import useAuth from '@/stores/auth'
+const store = useAuth()
 
+const closeSesion = () => {
+  store.reset()
+  router.push({ name: 'login' })
+}
+</script>
 <script>
 import useAuth from '@/stores/auth'
 import router from '@/router'
@@ -156,19 +177,20 @@ export default {
   data() {
     return {
       isVisible: false,
-      sliderValue: 25 / 16,
+      sliderValue: 20 / 16,
       minValue: 20 / 16,
-      maxValue: 30 / 16
+      maxValue: 30 / 16,
+      store: useAuth()
     }
   },
 
-  computed: {
+  /*computed: {
     showLogoutButton() {
       return this.$route.name === 'dashboard' ||
       this.$route.name === 'worker';
     },
   },
-
+*/
 
 
 
@@ -213,6 +235,7 @@ export default {
       // this.$router.push('/login')
       router.push({ name: 'login' })
     },
+
     getSidebarStyles() {
       // Determine the route and set gap size accordingly
       const route = this.$route.name
@@ -306,9 +329,10 @@ li {
   border-radius: 20px;
 }
 .sidebar {
+  font-family: 'Baloo 2';
+  font-size: 20px;
   width: 289px;
   padding: 60.3904px 40.5008px;
-
   background-color: white;
   min-height: 720px;
   overflow-x: visible;
@@ -329,6 +353,7 @@ li {
 
 .visible {
   transform: translateX(0);
+  z-index: 3;
 }
 
 .hidden {
@@ -355,6 +380,8 @@ li {
 
 .link {
   text-decoration: none;
+  font-family: 'Baloo 2';
+  font-size: 20px;
 }
 .link:hover {
   cursor: pointer;
@@ -388,6 +415,7 @@ li {
   font-family: 'Baloo 2';
   /* font-size: 20px; */
   font-weight: 500;
+  font-size: 20px;
 }
 
 .social-list {
@@ -407,7 +435,7 @@ li {
   margin-bottom: 9px;
 }
 
-.sidebarbutton {
+.sidebar__button {
   color: var(--white, #fff);
   font-family: 'Baloo 2';
   font-size: 20px;
@@ -458,6 +486,15 @@ li {
   z-index: 1;
   font-size: 0.625rem;
   margin-bottom: -1.125rem;
+  top: 634px;
+}
+
+.circle-dashboard {
+  top: 664px;
+}
+
+.circle:hover {
+  cursor: pointer;
 }
 
 .circle.start {

@@ -3,7 +3,7 @@ export const categorias = [
   'Extraccionista',
   'Cuidador',
   'Trámites',
-  'Kinesiología',
+  'Kinesiologo',
   'Transporte',
   'Delivery'
 ]
