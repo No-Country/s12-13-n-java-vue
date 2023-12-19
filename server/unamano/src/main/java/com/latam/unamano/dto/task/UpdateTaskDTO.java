@@ -1,5 +1,6 @@
 package com.latam.unamano.dto.task;
 
+import com.latam.unamano.dto.addressDto.AddressDto;
 import com.latam.unamano.dto.clientDto.response.ClientData;
 import com.latam.unamano.dto.occupationDto.OccupationDTO;
 import com.latam.unamano.persistence.entities.addressEntity.Address;
@@ -21,4 +22,5 @@ public class UpdateTaskDTO {
     private BigDecimal price;
     private String currencyType;
     private LocalDateTime taskDate;
+    private AddressDto address;
 }
