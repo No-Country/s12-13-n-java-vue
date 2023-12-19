@@ -5,7 +5,7 @@ import com.latam.unamano.utils.Role;
 
 public record GetClient(Long id_client,Long id_user, String username, String firstName,
                         String lastName,String email,Role rol,Long id_address,
-                        String city, String country) {
+                        String city, String country, String profilePicture) {
 
     public GetClient(Client client){
         this(client.getId(),
@@ -17,6 +17,7 @@ public record GetClient(Long id_client,Long id_user, String username, String fir
                 client.getUser().getRole(),
                 client.getUser().getAddresses().getId(),
                 client.getUser().getAddresses().getCity(),
-                client.getUser().getAddresses().getCountry());
+                client.getUser().getAddresses().getCountry(),
+                client.getUser().getProfilePicture());
     }
 }

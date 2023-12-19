@@ -19,4 +19,5 @@ public class ClientData {
     private Long id_address;
     private String city;
     private String country;
+    private String profilePicture;
 }
