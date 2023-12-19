@@ -1,21 +1,17 @@
-import useAuth from '@/stores/auth'
+import useAuth from '@/stores/auth'// Importa useAut
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
-import DashboardTrabajador from '../views/DashboardTrabajador.vue'
 import PostulationsView from '../views/PostulationsView.vue'
 import ChatView from '../views/ChatView.vue'
 import DashboardView from '../views/DashboardView.vue'
 import HomeView from '../views/HomeView.vue'
-import LoginView from '@/views/LoginView.vue'
 import DashboardWorker from '@/views/DashboardWorker.vue'
-import useAuth from '@/stores/auth' // Importa useAut
 
 const routes = [
   {
     path: '/login',
     name: 'login',
     component: LoginView,
-  },
     meta: {
       requereAuth: false
     }
@@ -26,7 +22,6 @@ const routes = [
     name: 'dashboard',
     component: DashboardView,
     meta: {
-
       requireAuth: true,
     },
   },
@@ -42,29 +37,6 @@ const routes = [
     meta: {
       requireAuth: true,
     },
-  },
-];
-
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes,
-});
-
-router.beforeEach((to, from, next) => {
-  const auth = useAuth(); // Utiliza useAuth directamente
-  const isAuth = auth.token;
-
-  if (to.meta.requireAuth && !isAuth) {
-    // Redirige al usuario a la página de inicio de sesión
-    next({ name: 'login' });
-  } else {
-    next();
-  }
-});
-
-export default router;
-      requereAuth: true
-    }
   },
   {
     path: '/posts',
@@ -86,22 +58,21 @@ export default router;
       requereAuth: true
     }
   },
-  }
-]
+];
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes
-})
+  routes,
+});
 
 router.beforeEach((to, from, next) => {
-  const auth = useAuth()
-  const isAuth = auth.token
+  const auth = useAuth(); // Utiliza useAuth directamente
+  const isAuth = auth.token;
 
-  if (to.meta.requereAuth && isAuth == null) {
-    next('login')
+  if (to.meta.requireAuth && !isAuth) {
+    // Redirige al usuario a la página de inicio de sesión
+    next({ name: 'login' });
   } else {
-    next()
+    next();
   }
-})
-
+});
