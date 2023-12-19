@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import DashboardView from '../views/DashboardView.vue'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
-import dashboardtrabajador from '../views/DashboardTrabajador.vue'
+import DashboardTrabajador from '../views/DashboardTrabajador.vue'
 
 const routes = [
  {
@@ -27,7 +27,7 @@ const routes = [
     {
       path: '/DashboardTrabajador',
       name: 'DashboardTrabajador',
-      component: dashboardtrabajador
+      component: DashboardTrabajador
     },
 
     {

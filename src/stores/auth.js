@@ -64,7 +64,7 @@ const useAuth = defineStore('auth', {
       this.rol = null
       this.feedback = ''
       this.feedbackError = ''
-    },
+    }
 
   },
 
