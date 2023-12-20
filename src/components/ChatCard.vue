@@ -1,4 +1,5 @@
 <script setup>
+
 const props = defineProps({
   name: String,
   clientName: String,
@@ -23,89 +24,15 @@ const props = defineProps({
         <img src="../assets/images/unexpand-icon.svg" alt="unexpand" />
       </button>
     </div>
+    
     <div class="container">
       <div class="data-container" :class="{ container_expanded: isExpanded }">
         <p class="data__title">icono</p>
         <p class="data__value">08/12/2023</p>
       </div>
-      <div class="data-container" :class="{ container_expanded: isExpanded, hidden: !isExpanded }">
-        <p class="data__title">Dirección:</p>
-        <p class="data__value">Bogotá, Colombia</p>
-      </div>
-      <div class="data-container" :class="{ container_expanded: isExpanded, hidden: !isExpanded }">
-        <p class="data__title">Precio:</p>
-        <p class="data__value">30 USD</p>
-      </div>
-      <div class="description-container" :class="{ hidden: !isExpanded }">
-        <p class="data__title">Descripción:</p>
-        <p class="data__value description-text">
-          Necesito 3 sesiones semanales a domicilio durante las tardes para tratar una lesión a la
-          rodilla. Precio sugerido por sesión.
-        </p>
-      </div>
     </div>
   </section>
-
-  <section class="section-blog">
-
-  </section>
-
-    <modal class="popup open" v-if="isOpen" :class="{open:isOpen}">
-      <div class="popup__container" :class="{ container_expanded: isExpanded }">
-        <div class="popoup__header">
-          <section>
-            <div>
-              <img src="../assets/images/gustavo perez.png" alt="foto de perfil">
-            </div>
-            <div>
-              <h3 class="popup__title">Gustavo Pérez</h3>
-              <h4>Sesiones semanales</h4>
-            </div>
-          </section>
-            <section>
-              <div>
-                <img src="../assets/images/daniela martinez.png" alt="foto de perfil">
-              </div>
-              <div>
-                <h3 class="popup__title">Daniela Martínez</h3>
-                <h4>Transporte desde el hospital a la casa</h4>
-              </div>
-            </section>
-            <section>
-              <div>
-                <img src="../assets/images/melisa suarez.png" alt="foto de perfil">
-              </div>
-              <div>
-                <h3 class="popup__title">Melisa Suárez</h3>
-                <h4>Cuiadados diarios a personas de la tercera edad</h4>
-              </div>
-            </section> 
-            <section>
-              <div>
-                <button class="popup__ close button" @click="ClosePopup">
-                  <img src="../assets/images/close-button-icon.svg" alt="Button Image">
-                </button>
-              </div>
-            </section>
-        </div>
-      </div>
-    </modal>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      isExpanded: false
-    }
-  },
-  methods: {
-    expand() {
-      this.isExpanded = !this.isExpanded
-    }
-  }
-}
-</script>
 
 <style scoped>
 h3,

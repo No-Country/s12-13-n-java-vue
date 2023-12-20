@@ -1,6 +1,7 @@
 <!-- eslint-disable no-unused-vars -->
 <script setup>
 import SectionHeader from '../components/SectionHeader.vue'
+import MessageChats from '@/components/MessageChats.vue'
 import { ref } from 'vue'
 import '@vuepic/vue-datepicker/dist/main.css'
 import FooterPage from '@/components/SectionFooter.vue'
@@ -15,7 +16,7 @@ const headers = {
     router.push({ name: 'dashboard' })
   }
 
-let id= ref(0)
+let id= ref('')
 let name= ref('')
 let clientName= ref ('')
 let workerName= ref('')
@@ -25,7 +26,9 @@ let chats= ref (null)
 const fetchChat = async () => {
   await axios.get('chats', { headers }).then((response) => {
     console.log('response:', response.data)
+
     chats.value = response.data.filter((chat) => chat.id > 0)
+    
   })
 }
 
@@ -70,15 +73,18 @@ const date = ref()
         </li>
       </ul>
     </nav>
+
     <section class="container">
       <div v-if="chats && chats.length" class="tasks-container">
           <div v-for="chat in chats" :key="chat.id">
-            <button @click="openPopup"><ChatCard 
+            <button @click="openPopup">
+              <ChatCard 
               :name="chat.name"
               :clientName="chat.clientName"
               :workerName="chat.workerName"
               :id="chat.id"
-              @click="openPopup"/> </button>
+              @click="openPopup"/> 
+            </button>
           </div>
       </div>    
     </section>
@@ -89,106 +95,28 @@ const date = ref()
       <modal class="popup" v-if="isOpen" :class="{ open: isOpen }">
         <div class="popup__container">
           <div class="popup__header">
-            <h3 class="popup__title">Crear nueva publicación</h3>
+            <h3 class="popup__title"></h3>
+            <img class="me-3" src="" alt="la foto">
+                <div>
+                  <p>Daniela Martinez</p>
+                  <small>Transporte desde el hospital..</small>
+                </div>
             <button class="popup__close button" @click="closePopup">
               <img src="../assets/images/close-button-icon.svg" alt="Button Image" />
             </button>
+
           </div>
           <form class="form">
-            <div class="form__labelBox">
-              <label htmlFor="eventName" class="form__labelText"> Elige el tipo de servicio </label>
-              <select
-                class="form__select"
-                type="select"
-                id="eventName"
-                name="eventName"
-                value="Categorias"
-                onChange="{handleInputChange}"
-                required
-              >
-                <option class="form__optionText">Categorias</option>
-              </select>
-              <img src="../assets/images/shevron.svg" alt="shevron" class="shevron" />
-            </div>
-            <div class="form__labelBox">
-              <label htmlFor="eventName" class="form__labelText">Título</label>
-              <input
-                class="form__input"
-                type="select"
-                id="eventName"
-                name="eventName"
-                onChange="{handleInputChange}"
-                placeholder="Escribe un título"
-                required
-              />
-            </div>
-            <div class="form__labelBox">
-              <label htmlFor="eventName" class="form__labelText">Descripción</label>
-              <textarea
-                class="form__textarea"
-                type="select"
-                id="eventName"
-                name="eventName"
-                onChange="{handleInputChange}"
-                placeholder="Agrega una descripción con los
-detalles de tu trabajo"
-                required
-              ></textarea>                
-            </div>
-            <div class="labelBox-container">
-              <div class="form__labelBox">
-                <label htmlFor="eventName" class="form__labelText">Precio</label>
-                <input
-                  class="form__input"
-                  type="select"
-                  id="eventName"
-                  name="eventName"
-                  onChange="{handleInputChange}"
-                  placeholder="$"
-                  required
-                />
-              </div>
-              <div class="form__labelBox">
-                <label htmlFor="eventName" class="form__labelText">Moneda</label>
-                <select
-                  class="form__select select-currency"
-                  type="select"
-                  id="eventName"
-                  name="eventName"
-                  value="USD"
-                  onChange="{handleInputChange}"
-                  required
-                >
-                  <option class="form__optionText">USD</option>
-                </select>
-                <img src="../assets/images/shevron.svg" alt="shevron" class="shevron" />
-              </div>
-            </div>
-
-            <div class="form__labelBox">
-              <label htmlFor="eventName" class="form__labelText">Ubicación</label>
-              <img src="../assets/images/location-icon.svg" alt="" class="location-img" />
-
-              <input
-                class="form__input input-location"
-                type="select"
-                id="eventName"
-                name="eventName"
-                onChange="{handleInputChange}"
-                placeholder="Ingresa tu dirección"
-                required
-              />
-            </div>
-            <div class="form__labelBox">
-              <label htmlFor="eventName" class="form__labelText">Fecha de la tarea</label>
-              <Datepicker v-model="date" class="date-picker" />
-            </div>
-
-            <button class="form__submit-button link">Publicar</button>
+            <MessageChats />
           </form>
+          <div class="d-flex justify-content-between">
+            <input style="background-color: #a9b8de;flex: auto" type="text">
+            <v-icon scale="1.5" name="ri-send-plane-fill" style="cursor: pointer;"/>
+          </div>
         </div>
       </modal>
     </Transition>
+
     <FooterPage />
   </main>
 </template>
@@ -203,7 +131,7 @@ export default {
   },
   methods: {
     toggleNavItem(index) {
-      this.$set(this.activeItems, index, !this.activeItems[index])
+      /* this.$set(this.activeItems, index, !this.activeItems[index]) */
     },
     openPopup() {
       console.log('isOpen:')
