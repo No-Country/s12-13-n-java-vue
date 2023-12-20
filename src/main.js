@@ -19,6 +19,7 @@ import { createApp } from 'vue'
 import './assets/main.css'
 import '@mdi/font/css/materialdesignicons.css'
 import '@fortawesome/fontawesome-free/css/all.css'
+//import VueNativeSock from 'vue-native-websocket'
 
 addIcons(
   FaRegularEyeSlash,
@@ -65,4 +66,7 @@ app.use(pinia)
 app.use(router)
 app.use(vuetify)
 
+/*Vue.use(VueNativeSock, "https://unamanoapi.onrender.com/web-socket", {
+   reconnection: true 
+})*/
 app.mount('#app')

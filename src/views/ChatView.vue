@@ -5,9 +5,30 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import FooterPage from '@/components/SectionFooter.vue'
 import ChatCard from '@/components/ChatCard.vue'
 import router from '@/router'
+import axios from '@/plugins/axios'
+const token = localStorage.getItem('token')
+const headers = {
+  Authorization: `Bearer ${token}`
+  }
   const dashboard = ()=>{
     router.push({ name: 'dashboard' })
   }
+
+let id= ref(0)
+let name= ref('')
+let clientName= ref ('')
+let workerName= ref('')
+let chats= ref (null)
+
+
+const fetchChat = async () => {
+  await axios.get('chats', { headers }).then((response) => {
+    console.log('response:', response.data)
+    chats.value = response.data.filter((chat) => chat.id > 0)
+  })
+}
+
+fetchChat () 
 
 const date = ref()
 </script>
@@ -49,7 +70,16 @@ const date = ref()
       </ul>
     </nav>
     <section class="container">
-        <button @click="openPopup"><ChatCard @click="openPopup"/> </button>
+      <div v-if="chats && chats.length" class="tasks-container">
+          <div v-for="chat in chats" :key="chat.id">
+            <button @click="openPopup"><ChatCard 
+              :name="chat.name"
+              :clientName="chat.clientName"
+              :workerName="chat.workerName"
+              :id="chat.id"
+              @click="openPopup"/> </button>
+          </div>
+      </div>    
     </section>
     <section class="section-blog">
       <!-- contenido de la segunda tarjeta -->

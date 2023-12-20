@@ -1,4 +1,12 @@
-<script setup></script>
+<script setup>
+const props = defineProps({
+  name: String,
+  clientName: String,
+  workerName: String,
+  id: Number
+})
+
+</script>
 
 <template>
   <p>Chats Activos</p>
@@ -8,14 +16,13 @@
   >
     <div class="container">
       <div>
-        <h3 class="card__category">Nombre Trabajador</h3>
-        <p class="card__title">Titulo de la tarea</p>
+        <h3 class="card__category">{{props.clientName}}</h3>
+        <p class="card__title">{{props.name}}</p>
       </div>
       <button class="unexpand-button link" @click="expand()" :class="{ hidden: !isExpanded }">
         <img src="../assets/images/unexpand-icon.svg" alt="unexpand" />
       </button>
     </div>
-
     <div class="container">
       <div class="data-container" :class="{ container_expanded: isExpanded }">
         <p class="data__title">icono</p>
@@ -38,6 +45,51 @@
       </div>
     </div>
   </section>
+
+  <section class="section-blog">
+
+  </section>
+
+    <modal class="popup open" v-if="isOpen" :class="{open:isOpen}">
+      <div class="popup__container" :class="{ container_expanded: isExpanded }">
+        <div class="popoup__header">
+          <section>
+            <div>
+              <img src="../assets/images/gustavo perez.png" alt="foto de perfil">
+            </div>
+            <div>
+              <h3 class="popup__title">Gustavo Pérez</h3>
+              <h4>Sesiones semanales</h4>
+            </div>
+          </section>
+            <section>
+              <div>
+                <img src="../assets/images/daniela martinez.png" alt="foto de perfil">
+              </div>
+              <div>
+                <h3 class="popup__title">Daniela Martínez</h3>
+                <h4>Transporte desde el hospital a la casa</h4>
+              </div>
+            </section>
+            <section>
+              <div>
+                <img src="../assets/images/melisa suarez.png" alt="foto de perfil">
+              </div>
+              <div>
+                <h3 class="popup__title">Melisa Suárez</h3>
+                <h4>Cuiadados diarios a personas de la tercera edad</h4>
+              </div>
+            </section> 
+            <section>
+              <div>
+                <button class="popup__ close button" @click="ClosePopup">
+                  <img src="../assets/images/close-button-icon.svg" alt="Button Image">
+                </button>
+              </div>
+            </section>
+        </div>
+      </div>
+    </modal>
 </template>
 
 <script>
