@@ -18,18 +18,37 @@ const headers = {
 
 
 let chats= ref (null)
+let completeName = ref(null)
 
+const fetchUserData = async () => {
+  await axios.get('auth/details', { headers }).then((response) => {
+    console.log('response:', response.data)
+    completeName.value = response.data.firstName +" "+ response.data.LastName
+  })
+}
 
 const fetchChat = async () => {
   await axios.get('chats', { headers }).then((response) => {
     console.log('response:', response.data)
-
     chats.value = response.data.filter((chat) => chat.id > 0)
-    
   })
 }
 
-fetchChat () 
+const getDisplayName = (chat) => {
+  
+  if (chat.clientName === completeName.value) {
+    return chat.workerName; 
+  } else {
+    return chat.clientName;
+  }
+}
+
+
+fetchChat ()
+fetchUserData().then(() => {
+
+  console.log('Valor de completeName después de fetchUserData:', completeName.value);
+});
 
 const date = ref()
 </script>
@@ -77,8 +96,7 @@ const date = ref()
             <button @click="openPopup(chat.id)">
               <ChatCard 
               :name="chat.name"
-              :clientName="chat.clientName"
-              :workerName="chat.workerName"
+              :otherUsername ="getDisplayName(chat)"
               :id="chat.id"
               @click="openPopup"/> 
             </button>
