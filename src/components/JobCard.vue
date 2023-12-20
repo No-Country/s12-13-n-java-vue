@@ -87,7 +87,7 @@ const getPosts = () => {
           <!-- <button class="delete-button link" @click="deleteTask({ id })">Del</button> -->
           <button class="applications-button link" @click="getPosts">
             <div class="users-container">
-              <span>3</span>
+              <!-- <span>3 </span> -->
               <img src="../assets/images/user-icon.svg" alt="user" class="applications-image" />
             </div>
             Postulaciones
