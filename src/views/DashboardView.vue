@@ -778,4 +778,30 @@ li {
 .dialog-subtext {
   margin-bottom: 24px;
 }
+
+@media screen (min-width: 768px){
+
+  .cards-container{
+    font-size: 14px;
+  }
+  .nav{
+    font-size: 14px;
+  }
+
+  .popup{
+    font-size: 14px; 
+  }
+
+  .modal-info{
+    font-size: 14px;
+  }
+
+  .form{
+    font-size: 14px;
+  }
+
+  .dialog{
+    font-size: 14px;
+  }
+}
 </style>

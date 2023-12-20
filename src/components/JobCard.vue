@@ -298,4 +298,25 @@ p {
     opacity: 0;
   }
 }
+
+@media screen (min-width: 768px){
+  .card{
+    font-size: 14px;
+  }
+  .container{
+    font-size: 14px;
+  }
+
+  .data-container{
+    font-size: 14px; 
+  }
+
+  
+  .description-container{
+    font-size: 14px;
+  }
+  .applications-button link{
+    font-size: 14px;
+  }
+}
 </style>

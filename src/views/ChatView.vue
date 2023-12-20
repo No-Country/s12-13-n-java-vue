@@ -1,3 +1,4 @@
+<!-- eslint-disable no-unused-vars -->
 <script setup>
 import SectionHeader from '../components/SectionHeader.vue'
 import { ref } from 'vue'
@@ -431,5 +432,20 @@ li {
 .v-enter-from,
 .v-leave-to {
   transform: translateY(100%);
+}
+
+/*media queries*/
+
+@media screen (min-width: 768px){
+  .container{
+    font-size: 14px;
+  }
+  .nav{
+    font-size: 14px;
+  }
+
+  .popup{
+    font-size: 14px; 
+  }
 }
 </style>

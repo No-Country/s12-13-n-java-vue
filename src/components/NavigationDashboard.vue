@@ -95,4 +95,10 @@ p {
 .nav__item-text_home {
   color: var(--blue1, #3960c2);
 }
+
+@media screen (min-width: 768px){
+  .nav{
+    font-size: 14px;
+  }
+}
 </style>

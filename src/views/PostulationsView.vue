@@ -283,4 +283,21 @@ li {
   font-family: 'Baloo 2';
   font-weight: 500;
 }
+
+@media screen (min-width: 768px){
+  .wrapper{
+    font-size: 14px;
+  }
+  .posts-container{
+    font-size: 14px;
+  }
+
+  .ranking{
+    font-size: 14px; 
+  }
+
+  .section-blog{
+    font-size: 14px;
+  }
+}
 </style>

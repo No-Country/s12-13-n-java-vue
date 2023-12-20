@@ -563,4 +563,14 @@ li {
   flex-direction: column;
   justify-content: center;
 }
+
+@media screen (min-width: 768px){
+  .container gx-0{
+    font-size: 14px;
+  }
+
+  .side{
+    font-size: 14px;
+  }
+}
 </style>

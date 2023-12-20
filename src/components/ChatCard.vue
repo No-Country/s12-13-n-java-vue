@@ -260,4 +260,17 @@ p {
     min-height: 134px;
   }
 }
+
+@media screen (min-width: 768px){
+  .container{
+    font-size: 14px;
+  }
+  .nav{
+    font-size: 14px;
+  }
+
+  .popup{
+    font-size: 14px; 
+  }
+}
 </style>

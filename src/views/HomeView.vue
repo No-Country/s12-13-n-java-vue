@@ -27,4 +27,13 @@ import SectionNosotros from '../components/SectionNosotros.vue'
   </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+@media screen (min-width: 768px){
+  .container{
+    font-size: 14px;
+  }
+  .nav{
+    font-size: 14px;
+  }
+}
+</style>

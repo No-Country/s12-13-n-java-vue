@@ -50,4 +50,10 @@ import router from '@/router'
   font-size: 20px;
   margin-bottom: 48px;
 }
+
+@media screen (min-width: 768px){
+  .container{
+    font-size: 14px;
+  }
+}
 </style>
