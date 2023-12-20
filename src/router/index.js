@@ -5,9 +5,9 @@ import PostulationsView from '../views/PostulationsView.vue'
 import ChatView from '../views/ChatView.vue'
 import DashboardView from '../views/DashboardView.vue'
 import HomeView from '../views/HomeView.vue'
-import DashboardWorker from '@/views/DashboardWorker.vue'
-import HistoryPage from '@/views/HistoryPage.vue'
-
+import LoginView from '../views/LoginView.vue'
+import DashboardTrabajador from '../views/DashboardTrabajador.vue'
+import ChatView from '../views/ChatView.vue'
 
 const routes = [
   {
@@ -27,40 +27,24 @@ const routes = [
 
       requireAuth: true,
     },
-  },
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView,
-  },
-  {
-    path: '/worker',
-    name: 'worker',
-    component: DashboardWorker,
-    meta: {
-      requireAuth: true,
-    },
-  },
-  {
-    path: '/posts',
-    name: 'postulations',
-    component: PostulationsView,
-    query: {
-      category: ''
-    },
-    meta: {
-      requireAuth: true,
-    }
-  },
 
-  {
-    path: '/Chat',
-    name: 'Chat',
-    component: ChatView,
-    meta: {
-      requireAuth: true,
-    }
-  },
+    {
+      path: '/DashboardTrabajador',
+      name: 'DashboardTrabajador',
+      component: DashboardTrabajador,
+      meta: {
+        requereAuth: true
+      },
+    },
+
+    {
+      path: '/Chat',
+      name: 'Chat',
+      component: ChatView,
+      meta: {
+        requereAuth: true
+      },
+    },
 
   {
     path: '/history',
