@@ -153,12 +153,12 @@
       <button v-if="$route.name === 'home'" class="sidebar__button link" @click="navigateToLogin">
         Iniciar sesión
       </button>
-      <button  v-if="showLogoutButton" class="sidebar__button link" @click="closeSession">
+      <button v-if="showLogoutButton" class="sidebar__button link" @click="closeSesion">
         Cerrar sesión
       </button>
-      <button v-if="$route.name === 'dashboard'" class="sidebar__button link" @click="closeSesion">
+      <!-- <button v-if="$route.name === 'dashboard'" class="sidebar__button link" @click="closeSesion">
         Cerrar sesión
-      </button>
+      </button> -->
     </modal>
   </section>
 </template>
@@ -184,13 +184,9 @@ export default {
 
   computed: {
     showLogoutButton() {
-      return this.$route.name === 'dashboard' ||
-      this.$route.name === 'worker';
-    },
+      return this.$route.name === 'dashboard' || this.$route.name === 'worker'
+    }
   },
-
-
-
 
   methods: {
     handleSliderInput() {
@@ -247,12 +243,11 @@ export default {
     },
 
     // Lógica para cerrar sesión
-    closeSession() {  
-      const authStore = useAuth();
-      authStore.reset();
-      router.push({ name: 'login' });
-      
-    },
+    closeSession() {
+      const authStore = useAuth()
+      authStore.reset()
+      router.push({ name: 'login' })
+    }
   }
 }
 </script>

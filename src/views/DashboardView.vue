@@ -155,7 +155,7 @@ const fetchProfileAndCards = async () => {
     console.log('fetchProfileInfo.data:', fetchProfileInfo.data)
     profile.value = fetchProfileInfo.data
 
-    const fetchCards = await axios.get('task/client/', {
+    const fetchPublishedCards = await axios.get('task/client/', {
       headers,
       params: {
         id: profile.value.id_client,
@@ -163,7 +163,20 @@ const fetchProfileAndCards = async () => {
       }
     })
 
-    cards.value = fetchCards.data.content
+    console.log('fetchPostPublishedCards:', fetchPublishedCards)
+
+    const fetchProgressCards = await axios.get('task/client/', {
+      headers,
+      params: {
+        id: profile.value.id_client,
+        status: 'INPROGRESS'
+      }
+    })
+    console.log('fetchPostProgressCards:', fetchProgressCards)
+
+    cards.value = [...fetchPublishedCards.data.content, ...fetchProgressCards.data.content]
+
+    console.log('fetchPostcards.value:', cards.value)
   } catch (error) {
     console.error('Error fetching data:', error)
   }
@@ -571,11 +584,6 @@ li {
   padding: 26px;
   height: 100%;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.popup__container {
   display: flex;
   flex-direction: column;
   gap: 19px;
