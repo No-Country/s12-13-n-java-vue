@@ -27,10 +27,15 @@ onMounted(() => {
   fetchCards()
 })
 
-const contract = async () => {
-  console.log('contract:', contract)
-  isActive.value = !isActive.value
-  await axios.post('')
+const contract = async (clickedPost) => {
+  clickedPost.isActive = !clickedPost.isActive
+  posts.value.forEach((post) => {
+    if (post !== clickedPost) {
+      post.isDisabled = clickedPost.isActive
+    }
+  })
+
+  isActive.value = posts.value.some((post) => post.isActive)
 }
 </script>
 <template>
@@ -74,10 +79,13 @@ const contract = async () => {
               </div>
               <button
                 class="post-button link"
-                :style="{ background: isActive ? '#1b9964' : '#149ed7' }"
-                @click="contract()"
+                :style="{
+                  background: post.isActive ? '#1b9964' : post.isDisabled ? '#C7C7C7' : '#149ed7'
+                }"
+                @click="contract(post)"
+                :disabled="post.isDisabled"
               >
-                <span v-if="isActive">Contratado</span> <span v-else>Contratar</span>
+                <span v-if="post.isActive">Contratado</span> <span v-else>Contratar</span>
               </button>
             </div>
           </div>
@@ -116,7 +124,8 @@ const contract = async () => {
         </button>
         <button
           class="button-finalize link post-button"
-          :style="{ background: isActive ? '#1b9964' : '#149ed7' }"
+          :style="{ background: isActive ? '#1b9964' : '#C7C7C7' }"
+          :disabled="!isActive"
         >
           Finalizar publicación
         </button>
