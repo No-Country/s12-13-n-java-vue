@@ -21,6 +21,7 @@ const chats= ref (null)
 const completeName = ref(null)
 
 
+
 const fetchUserData = async () => {
   await axios.get('auth/details', { headers }).then((response) => {
     console.log('response:', response.data)
@@ -36,7 +37,6 @@ const fetchChat = async () => {
 }
 
 const getDisplayName = (chat) => {
-  
   return chat.clientName === completeName.value ? chat.workerName : chat.clientName;
 }
 
@@ -88,7 +88,7 @@ const date = ref()
     <section class="container">
       <div v-if="chats && chats.length" class="tasks-container">
           <div v-for="chat in chats" :key="chat.id">
-            <button @click="openPopup(chat)">
+            <button @click="openPopup(chat, getDisplayName(chat))">
               <ChatCard 
               :name="chat.name"
               :otherUsername ="getDisplayName(chat)"
@@ -146,13 +146,13 @@ export default {
     toggleNavItem(index) {
       /* this.$set(this.activeItems, index, !this.activeItems[index]) */
     },
-    openPopup(chat) {
+    openPopup(chat, name) {
       console.log('isOpen:')
       this.isOpen = true
       console.log(chat.id)
       this.selectedChatId = chat.id
       this.modalTitle = chat.name
-      this.modalUsername = getDisplayName(chat)
+      this.modalUsername = name
       console.log(this.modalTitle, this.modalUsername)
     },
     closePopup() {
