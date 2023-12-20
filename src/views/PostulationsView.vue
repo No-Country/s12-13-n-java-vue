@@ -17,8 +17,6 @@ let posts = ref([])
 
 let isActive = ref(false)
 
-
-
 const fetchCards = async () => {
   for (let page = 0; page <= 10; page++) {
     try {
@@ -36,20 +34,45 @@ onMounted(() => {
 })
 
 const contract = async (clickedPost) => {
+  console.log('clickedPost:', clickedPost)
   clickedPost.isActive = !clickedPost.isActive
   posts.value.forEach((post) => {
     if (post !== clickedPost) {
       post.isDisabled = clickedPost.isActive
     }
   })
+  await axios
+    .put(
+      `postulations/accept_postulation/`,
+      {
+        postulation_id: clickedPost.id,
+        task_id: clickedPost.idTask
+      },
+      { headers }
+    )
+    .then((response) => {
+      console.log('Response', response)
+    })
+    .catch((error) => {
+      console.log('Error en form', error)
+    })
 
   isActive.value = posts.value.some((post) => post.isActive)
 }
 
-const confirmSubmit = async () => {
+const confirmSubmit = async (task) => {
+  console.log('task:', task)
   console.log('confirmations')
   isDialogOpen.value = false
   router.push({ name: 'dashboard' })
+  await axios
+    .put(`task/completed/${task.id}`, { headers })
+    .then((response) => {
+      console.log('Response', response)
+    })
+    .catch((error) => {
+      console.log('Error en form', error)
+    })
 }
 
 const openDialog = () => {
