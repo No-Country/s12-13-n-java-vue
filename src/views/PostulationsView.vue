@@ -27,9 +27,10 @@ onMounted(() => {
   fetchCards()
 })
 
-const contract = () => {
+const contract = async () => {
   console.log('contract:', contract)
-  isActive.value = true
+  isActive.value = !isActive.value
+  await axios.post('')
 }
 </script>
 <template>
@@ -80,7 +81,7 @@ const contract = () => {
           </div>
         </section>
 
-        <section class="post-container">
+        <!-- <section class="post-container">
           <div class="post">
             <div class="post-info">
               <div class="circle-container">
@@ -106,11 +107,15 @@ const contract = () => {
             </div>
             <button class="post-button link">Contratar</button>
           </div>
-        </section>
+        </section> -->
+
         <button class="button-back link post-button" @click="router.back()">
           Volver a publicaciones
         </button>
-        <button class="button-finalize link post-button" :class="{ buttonActive: isActive }">
+        <button
+          class="button-finalize link post-button"
+          :style="{ background: isActive ? '#1b9964' : '#149ed7' }"
+        >
           Finalizar publicación
         </button>
       </section>
