@@ -55,8 +55,8 @@ const fetchCards = async () => {
   }
 };
 
-onMounted(() => {
-  fetchPostulations();
+onMounted(async () => {
+  await fetchPostulations();
   fetchCards();
 });
 

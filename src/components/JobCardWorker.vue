@@ -45,88 +45,76 @@ function handlePostulation() {
 
 
 <template>
-  <section
-    class="card"
-    :class="{ unexpanded: !isExpanded, expanded: isExpanded, 'z-1000': isExpanded }">
-
-    <div class="container">
-      <div>
-        <h3 class="card__category">{{ props.category }}</h3>
-        <p class="card__title">{{ props.taskTitle }}</p>
-      </div>
-      <button class="unexpand-button link" @click="expand()" :class="{ hidden: !isExpanded }">
-        <img src="../assets/images/unexpand-icon.svg" alt="unexpand" />
-      </button>
-    </div>
-
-    <div class="container">
-      <div class="data-container" :class="{ container_expanded: isExpanded }">
-        <p class="data__title">Fecha:</p>
-        <p class="data__value">{{ props.taskDate }}</p>
-
-      </div>
-      <div
-        class="data-container"
-        :class="{
-          container_expanded: isExpanded,
-          hidden: !isExpanded,
-          container_unrevealed: !isExpanded,
-          container_revealed: isExpanded
-        }"
-      >
-        <p class="data__title">Dirección:</p>
-        <p class="data__value">{{ props.address }}</p>
-  
-
-      </div>
-      <div
-        class="data-container"
-        :class="{
-          container_expanded: isExpanded,
-          hidden: !isExpanded,
-          container_unrevealed: !isExpanded,
-          container_revealed: isExpanded
-        }"
-      >
-        <p class="data__title">Precio:</p>
-        <p class="data__value">{{ props.price }} {{ props.currencyType }}</p>
-      </div>
-      <div
-        class="description-container"
-        :class="{
-          hidden: !isExpanded,
-          container_unrevealed: !isExpanded,
-          container_revealed: isExpanded
-        }"
-      >
-        <p class="data__title">Descripción:</p>
-        <p class="data__value description-text">
-          {{ props.description }}
-        </p>
-
-
-        <div class="container_expanded buttons-container" :class="{ hidden: !isExpanded }">
-          <button
-            class="postulation-button link"
-            @click="handlePostulation"
-            :class="{ postulated: postulated }"
-            :disabled="postulated"
-          >
-            {{ postulated ? 'Postulado' : 'Postular' }}
-          </button>
-        </div>
-
-
-      </div>
-        <button class="expand-button link" :class="{ hidden: isExpanded }" @click="expand()">
-          Ver más
-        </button>
-    </div>
-
-
+  <section  class="card" 
+  :class="{ unexpanded: !isExpanded, expanded: isExpanded, 'z-1000': isExpanded }">
+     <div class="container">
+       <div>
+         <h3 class="card__category">{{ props.category }}</h3>
+         <p class="card__title">{{ props.taskTitle }}</p>
+       </div>
+       <button class="unexpand-button link" @click="expand()" :class="{ hidden: !isExpanded }">
+         <img src="../assets/images/unexpand-icon.svg" alt="unexpand" />
+       </button>
+     </div>
+     <div class="container">
+       <div class="data-container" :class="{ container_expanded: isExpanded }">
+         <p class="data__title">Fecha:</p>
+         <p class="data__value">{{ props.taskDate }}</p>
+       </div>
+ 
+       <div
+         class="data-container"
+         :class="{
+           container_expanded: isExpanded,
+           hidden: !isExpanded,
+           container_unrevealed: !isExpanded,
+           container_revealed: isExpanded
+         }"
+       >
+         <p class="data__title">Dirección:</p>
+         <p class="data__value">{{ props.address }}</p>
+       </div>
+       <div
+         class="data-container"
+         :class="{
+           container_expanded: isExpanded,
+           hidden: !isExpanded,
+           container_unrevealed: !isExpanded,
+           container_revealed: isExpanded
+         }"
+       >
+         <p class="data__title">Precio:</p>
+         <p class="data__value">{{ props.price }} {{ props.currencyType }}</p>
+       </div>
+       <div
+         class="description-container"
+         :class="{
+           hidden: !isExpanded,
+           container_unrevealed: !isExpanded,
+           container_revealed: isExpanded
+         }"
+       >
+         <p class="data__title">Descripción:</p>
+         <p class="data__value description-text">
+           {{ props.description }}
+         </p>
+         <div class="container_expanded buttons-container" :class="{ hidden: !isExpanded }">
+           <button
+             class="postulation-button link"
+             @click="handlePostulation"
+             :class="{ postulated: postulated, notPostulated: !postulated }"
+             :disabled="postulated"
+           >
+             {{ postulated ? 'Postulado' : 'Postular' }}
+           </button>
+         </div>
+       </div>
+         <button class="expand-button link" :class="{ hidden: isExpanded }" @click="expand()">
+           Ver más
+         </button>
+     </div> 
   </section>
-</template>
-
+ </template>
 
 <script>
 export default {
@@ -150,8 +138,6 @@ p {
   padding: 0;
 }
 
-
-  /* Agrega aquí los estilos que desees cuando el botón esté postulado */
 .postulated {
   background-color: #ccc;
   color: #888;

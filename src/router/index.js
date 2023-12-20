@@ -6,6 +6,8 @@ import ChatView from '../views/ChatView.vue'
 import DashboardView from '../views/DashboardView.vue'
 import HomeView from '../views/HomeView.vue'
 import DashboardWorker from '@/views/DashboardWorker.vue'
+import HistoryPage from '@/views/HistoryPage.vue'
+
 
 const routes = [
   {
@@ -32,7 +34,7 @@ const routes = [
     component: HomeView,
   },
   {
-    path: '/dashboard/worker',
+    path: '/worker',
     name: 'worker',
     component: DashboardWorker,
     meta: {
@@ -47,7 +49,7 @@ const routes = [
       category: ''
     },
     meta: {
-      requereAuth: true
+      requireAuth: true,
     }
   },
 
@@ -56,8 +58,17 @@ const routes = [
     name: 'Chat',
     component: ChatView,
     meta: {
-      requereAuth: true
+      requireAuth: true,
     }
+  },
+
+  {
+    path: '/history',
+    name: 'history',
+    component: HistoryPage,
+   /* meta: {
+      requireAuth: true,
+    }*/
   },
 ]
 
@@ -76,3 +87,4 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
+export default router
