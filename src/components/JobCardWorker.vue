@@ -360,7 +360,7 @@ p {
   }
 }
 
-@media screen (min-width: 768px){
+@media screen and(min-width: 768px){
   .card{
     font-size: 14px;
   }

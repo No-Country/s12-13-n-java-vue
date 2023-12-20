@@ -188,7 +188,7 @@ p {
   }
 }
 
-@media screen (min-width: 768px){
+@media screen and(min-width: 768px){
   .container{
     font-size: 14px;
   }

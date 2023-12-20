@@ -3,8 +3,8 @@ import SectionInfo from '@/components/SectionInfo.vue'
 import SectionTutorial from '@/components/SectionTutorial.vue'
 import SectionBlog from '@/components/SectionBlog.vue'
 import SectionSoporte from '@/components/SectionSoporte.vue'
-import SectionHeader from '../components/SectionHeader.vue'
-import SectionNosotros from '../components/SectionNosotros.vue'
+import SectionHeader from '@/components/SectionHeader.vue'
+import SectionNosotros from '@/components/SectionNosotros.vue'
 
 //pasar props
 // defineProps({
@@ -28,7 +28,7 @@ import SectionNosotros from '../components/SectionNosotros.vue'
 </template>
 
 <style scoped>
-@media screen (min-width: 768px){
+@media screen and (min-width: 768px){
   .container{
     font-size: 14px;
   }

@@ -1,5 +1,5 @@
 <script setup>
-import SectionHeader from '../components/SectionHeader.vue'
+import SectionHeader from '@/components/SectionHeader.vue'
 import { ref, onMounted, computed } from 'vue'
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
@@ -787,7 +787,7 @@ li {
   margin-bottom: 24px;
 }
 
-@media screen (min-width: 768px){
+@media screen and(min-width: 768px){
 
   .cards-container{
     font-size: 14px;

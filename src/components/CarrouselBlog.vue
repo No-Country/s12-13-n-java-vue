@@ -73,7 +73,7 @@ section {
     margin-bottom: 0px
   }
 
-  @media screen (min-width: 768px){
+  @media screen and(min-width: 768px){
   .description{
     font-size: 14px;
   }

@@ -96,7 +96,7 @@ p {
   color: var(--blue1, #3960c2);
 }
 
-@media screen (min-width: 768px){
+@media screen and(min-width: 768px){
   .nav{
     font-size: 14px;
   }

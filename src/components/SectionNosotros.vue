@@ -139,7 +139,7 @@
     margin-right: 25px;
   }
 
-  @media screen (min-width: 768px){
+  @media screen and(min-width: 768px){
   .col{
     font-size: 14px;
   }

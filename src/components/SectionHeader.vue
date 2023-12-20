@@ -559,7 +559,7 @@ li {
   justify-content: center;
 }
 
-@media screen (min-width: 768px){
+@media screen and(min-width: 768px){
   .container gx-0{
     font-size: 14px;
   }

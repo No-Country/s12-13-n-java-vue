@@ -1,6 +1,6 @@
 <!-- eslint-disable no-unused-vars -->
 <script setup>
-import SectionHeader from '../components/SectionHeader.vue'
+import SectionHeader from '@/components/SectionHeader.vue'
 import MessageChats from '@/components/MessageChats.vue'
 import { ref } from 'vue'
 import '@vuepic/vue-datepicker/dist/main.css'
@@ -131,7 +131,7 @@ export default {
   },
   methods: {
     toggleNavItem(index) {
-      /* this.$set(this.activeItems, index, !this.activeItems[index]) */
+       this.$set(this.activeItems, index, !this.activeItems[index]) 
     },
     openPopup() {
       console.log('isOpen:')
@@ -364,7 +364,7 @@ li {
 
 /*media queries*/
 
-@media screen (min-width: 768px){
+@media screen and(min-width: 768px){
   .container{
     font-size: 14px;
   }

@@ -223,7 +223,7 @@
     transition: background-color 0.3s;
   }
 
-  @media screen (min-width: 768px){
+  @media screen and(min-width: 768px){
   .logincontainer{
     font-size: 14px;
   }

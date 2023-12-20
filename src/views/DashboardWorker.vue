@@ -445,16 +445,13 @@ li {
     flex-direction: column;
   }
 
-  @media screen (min-width: 768px){
+  @media screen and(min-width: 768px){
   .cards-container{
     font-size: 14px;
   }
   .nav{
     font-size: 14px;
   }
-}
-
-  @media (min-width: 768px){
     .foot{
       display: flex;
       flex-direction: row;

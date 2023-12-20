@@ -55,7 +55,7 @@
   margin-bottom: 48px;
 }
 
-@media screen (min-width: 768px){
+@media screen and(min-width: 768px){
   .conteiner{
     font-size: 14px;
   }
