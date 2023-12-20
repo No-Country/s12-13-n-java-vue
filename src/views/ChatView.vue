@@ -17,8 +17,9 @@ const headers = {
   }
 
 
-let chats= ref (null)
-let completeName = ref(null)
+const chats= ref (null)
+const completeName = ref(null)
+
 
 const fetchUserData = async () => {
   await axios.get('auth/details', { headers }).then((response) => {
@@ -36,19 +37,13 @@ const fetchChat = async () => {
 
 const getDisplayName = (chat) => {
   
-  if (chat.clientName === completeName.value) {
-    return chat.workerName; 
-  } else {
-    return chat.clientName;
-  }
+  return chat.clientName === completeName.value ? chat.workerName : chat.clientName;
 }
 
 
-fetchChat ()
-fetchUserData().then(() => {
 
-  console.log('Valor de completeName después de fetchUserData:', completeName.value);
-});
+fetchChat ()
+fetchUserData()
 
 const date = ref()
 </script>
@@ -93,7 +88,7 @@ const date = ref()
     <section class="container">
       <div v-if="chats && chats.length" class="tasks-container">
           <div v-for="chat in chats" :key="chat.id">
-            <button @click="openPopup(chat.id)">
+            <button @click="openPopup(chat)">
               <ChatCard 
               :name="chat.name"
               :otherUsername ="getDisplayName(chat)"
@@ -113,8 +108,8 @@ const date = ref()
             <h3 class="popup__title"></h3>
             <img class="me-3" src="" alt="la foto">
                 <div>
-                  <p>Daniela Martinez</p>
-                  <small>Transporte desde el hospital..</small>
+                  <p>{{ modalUsername }}</p>
+                  <small>{{modalTitle}}.</small>
                 </div>
             <button class="popup__close button" @click="closePopup">
               <img src="../assets/images/close-button-icon.svg" alt="Button Image" />
@@ -142,22 +137,27 @@ export default {
     return {
       activeItems: [false, false, false],
       isOpen: false,
-      selectedChatId: null
+      selectedChatId: null,
+      modalTitle : null,
+      modalUsername : null
     }
   },
   methods: {
     toggleNavItem(index) {
       /* this.$set(this.activeItems, index, !this.activeItems[index]) */
     },
-    openPopup(chatId) {
+    openPopup(chat) {
       console.log('isOpen:')
       this.isOpen = true
-      console.log(chatId)
-      this.selectedChatId = chatId
-      
+      console.log(chat.id)
+      this.selectedChatId = chat.id
+      this.modalTitle = chat.name
+      this.modalUsername = getDisplayName(chat)
+      console.log(this.modalTitle, this.modalUsername)
     },
     closePopup() {
       this.isOpen = false
+      
     }
   }
 }
