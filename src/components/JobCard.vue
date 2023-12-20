@@ -13,7 +13,6 @@ const props = defineProps({
 })
 
 const getPosts = () => {
-  console.log('getPosts:', getPosts)
   router.push({
     name: 'postulations',
     query: {
