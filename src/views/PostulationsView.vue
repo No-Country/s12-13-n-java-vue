@@ -42,6 +42,7 @@ const contract = async (clickedPost) => {
 const confirmSubmit = async () => {
   console.log('confirmations')
   isDialogOpen.value = false
+  router.push({ name: 'dashboard' })
 }
 
 const openDialog = () => {
