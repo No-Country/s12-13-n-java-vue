@@ -1,5 +1,5 @@
 export const categorias = [
-  'Enfermería',
+  'Enfermeria',
   'Extraccionista',
   'Cuidador',
   'Trámites',

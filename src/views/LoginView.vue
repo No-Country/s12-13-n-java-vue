@@ -8,11 +8,11 @@
   const password = ref('')
   const email = ref('')
 
-  //para ver la contraseña
+  // Para ver la contraseña
   let eyes = ref(true)
   let type = ref('password')
 
-  //control del switch
+  // Control del switch
   let activeCont = true
   let activeTrab = false
   let activeTab = ref('contratador')
@@ -20,42 +20,50 @@
   const setActiveTab = (tab) => {
     activeTab.value = tab;
 
-    if (activeTab.value == 'contratador') {
+    if (activeTab.value === 'contratador') {
       activeCont = true
       activeTrab = false
     }
-    if (activeTab.value == 'trabajador') {
+    if (activeTab.value === 'trabajador') {
       activeCont = false
       activeTrab = true
     }
-
   };
 
   const logged_in = async () => {
-    await store.login(email.value, password.value, activeTab.value)
-
-     //Acceso ok
-     if(store.token != null){
-       router.push({ name: 'dashboard' })
-     }
+    // Realizar el inicio de sesión
+    if (!email.value || !password.value) {
+      // Notificar al usuario que ambos campos son requeridos
+      store.notificationError('Por favor, completa todos los campos.');
+      return;
+    }
+    await store.login(email.value, password.value, activeTab.value);
+  
+    // Verificar si el usuario está autenticado
+    if (store.token) {
+      // Si está autenticado, redirigir a la página correspondiente
+      if (activeTab.value === 'trabajador') {
+        router.push({ name: 'worker' });
+      } else {
+        router.push({ name: 'dashboard' });
+      }
+    } else {
+      // Si no está autenticado, puedes mostrar un mensaje de error o redirigir a la página de inicio de sesión
+      router.push({ name: 'login' });
+    }
   }
 
   const handleEyes = () => {
     eyes.value = !eyes.value
 
-    if (type.value == 'password') {
+    if (type.value === 'password') {
       type.value = 'text'
-      return
-    }
-    if (type.value == 'text') {
+    } else if (type.value === 'text') {
       type.value = 'password'
-      return
     }
-
   }
-
-
 </script>
+
 
 
 <template>
@@ -68,7 +76,6 @@
         <label style=" font-size: 20px; " for="email">Email o Usuario</label>
       </div>
       <input autocomplete="none" id="email" v-model="email" type="text">
-
       <div style="width: 85%; margin-top: 30px">
         <label style=" font-size: 20px; " for="password">Contraseña</label>
       </div>
