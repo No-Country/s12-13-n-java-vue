@@ -34,7 +34,6 @@ onMounted(() => {
 })
 
 const contract = async (clickedPost) => {
-  console.log('clickedPost:', clickedPost)
   clickedPost.isActive = !clickedPost.isActive
   posts.value.forEach((post) => {
     if (post !== clickedPost) {
@@ -52,27 +51,34 @@ const contract = async (clickedPost) => {
     )
     .then((response) => {
       console.log('Response', response)
+      filteredPosts()
+      console.log('clickedpost:', clickedPost.status)
     })
     .catch((error) => {
       console.log('Error en form', error)
     })
+  console.log('clickedpost:', clickedPost.status)
 
   isActive.value = posts.value.some((post) => post.isActive)
 }
 
 const confirmSubmit = async (task) => {
-  console.log('task:', task)
+  console.log('fetchPosttask:', task)
   console.log('confirmations')
   isDialogOpen.value = false
   router.push({ name: 'dashboard' })
-  await axios
-    .put(`task/completed/${task.id}`, { headers })
-    .then((response) => {
-      console.log('Response', response)
-    })
-    .catch((error) => {
-      console.log('Error en form', error)
-    })
+
+  if (task) {
+    const id = task.id.toString()
+    await axios
+      .put(`task/completed/${id}`, {}, { headers })
+      .then((response) => {
+        console.log('fetchPostResponse', response)
+      })
+      .catch((error) => {
+        console.log('fetchPostError en form', error)
+      })
+  }
 }
 
 const openDialog = () => {
@@ -80,8 +86,16 @@ const openDialog = () => {
 }
 
 const filteredPosts = (posts, id) => {
-  posts
-  return posts.filter((item) => item.idTask == id)
+  const requiredPost = posts.filter((item) => item.idTask == id)
+  requiredPost.forEach((post) => {
+    console.log('post:', post)
+    if (post.status === 'APPROVED') {
+      console.log('post', post.status)
+      post.isActive = true
+      isActive.value = true
+    }
+  })
+  return requiredPost
 }
 </script>
 <template>
