@@ -573,12 +573,8 @@ li {
   width: 100%;
   display: flex;
   flex-direction: column;
-}
-
-.popup__container {
-  display: flex;
-  flex-direction: column;
   gap: 19px;
+
 }
 .popup__header {
   display: flex;

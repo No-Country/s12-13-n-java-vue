@@ -11,6 +11,7 @@ const token = localStorage.getItem('token')
 const headers = {
   Authorization: `Bearer ${token}`
 }
+let isDialogOpen = ref(false)
 
 let posts = ref(null)
 
@@ -36,6 +37,15 @@ const contract = async (clickedPost) => {
   })
 
   isActive.value = posts.value.some((post) => post.isActive)
+}
+
+const confirmSubmit = async () => {
+  console.log('confirmations')
+  isDialogOpen.value = false
+}
+
+const openDialog = () => {
+  isDialogOpen.value = 'true'
 }
 </script>
 <template>
@@ -126,14 +136,31 @@ const contract = async (clickedPost) => {
           class="button-finalize link post-button"
           :style="{ background: isActive ? '#1b9964' : '#C7C7C7' }"
           :disabled="!isActive"
+          @click="openDialog"
         >
           Finalizar publicación
         </button>
       </section>
     </div>
-    <section class="section-blog">
-      <!-- contenido de la segunda tarjeta -->
-    </section>
+    <modal class="dialog" ref="dialogRef" v-if="isDialogOpen" @close="isDialogOpen = false">
+      <div class="popup__header">
+        <h3>Finalizar publicación</h3>
+        <button class="popup__close button" @click="isDialogOpen = false">
+          <img src="../assets/images/close-button-icon.svg" alt="Button Image" />
+        </button>
+      </div>
+      <p class="dialog-text">
+        Al presionar confirmar contaremos como finalizada la publicación. Esta acción no se puede
+        deshacer.
+      </p>
+      <p class="dialog-subtext">¿Quieres finalizar la publicación?</p>
+      <div class="dialog-buttons">
+        <button class="edit-button link" @click="isDialogOpen = false">
+          Volver a postulaciones
+        </button>
+        <button class="confirm-button link" @click="confirmSubmit">Confirmar</button>
+      </div>
+    </modal>
     <FooterPage />
   </main>
 </template>
@@ -320,5 +347,85 @@ li {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.dialog {
+  z-index: 2;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 391px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  border-radius: 12px;
+  box-shadow: 0px 4px 20.8px 0px rgba(16, 96, 217, 0.25);
+  border: 1px solid grey;
+  padding: 26px;
+  font-family: 'Baloo 2';
+  max-width: 500px;
+}
+
+.popup__header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.popup__close {
+  border: none;
+  vertical-align: middle;
+  width: 27px;
+  height: 27px;
+  background-color: transparent;
+}
+.popup__title {
+  color: var(--black1, #2f2f2f);
+  font-family: 'Baloo 2';
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.dialog-buttons {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dialog-text {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.dialog-subtext {
+  margin-bottom: 24px;
+}
+
+.edit-button {
+  border: 2px solid var(--delete-error, #e20c0c);
+  background-color: transparent;
+  color: var(--delete-error, #e20c0c);
+  font-family: 'Baloo 2';
+  font-weight: 700;
+  padding: 10px;
+  width: 100%;
+  font-size: 20px;
+  border: 2px solid var(--blue1, #1d3d8f);
+  color: var(--blue1, #1d3d8f);
+  border-radius: 6px;
+}
+
+.confirm-button {
+  background-color: transparent;
+  background: var(--greensoft, #1b9964);
+  font-family: 'Baloo 2';
+  font-weight: 700;
+  padding: 10px;
+  width: 100%;
+  color: var(--white, #fff);
 }
 </style>
