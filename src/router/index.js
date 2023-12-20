@@ -32,7 +32,7 @@ const routes = [
     component: HomeView,
   },
   {
-    path: '/dashboard/worker',
+    path: '/worker',
     name: 'worker',
     component: DashboardWorker,
     meta: {
