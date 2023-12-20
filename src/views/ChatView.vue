@@ -7,6 +7,7 @@ import FooterPage from '@/components/SectionFooter.vue'
 import ChatCard from '@/components/ChatCard.vue'
 import router from '@/router'
 import axios from '@/plugins/axios'
+
 const token = localStorage.getItem('token')
 const headers = {
   Authorization: `Bearer ${token}`
@@ -15,10 +16,7 @@ const headers = {
     router.push({ name: 'dashboard' })
   }
 
-let id= ref('')
-let name= ref('')
-let clientName= ref ('')
-let workerName= ref('')
+
 let chats= ref (null)
 
 
@@ -76,7 +74,7 @@ const date = ref()
     <section class="container">
       <div v-if="chats && chats.length" class="tasks-container">
           <div v-for="chat in chats" :key="chat.id">
-            <button @click="openPopup">
+            <button @click="openPopup(chat.id)">
               <ChatCard 
               :name="chat.name"
               :clientName="chat.clientName"
@@ -106,7 +104,7 @@ const date = ref()
 
           </div>
           <form class="form">
-            <MessageChats />
+            <MessageChats :roomId="selectedChatId"/>
           </form>
           <div class="d-flex justify-content-between">
             <input style="background-color: #a9b8de;flex: auto" type="text">
@@ -125,16 +123,20 @@ export default {
   data() {
     return {
       activeItems: [false, false, false],
-      isOpen: false
+      isOpen: false,
+      selectedChatId: null
     }
   },
   methods: {
     toggleNavItem(index) {
       /* this.$set(this.activeItems, index, !this.activeItems[index]) */
     },
-    openPopup() {
+    openPopup(chatId) {
       console.log('isOpen:')
       this.isOpen = true
+      console.log(chatId)
+      this.selectedChatId = chatId
+      
     },
     closePopup() {
       this.isOpen = false
