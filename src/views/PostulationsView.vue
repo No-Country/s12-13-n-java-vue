@@ -13,15 +13,22 @@ const headers = {
 }
 let isDialogOpen = ref(false)
 
-let posts = ref(null)
+let posts = ref([])
 
 let isActive = ref(false)
 
+
+
 const fetchCards = async () => {
-  await axios.get('postulations/task_postulations/18', { headers }).then((response) => {
-    posts.value = response.data.content
-    console.log('postulations:', posts.value)
-  })
+  for (let page = 0; page <= 10; page++) {
+    try {
+      const response = await axios.get(`postulations/page/${page}`, { headers })
+      const newPosts = response.data.response.content
+      posts.value = [...posts.value, ...newPosts]
+    } catch (error) {
+      console.error(`Error fetching posts from page ${page}:`, error)
+    }
+  }
 }
 
 onMounted(() => {
@@ -48,6 +55,11 @@ const confirmSubmit = async () => {
 const openDialog = () => {
   isDialogOpen.value = 'true'
 }
+
+const filteredPosts = (posts, id) => {
+  posts
+  return posts.filter((item) => item.idTask == id)
+}
 </script>
 <template>
   <main>
@@ -55,7 +67,7 @@ const openDialog = () => {
     <NavigationDashboard />
 
     <div class="wrapper">
-      <section class="container" style="margin-bottom: 16px">
+      <section class="container" style="margin-bottom: 16px" ref="passingData($route.query)">
         <p>Publicaciones activas <strong>/ Postulaciones</strong></p>
         <section class="card" :style="{ boxShadow: `0px 5px 0px 0px ${$route.query.color} inset` }">
           <div>
@@ -65,7 +77,11 @@ const openDialog = () => {
         </section>
 
         <section v-if="posts && posts.length" class="post-wrapper">
-          <div class="post-container" v-for="post in posts" :key="post.id">
+          <div
+            class="post-container"
+            v-for="post in filteredPosts(posts, $route.query.id) || posts"
+            :key="post.id"
+          >
             <div class="post">
               <div class="post-info">
                 <div class="circle-container">
@@ -102,34 +118,6 @@ const openDialog = () => {
           </div>
         </section>
 
-        <!-- <section class="post-container">
-          <div class="post">
-            <div class="post-info">
-              <div class="circle-container">
-                <img src="../assets/images/post-avatar.svg" alt="avatar" class="avatar" />
-              </div>
-              <div class="profile__info">
-                <p class="profile__name">Florencia R.</p>
-                <p class="profile__role">Contratador</p>
-              </div>
-
-              <div class="ranking">
-                <v-rating
-                  hover
-                  half-increments
-                  :length="5"
-                  :size="22"
-                  :model-value="3"
-                  color="#1D3D8F"
-                  active-color="#1D3D8F"
-                />
-                <p class="ranking-text">21 calificaciones</p>
-              </div>
-            </div>
-            <button class="post-button link">Contratar</button>
-          </div>
-        </section> -->
-
         <button class="button-back link post-button" @click="router.back()">
           Volver a publicaciones
         </button>
@@ -159,7 +147,7 @@ const openDialog = () => {
         <button class="edit-button link" @click="isDialogOpen = false">
           Volver a postulaciones
         </button>
-        <button class="confirm-button link" @click="confirmSubmit">Confirmar</button>
+        <button class="confirm-button link" @click="confirmSubmit($route.query)">Confirmar</button>
       </div>
     </modal>
     <FooterPage />
