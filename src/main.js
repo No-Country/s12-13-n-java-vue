@@ -11,7 +11,8 @@ import {
   LaLinkedin,
   RiFacebookBoxLine,
   RiTwitterLine,
-  SiInstagram
+  SiInstagram,
+  RiSendPlaneFill
 } from 'oh-vue-icons/icons'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
@@ -28,7 +29,8 @@ addIcons(
   RiFacebookBoxLine,
   SiInstagram,
   CoTiktok,
-  RiTwitterLine
+  RiTwitterLine,
+  RiSendPlaneFill
 )
 
 import App from './App.vue'
