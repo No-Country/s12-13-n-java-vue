@@ -48,36 +48,38 @@ const contract = async () => {
           </div>
         </section>
 
-        <section v-if="posts && posts.length" class="post-container">
-          <div class="post" v-for="post in posts" :key="post.id">
-            <div class="post-info">
-              <div class="circle-container">
-                <img src="../assets/images/post-avatar.svg" alt="avatar" class="avatar" />
+        <section v-if="posts && posts.length" class="post-wrapper">
+          <div class="post-container" v-for="post in posts" :key="post.id">
+            <div class="post">
+              <div class="post-info">
+                <div class="circle-container">
+                  <img src="../assets/images/post-avatar.svg" alt="avatar" class="avatar" />
+                </div>
+                <div class="profile__info">
+                  <p class="profile__name">{{ post.firstname }} {{ post.lastname.slice(0, 1) }}.</p>
+                  <p class="profile__role">Contratador</p>
+                </div>
+                <div class="ranking">
+                  <v-rating
+                    hover
+                    half-increments
+                    :length="5"
+                    :size="22"
+                    :model-value="3"
+                    color="#1D3D8F"
+                    active-color="#1D3D8F"
+                  />
+                  <p class="ranking-text">21 calificaciones</p>
+                </div>
               </div>
-              <div class="profile__info">
-                <p class="profile__name">{{ post.firstname }} {{ post.lastname.slice(0, 1) }}.</p>
-                <p class="profile__role">Contratador</p>
-              </div>
-              <div class="ranking">
-                <v-rating
-                  hover
-                  half-increments
-                  :length="5"
-                  :size="22"
-                  :model-value="3"
-                  color="#1D3D8F"
-                  active-color="#1D3D8F"
-                />
-                <p class="ranking-text">21 calificaciones</p>
-              </div>
+              <button
+                class="post-button link"
+                :style="{ background: isActive ? '#1b9964' : '#149ed7' }"
+                @click="contract()"
+              >
+                <span v-if="isActive">Contratado</span> <span v-else>Contratar</span>
+              </button>
             </div>
-            <button
-              class="post-button link"
-              :style="{ background: isActive ? '#1b9964' : '#149ed7' }"
-              @click="contract()"
-            >
-              <span v-if="isActive">Contratado</span> <span v-else>Contratar</span>
-            </button>
           </div>
         </section>
 
@@ -303,5 +305,11 @@ li {
   font-size: 16px;
   font-family: 'Baloo 2';
   font-weight: 500;
+}
+
+.post-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 </style>

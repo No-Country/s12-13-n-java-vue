@@ -248,6 +248,7 @@ li {
   list-style: none;
 }
 
+
 .placeholder {
   height: 70px;
   /* width: 393px; */
