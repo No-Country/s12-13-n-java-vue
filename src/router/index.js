@@ -74,9 +74,8 @@ const routes = [
     path: '/historyClient',
     name: 'historyClient',
     component: HistoryPageClient,
-   /* meta: {
+    meta: {
       requireAuth: true,
-    }*/
   },
 ]
 
