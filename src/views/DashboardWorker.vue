@@ -114,6 +114,7 @@ onMounted(async () => {
               :category="(card.occupations && card.occupations[0] && card.occupations[0].occupationName) ?? ''"
               :description="card.description ?? ''"
               :price="card.price ?? ''"
+              :color="card.occupations[0].color"
               :currencyType="card.currencyType ?? ''"
               :address="(card.address && card.address.street) ?? ''"
               :id="card.id ?? 0"

@@ -139,6 +139,7 @@ onMounted(async () => {
               :taskDate="(card.taskDate ? card.taskDate.slice(0, 10).replace(/-/g, '/') : '') ?? ''"
               :category="(card.occupations && card.occupations[0] && card.occupations[0].occupationName) ?? ''"
               :description="card.description ?? ''"
+              :color="card.occupations[0].color"
               :price="card.price ?? ''"
               :currencyType="card.currencyType ?? ''"
               :address="(card.address && card.address.street) ?? ''"

@@ -13,6 +13,7 @@ const props = defineProps({
   taskDate: String,
   category: String,
   description: String,
+  color: String,
   address: String,
   price: String,
   currencyType: String,
@@ -46,7 +47,8 @@ function handlePostulation() {
 
 <template>
   <section  class="card" 
-  :class="{ unexpanded: !isExpanded, expanded: isExpanded, 'z-1000': isExpanded }">
+  :class="{ unexpanded: !isExpanded, expanded: isExpanded, 'z-1000': isExpanded }"
+  :style="{ boxShadow: `0px 5px 0px 0px ${props.color} inset` }">
      <div class="container">
        <div>
          <h3 class="card__category">{{ props.category }}</h3>

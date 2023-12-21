@@ -14,6 +14,7 @@ const props = defineProps({
   taskDate: String,
   category: String,
   description: String,
+  color: String,
   address: String,
   price: String,
   currencyType: String,
@@ -22,33 +23,14 @@ const props = defineProps({
 })
 
 
-
 const emits = defineEmits()
-//const postulated = ref(props.postulated)
-
-/*function handlePostulation() {
-  let dataUser = JSON.parse(user)
-  const worker_id = dataUser['id_worker']
-
-  axios.post(`postulations`, {
-    worker_id: worker_id,
-    task_id: props.id
-  }, {
-    headers: headers
-  }).then((response) => {
-    console.log(response)
-
-    postulated.value = true
-    // Emitir un evento al componente padre para informar sobre la acción de postulación
-    emits('postulation', props.id)
-  })
-}*/
 </script>
 
 
 <template>
   <section  class="card" 
-  :class="{ unexpanded: !isExpanded, expanded: isExpanded, 'z-1000': isExpanded }">
+  :class="{ unexpanded: !isExpanded, expanded: isExpanded, 'z-1000': isExpanded }"
+  :style="{ boxShadow: `0px 5px 0px 0px ${props.color} inset` }">
      <div class="container">
        <div>
          <h3 class="card__category">{{ props.category }}</h3>
