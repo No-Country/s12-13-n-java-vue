@@ -43,6 +43,7 @@ p {
 .card {
   display: flex;
   min-height: 134px;
+  min-width: 343px;
   padding: 16px;
   flex-direction: column;
   align-items: flex-start;

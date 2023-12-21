@@ -91,7 +91,7 @@ const date = ref()
     </nav>
 
     <section class="container">
-      <div v-if="chats && chats.length" class="tasks-container">
+      <div v-if="chats && chats.length" class="container">
           <div v-for="chat in chats" :key="chat.id">
             <button @click="openPopup(chat.id)">
               <ChatCard 
@@ -231,6 +231,9 @@ li {
   background-color: #a9b8de;
   width: 100%;
   height: 530px;
+  min-height: 134px;
+  min-width: 361px;
+  overflow: auto;
 }
 
 .popup {
