@@ -1,3 +1,4 @@
+<!-- eslint-disable no-unused-vars -->
 <script setup>
 import SectionHeader from '@/components/SectionHeader.vue';
 import { ref, onMounted } from 'vue';
@@ -508,4 +509,13 @@ li {
       flex-direction: row;
     }
   }
+@media screen and(min-width: 768px){
+  .container{
+    font-size: 14px;
+  }
+  
+  .container{
+    font-size: 14px; 
+  }
+}
 </style>

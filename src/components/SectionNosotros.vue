@@ -139,4 +139,14 @@
     margin-right: 25px;
   }
 
+  @media screen and(min-width: 768px){
+  .col{
+    font-size: 14px;
+  }
+
+  .cards{
+    font-size: 14px;
+  }
+}
+
 </style>

@@ -75,4 +75,10 @@
   .description p {
     margin-bottom: 0px
   }
+
+  @media screen and(min-width: 768px){
+  .description{
+    font-size: 14px;
+  }
+}
 </style>

@@ -54,4 +54,10 @@
   font-size: 20px;
   margin-bottom: 48px;
 }
+
+@media screen and(min-width: 768px){
+  .conteiner{
+    font-size: 14px;
+  }
+}
 </style>

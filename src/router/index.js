@@ -1,16 +1,21 @@
 import useAuth from '@/stores/auth'
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
-import PostulationsView from '../views/PostulationsView.vue'
-import ChatView from '../views/ChatView.vue'
-import DashboardView from '../views/DashboardView.vue'
-import HomeView from '../views/HomeView.vue'
+import PostulationsView from '@/views/PostulationsView.vue'
+import ChatView from '@/views/ChatView.vue'
+import DashboardView from '@/views/DashboardView.vue'
+import HomeView from '@/views/HomeView.vue'
 import DashboardWorker from '@/views/DashboardWorker.vue'
 import HistoryPage from '@/views/HistoryPage.vue'
 import HistoryPageClient from '@/views/HistoryPageClient.vue'
 
 
 const routes = [
+  {
+    path: '/',
+    name: 'home',
+    component: HomeView,
+  },
   {
     path: '/login',
     name: 'login',
@@ -25,14 +30,8 @@ const routes = [
     name: 'dashboard',
     component: DashboardView,
     meta: {
-
       requireAuth: true,
     },
-  },
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView,
   },
   {
     path: '/worker',
@@ -67,9 +66,9 @@ const routes = [
     path: '/history',
     name: 'history',
     component: HistoryPage,
-   /* meta: {
+    meta: {
       requireAuth: true,
-    }*/
+    }
   },
   {
     path: '/historyClient',
