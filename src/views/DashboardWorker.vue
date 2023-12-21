@@ -102,10 +102,10 @@ onMounted(async () => {
     </nav>
     <div class="cards-container">
       <section class="container">
-        <div>
-          <p>Publicaciones activas</p>
+        <div class="mt-5 mb-5">
+          <h3>Publicaciones activas</h3>
         </div>         
-        <div v-if="cards && cards.length" class="tasks-container">
+        <div v-if="cards && cards.length" class="tasks-container mt-5 mb-5">
           <div v-for="card in cards" :key="card.id">
   
             <JobCard
@@ -121,6 +121,9 @@ onMounted(async () => {
             ></JobCard>
 
           </div>
+        </div>
+        <div v-else class="mp-3 d-flex justify-content-center align-items-center">
+          <h3> sin resultados</h3>
         </div>
       </section>
 

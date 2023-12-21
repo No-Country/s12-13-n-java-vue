@@ -1,34 +1,55 @@
 <script setup>
-import SectionHeader from '@/components/SectionHeader.vue'
-import { ref, onMounted } from 'vue'
-import '@vuepic/vue-datepicker/dist/main.css'
-import FooterPage from '@/components/SectionFooter.vue'
-import JobCard from '@/components/JobCardStatus.vue'
-import axios from '@/plugins/axios'
+import SectionHeader from '@/components/SectionHeader.vue';
+import { ref, onMounted } from 'vue';
+import '@vuepic/vue-datepicker/dist/main.css';
+import FooterPage from '@/components/SectionFooter.vue';
+import JobCard from '@/components/JobCardStatus.vue';
+import axios from '@/plugins/axios';
 
-const token = localStorage.getItem('token')
-const user = localStorage.getItem('userData')
+const token = localStorage.getItem('token');
+const user = localStorage.getItem('userData');
 const headers = {
   Authorization: `Bearer ${token}`
-}
+};
 
+const activeItems = ref([false, false, false]);
+const cards = ref(null);
 
-const activeItems = ref([false, false, false])
-let cards = ref(null)
+const stateTranslations = {
+  STARTED: 'Iniciado',   //PUEDE SER TASK PUBLISHED, 
+  CANCELED: 'Cancelado', //task INPROGRESS
+  APPROVED: 'Aprobado', 
+ // COMPLETED: 'Completed' // TASK COMPLETED - APPROVED
+};
+
+//TASK -> PUBLISHED, INPROGRESS, COMPLETED, REMOVED
+
+const filters = ref({
+  states: 'STARTED'
+});
+
+const filtersButtonVisible = ref(false);
+
 
 const toggleNavItem = (index) => {
-  activeItems.value[index] = !activeItems.value[index]
-}
-
+  activeItems.value[index] = !activeItems.value[index];
+};
 
 const fetchPostulations = async (TaskStatus, status) => {
   try {
-    let dataUser = JSON.parse(user);
+    const dataUser = JSON.parse(user);
     const worker_id = dataUser['id_worker'];
-    const response = await axios.get('task/worker/?id=' + worker_id + 
-                '&task_status=' + TaskStatus + '&postulation_status=' + status, { headers });
+  const response = await axios.get('task/worker/', {
+        headers,
+        params: {
+          id: worker_id,
+          task_status: TaskStatus,
+          postulation_status: status
+        }
+  });
 
-                console.log(response.data.content)
+
+    console.log(response.data.content);
     cards.value = response.data.content;
   } catch (error) {
     console.error('Error fetching postulations:', error);
@@ -36,10 +57,15 @@ const fetchPostulations = async (TaskStatus, status) => {
   }
 };
 
-onMounted(async () => {
-  await fetchPostulations("PUBLISHED","STARTED");
-});
+const updateFilters = async () => {
+  const selectedStates = filters.value.states;
+  await fetchPostulations('PUBLISHED', selectedStates);
+  filtersButtonVisible.value = false;
+};
 
+onMounted(async () => {
+  await fetchPostulations('PUBLISHED', filters.value.states);
+});
 </script>
 
 
@@ -84,11 +110,30 @@ onMounted(async () => {
     <div class="cards-container">
       <section class="container">
         <div>
-          <p>Historial</p>
+          <div class="mt-3 mb-3">
+            <h3>Historial</h3>
+          </div>
+          <!-- FILTRO DE ESTADO DE POSTULACION -->
+          <div class="mt-2 mb-3">
+              <button @click="filtersButtonVisible = !filtersButtonVisible" class="expand-button link">filtrar</button>
+              <div v-if="filtersButtonVisible" class="filters">
+                <div v-for="state in Object.keys(stateTranslations)" :key="state">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    :value="state"
+                    v-model="filters.states"
+                    :class="{ 'selected-state': filters.states === state }"
+                  />
+                  <label class="form-check-label">{{ stateTranslations[state] }}</label>
+                </div>
+                <button class="expand-button link" @click="updateFilters">Aplicar</button>
+              </div>
+            </div>
 
-          <div v-if="cards && cards.length" class="tasks-container">
+          <!-- CARDS-->
+          <div v-if="cards && cards.length" class="tasks-container mt-5 mb-5">
           <div v-for="card in cards" :key="card.id">
-  
             <JobCard
               :taskTitle="card.taskTitle ?? ''"
               :taskDate="(card.taskDate ? card.taskDate.slice(0, 10).replace(/-/g, '/') : '') ?? ''"
@@ -97,20 +142,19 @@ onMounted(async () => {
               :price="card.price ?? ''"
               :currencyType="card.currencyType ?? ''"
               :address="(card.address && card.address.street) ?? ''"
-              :id="card.id ?? 0"
-        
+              :id="card.id"
             ></JobCard>
-
           </div>
+
         </div>
-
-
+        <div v-else class="mp-3 d-flex justify-content-center align-items-center">
+          <h3> sin resultados</h3>
+        </div>
         </div>         
       </section>
 
 
     </div>
-
     <FooterPage />
   </main>
 </template>
@@ -125,8 +169,19 @@ li {
   list-style: none;
 }
 
+.link {
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+}
+
 .link:hover {
   cursor: pointer;
+}
+
+.selected-state {
+  background-color: var(--blue1, #1d3d8f);
+  color:#fff;
 }
 
 .button:hover {
@@ -200,6 +255,21 @@ li {
 .cards-container {
   background-color: #a9b8de;
 }
+
+.expand-button {
+  color: var(--white, #fff);
+  font-family: 'Baloo 2';
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  height: 51px;
+  padding: 10px;
+  min-width: 123px;
+  justify-content: center;
+  align-items: center;
+  background: var(--blue1, #1d3d8f);
+}
+
 
 .popup {
   position: fixed;
