@@ -139,11 +139,7 @@ p {
   padding: 0;
 }
 
-.postulated {
-  background-color: #ccc;
-  color: #888;
-  font-size: small;
-}
+
 
 
 .eventButtonTrash {
@@ -255,7 +251,17 @@ p {
   justify-content: center;
   background: var(--blue1, #1d3d8f);
 }
-
+.postulated {
+  background-color: #ccc;
+  color: #888;
+  font-size: small;
+}
+.notpostulated{
+  background-color: #ccc;
+  color: #888;
+  font-size: small;
+  display: disabled;
+}
 
 .link {
   cursor: pointer;
