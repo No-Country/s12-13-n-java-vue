@@ -7,6 +7,7 @@ import DashboardView from '../views/DashboardView.vue'
 import HomeView from '../views/HomeView.vue'
 import DashboardWorker from '@/views/DashboardWorker.vue'
 import HistoryPage from '@/views/HistoryPage.vue'
+import HistoryPageClient from '@/views/HistoryPageClient.vue'
 
 
 const routes = [
@@ -66,6 +67,14 @@ const routes = [
     path: '/history',
     name: 'history',
     component: HistoryPage,
+   /* meta: {
+      requireAuth: true,
+    }*/
+  },
+  {
+    path: '/historyClient',
+    name: 'historyClient',
+    component: HistoryPageClient,
    /* meta: {
       requireAuth: true,
     }*/
