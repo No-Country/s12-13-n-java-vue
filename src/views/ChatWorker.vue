@@ -43,8 +43,10 @@ const getDisplayName = (chat) => {
 }
 
 const onSendMessage = (roomId) => {
-  document.dispatchEvent(new CustomEvent('send-message', { detail: roomId }));
-  inputMessage.value = "";
+  if(inputMessage.value !="" ){
+    document.dispatchEvent(new CustomEvent('send-message', { detail: roomId }));
+    inputMessage.value = "";
+  }
 };
 
 

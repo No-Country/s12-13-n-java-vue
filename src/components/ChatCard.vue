@@ -9,7 +9,6 @@ const props = defineProps({
 </script>
 
 <template>
-  <p>Chats Activos</p>
   <section
     class="card"
     :class="{ unexpanded: !isExpanded, expanded: isExpanded, 'z-1000': isExpanded }"
