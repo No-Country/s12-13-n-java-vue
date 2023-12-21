@@ -54,7 +54,6 @@ const fetchPostulations = async (TaskStatus, status) => {
 };
 
 const updateFilters = async () => {
-
   const selectedStates = filters.value.states;
   let taskStatus = 'PUBLISHED'
   if (selectedStates == 'APPROVED'){
@@ -131,7 +130,6 @@ onMounted(async () => {
                 <button class="expand-button link" @click="updateFilters">Aplicar</button>
               </div>
             </div>
-
 
           <!-- CARDS-->
           <div v-if="cards && cards.length" class="tasks-container mt-5 mb-5">
@@ -518,4 +516,5 @@ li {
     font-size: 14px; 
   }
 }
+
 </style>
