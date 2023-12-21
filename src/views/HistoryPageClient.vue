@@ -1,4 +1,3 @@
-<!-- eslint-disable no-unused-vars -->
 <script setup>
 import SectionHeader from '@/components/SectionHeader.vue';
 import { ref, onMounted } from 'vue';
@@ -17,13 +16,14 @@ const activeItems = ref([false, false, false]);
 const cards = ref(null);
 
 const stateTranslations = {
-  STARTED: 'Iniciado',  
-  APPROVED: 'Aprobado', 
-  CANCELED: 'Cancelado'
+  PUBLISHED: 'Publicado', 
+  INPROGRESS: 'en curso',
+  COMPLETED: 'finalizado', 
 };
 
+
 const filters = ref({
-  states: 'STARTED'
+  states: 'PUBLISHED'
 });
 
 const filtersButtonVisible = ref(false);
@@ -33,38 +33,35 @@ const toggleNavItem = (index) => {
   activeItems.value[index] = !activeItems.value[index];
 };
 
-const fetchPostulations = async (TaskStatus, status) => {
+const fetchTasks = async (status) => {
   try {
     const dataUser = JSON.parse(user);
-    const worker_id = dataUser['id_worker'];
-  const response = await axios.get('task/worker/', {
+    const client_id = dataUser['id_client'];
+  const response = await axios.get('task/client/', {
         headers,
         params: {
-          id: worker_id,
-          task_status: TaskStatus,
-          postulation_status: status
+          id: client_id,
+          status: status
         }
   });
+
+
     console.log(response.data.content);
     cards.value = response.data.content;
   } catch (error) {
-    console.error('Error fetching postulations:', error);
+    console.error('Error fetching task:', error);
     throw error;
   }
 };
 
 const updateFilters = async () => {
   const selectedStates = filters.value.states;
-  let taskStatus = 'PUBLISHED'
-  if (selectedStates == 'APPROVED'){
-      taskStatus = 'INPROGRESS'
-  }
-  await fetchPostulations(taskStatus, selectedStates);
+  await fetchTasks(selectedStates);
   filtersButtonVisible.value = false;
 };
 
 onMounted(async () => {
-  await fetchPostulations('PUBLISHED', filters.value.states);
+  await fetchTasks(filters.value.states);
 });
 </script>
 
@@ -113,7 +110,7 @@ onMounted(async () => {
           <div class="mt-3 mb-3">
             <h3>Historial</h3>
           </div>
-          <!-- FILTRO DE ESTADO DE POSTULACION -->
+          <!-- FILTRO DE ESTADO DE TASKS -->
           <div class="mt-2 mb-3">
               <button @click="filtersButtonVisible = !filtersButtonVisible" class="expand-button link">filtrar</button>
               <div v-if="filtersButtonVisible" class="filters">
@@ -507,14 +504,4 @@ li {
       flex-direction: row;
     }
   }
-@media screen and(min-width: 768px){
-  .container{
-    font-size: 14px;
-  }
-  
-  .container{
-    font-size: 14px; 
-  }
-}
-
 </style>
