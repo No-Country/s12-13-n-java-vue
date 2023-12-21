@@ -233,6 +233,9 @@ li {
   color: var(--blue1, #3960c2);
 }
 .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: #a9b8de;
   width: 100%;
   height: 530px;
