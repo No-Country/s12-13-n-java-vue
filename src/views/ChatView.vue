@@ -8,6 +8,7 @@ import FooterPage from '@/components/SectionFooter.vue'
 import ChatCard from '@/components/ChatCard.vue'
 import router from '@/router'
 import axios from '@/plugins/axios'
+
 const token = localStorage.getItem('token')
 const headers = {
   Authorization: `Bearer ${token}`
@@ -16,23 +17,39 @@ const headers = {
     router.push({ name: 'dashboard' })
   }
 
-let id= ref('')
-let name= ref('')
-let clientName= ref ('')
-let workerName= ref('')
-let chats= ref (null)
 
+let chats= ref (null)
+let completeName = ref(null)
+
+const fetchUserData = async () => {
+  await axios.get('auth/details', { headers }).then((response) => {
+    console.log('response:', response.data)
+    completeName.value = response.data.firstName +" "+ response.data.LastName
+  })
+}
 
 const fetchChat = async () => {
   await axios.get('chats', { headers }).then((response) => {
     console.log('response:', response.data)
-
     chats.value = response.data.filter((chat) => chat.id > 0)
-    
   })
 }
 
-fetchChat () 
+const getDisplayName = (chat) => {
+  
+  if (chat.clientName === completeName.value) {
+    return chat.workerName; 
+  } else {
+    return chat.clientName;
+  }
+}
+
+
+fetchChat ()
+fetchUserData().then(() => {
+
+  console.log('Valor de completeName después de fetchUserData:', completeName.value);
+});
 
 const date = ref()
 </script>
@@ -75,13 +92,12 @@ const date = ref()
     </nav>
 
     <section class="container">
-      <div v-if="chats && chats.length" class="tasks-container">
+      <div v-if="chats && chats.length" class="container">
           <div v-for="chat in chats" :key="chat.id">
-            <button @click="openPopup">
+            <button @click="openPopup(chat.id)">
               <ChatCard 
               :name="chat.name"
-              :clientName="chat.clientName"
-              :workerName="chat.workerName"
+              :otherUsername ="getDisplayName(chat)"
               :id="chat.id"
               @click="openPopup"/> 
             </button>
@@ -107,7 +123,7 @@ const date = ref()
 
           </div>
           <form class="form">
-            <MessageChats />
+            <MessageChats :roomId="selectedChatId"/>
           </form>
           <div class="d-flex justify-content-between">
             <input style="background-color: #a9b8de;flex: auto" type="text">
@@ -126,16 +142,20 @@ export default {
   data() {
     return {
       activeItems: [false, false, false],
-      isOpen: false
+      isOpen: false,
+      selectedChatId: null
     }
   },
   methods: {
     toggleNavItem(index) {
        this.$set(this.activeItems, index, !this.activeItems[index]) 
     },
-    openPopup() {
+    openPopup(chatId) {
       console.log('isOpen:')
       this.isOpen = true
+      console.log(chatId)
+      this.selectedChatId = chatId
+      
     },
     closePopup() {
       this.isOpen = false
@@ -212,6 +232,9 @@ li {
   background-color: #a9b8de;
   width: 100%;
   height: 530px;
+  min-height: 134px;
+  min-width: 361px;
+  overflow: auto;
 }
 
 .popup {

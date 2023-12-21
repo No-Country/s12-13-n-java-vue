@@ -2,8 +2,7 @@
 
 const props = defineProps({
   name: String,
-  clientName: String,
-  workerName: String,
+  otherUsername: String,
   id: Number
 })
 
@@ -17,7 +16,7 @@ const props = defineProps({
   >
     <div class="container">
       <div>
-        <h3 class="card__category">{{props.clientName}}</h3>
+        <h3 class="card__category">{{props.otherUsername}}</h3>
         <p class="card__title">{{props.name}}</p>
       </div>
       <button class="unexpand-button link" @click="expand()" :class="{ hidden: !isExpanded }">
@@ -44,6 +43,7 @@ p {
 .card {
   display: flex;
   min-height: 134px;
+  min-width: 343px;
   padding: 16px;
   flex-direction: column;
   align-items: flex-start;

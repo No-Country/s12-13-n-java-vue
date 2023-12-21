@@ -21,6 +21,7 @@
     "vue": "^3.3.4",
     "vue-native-websocket": "^2.0.15",
     "vue-router": "^4.2.5",
+    "vue-stomp": "^0.0.5",
     "vuetify": "^3.4.7"
   },
   "devDependencies": {
