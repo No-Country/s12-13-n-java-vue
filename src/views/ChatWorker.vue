@@ -98,8 +98,7 @@ fetchUserData()
               <ChatCard 
               :name="chat.name"
               :otherUsername ="getDisplayName(chat)"
-              :id="chat.id"
-              @click="openPopup"/> 
+              :id="chat.id"/> 
             </button>
           </div>
       </div>    
