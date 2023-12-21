@@ -19,8 +19,7 @@ const headers = {
 
 const chats= ref (null)
 const completeName = ref(null)
-
-
+const inputMessage = ref('');
 
 const fetchUserData = async () => {
   await axios.get('auth/details', { headers }).then((response) => {
@@ -40,6 +39,10 @@ const getDisplayName = (chat) => {
   return chat.clientName === completeName.value ? chat.workerName : chat.clientName;
 }
 
+const onSendMessage = (roomId) => {
+  document.dispatchEvent(new CustomEvent('send-message', { detail: roomId }));
+  inputMessage.value = "";
+};
 
 
 fetchChat ()
@@ -117,11 +120,11 @@ const date = ref()
 
           </div>
           <form class="form">
-            <MessageChats :roomId="selectedChatId"/>
+            <MessageChats  :username ="completeName" :message= "inputMessage" :chatRoomId ="selectedChatId"/>
           </form>
           <div class="d-flex justify-content-between">
-            <input style="background-color: #a9b8de;flex: auto" type="text">
-            <v-icon scale="1.5" name="ri-send-plane-fill" style="cursor: pointer;"/>
+            <input v-model="inputMessage" style="background-color: #a9b8de; flex: auto" type="text">
+            <v-icon scale="1.5" name="ri-send-plane-fill" style="cursor: pointer;" @click="onSendMessage(selectedChatId)"/>
           </div>
         </div>
       </modal>
@@ -153,7 +156,7 @@ export default {
       this.selectedChatId = chat.id
       this.modalTitle = chat.name
       this.modalUsername = name
-      console.log(this.modalTitle, this.modalUsername)
+      
     },
     closePopup() {
       this.isOpen = false
