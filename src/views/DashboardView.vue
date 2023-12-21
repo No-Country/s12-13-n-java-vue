@@ -16,6 +16,9 @@ import router from '@/router'
 const chat = () => {
   router.push({ name: 'Chat' })
 }
+const calendario = () => {
+  router.push({ name: 'calendario' })
+}
 
 const date = ref()
 const store = useFormContratador()
@@ -233,14 +236,14 @@ const openDialog = () => {
             <p class="nav__item-text" :class="{ active: !isActive }">Chats</p>
           </div>
         </li>
-        <li class="nav__item link" @click="toggleNavItem">
+        <li class="nav__item link" @click="toggleNavItem" @click.prevent="calendario">
           <div class="nav__item-container">
             <img
               class="nav__item-image"
               :class="{ active: !isActive }"
               src="../assets/images/history-icon.svg"
             />
-            <p class="nav__item-text" :class="{ active: !isActive }">Historial</p>
+            <p class="nav__item-text" :class="{ active: !isActive }">Calendario</p>
           </div>
         </li>
       </ul>
