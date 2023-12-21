@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
 import PostulationsView from '@/views/PostulationsView.vue'
 import ChatView from '@/views/ChatView.vue'
+import chatWorker from '@/views/ChatWorker.vue'
 import DashboardView from '@/views/DashboardView.vue'
 import HomeView from '@/views/HomeView.vue'
 import DashboardWorker from '@/views/DashboardWorker.vue'
@@ -64,7 +65,7 @@ const routes = [
   {
     path: '/chatworker',
     name: 'chatworker',
-    component: ChatView,
+    component: chatWorker,
     meta: {
       requireAuth: true,
     }

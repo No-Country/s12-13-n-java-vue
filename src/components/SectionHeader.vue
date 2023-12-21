@@ -15,7 +15,7 @@
     </header>
     <modal :style="getSidebarStyles()" class="sidebar" :class="{ visible: isVisible }">
       <img class="sidebar-logo" src="../assets/logo.svg" />
-      <section v-if="$route.name === 'dashboard'" class="profile">
+      <section v-if="$route.name === 'dashboard' || $route.name === 'worker' " class="profile">
         <div class="circle-container">
           <img src="../assets/images/avatar.svg" alt="avatar" class="avatar" />
         </div>
@@ -25,7 +25,7 @@
         </div>
       </section>
       <ul class="nav__list">
-        <div v-if="$route.name === 'dashboard' || $route.name === 'dashboardworker' " class="sidebar__line"></div>
+        <div v-if="$route.name !== 'home'" class="sidebar__line"></div>
         <li v-if="$route.name === 'home'" class="nav__item">
           <a class="nav__item link" @click="handleClickScrollNeeds">
             <div class="nav__item-picture">
@@ -34,7 +34,7 @@
             <p class="nav__item-text">Necesidades</p>
           </a>
         </li>
-        <li v-if="$route.name === 'dashboard'" class="nav__item">
+        <li v-if="$route.name !== 'home'" class="nav__item">
           <a class="nav__item link" @click="handleClickScrollNeeds">
             <div class="nav__item-picture">
               <img class="nav__item-icon" src="../assets/images/profile-icon.svg" alt="page-icon" />
@@ -42,7 +42,7 @@
             <p class="nav__item-text">Perfil</p>
           </a>
         </li>
-        <li v-if="$route.name === 'dashboard'" class="nav__item">
+        <li v-if="$route.name !== 'home'" class="nav__item">
           <a class="nav__item link" @click="handleClickScrollNeeds">
             <div class="nav__item-picture">
               <img
@@ -122,9 +122,8 @@
           <div>
             <div class="slider-container">
               <span
-                v-if="$route.name === 'dashboard' || $route.name === 'home'"
                 class="circle start"
-                :class="{ 'circle-dashboard': $route.name === 'dashboard' }"
+                :class="{ 'circle-dashboard': $route.name !== 'home' }"
               ></span>
               <input
                 class="range-slider"
@@ -137,14 +136,12 @@
                 :max="maxValue"
               />
               <span
-                v-if="$route.name === 'dashboard' || $route.name === 'home'"
                 class="circle center"
-                :class="{ 'circle-dashboard': $route.name === 'dashboard' }"
+                :class="{ 'circle-dashboard': $route.name !== 'home'}"
               ></span>
               <span
-                v-if="$route.name === 'dashboard' || $route.name === 'home'"
                 class="circle end"
-                :class="{ 'circle-dashboard': $route.name === 'dashboard' }"
+                :class="{ 'circle-dashboard': $route.name !== 'home'}"
               ></span>
             </div>
           </div>
@@ -184,7 +181,7 @@ export default {
 
   computed: {
     showLogoutButton() {
-      return this.$route.name === 'dashboard' || this.$route.name === 'worker'
+      return this.$route.name !== 'home'
     }
   },
 

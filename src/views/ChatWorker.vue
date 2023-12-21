@@ -147,9 +147,9 @@ export default {
     }
   },
   methods: {
-    toggleNavItem(index) {
+    /*toggleNavItem(index) {
        this.$set(this.activeItems, index, !this.activeItems[index]) 
-    },
+    },*/
     openPopup(chat, name) {
       console.log('isOpen:')
       this.isOpen = true

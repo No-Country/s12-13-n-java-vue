@@ -84,7 +84,7 @@ fetchUserData()
               :class="{ active: !isActive }"
               src="../assets/images/history-icon.svg"
             />
-            <p class="nav__item-text" :class="{ active: !isActive }">Historial</p>
+            <p class="nav__item-text" :class="{ active: !isActive }">Calendario</p>
           </div>
         </li>
       </ul>
@@ -148,9 +148,9 @@ export default {
     }
   },
   methods: {
-    toggleNavItem(index) {
+    /*toggleNavItem(index) {
        this.$set(this.activeItems, index, !this.activeItems[index]) 
-    },
+    },*/
     openPopup(chat, name) {
       console.log('isOpen:')
       this.isOpen = true
