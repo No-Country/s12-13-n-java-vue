@@ -25,7 +25,7 @@
         </div>
       </section>
       <ul class="nav__list">
-        <div v-if="$route.name === 'dashboard'" class="sidebar__line"></div>
+        <div v-if="$route.name === 'dashboard' || $route.name === 'dashboardworker' " class="sidebar__line"></div>
         <li v-if="$route.name === 'home'" class="nav__item">
           <a class="nav__item link" @click="handleClickScrollNeeds">
             <div class="nav__item-picture">

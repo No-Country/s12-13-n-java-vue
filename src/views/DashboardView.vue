@@ -16,8 +16,8 @@ import router from '@/router'
 const chat = () => {
   router.push({ name: 'Chat' })
 }
-const calendario = () => {
-  router.push({ name: 'calendario' })
+const historyclient = () => {
+  router.push({ name: 'historyClient' })
 }
 
 const date = ref()
@@ -236,7 +236,7 @@ const openDialog = () => {
             <p class="nav__item-text" :class="{ active: !isActive }">Chats</p>
           </div>
         </li>
-        <li class="nav__item link" @click="toggleNavItem" @click.prevent="calendario">
+        <li class="nav__item link" @click="toggleNavItem" @click.prevent="historyclient">
           <div class="nav__item-container">
             <img
               class="nav__item-image"

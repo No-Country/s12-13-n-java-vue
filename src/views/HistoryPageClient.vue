@@ -5,7 +5,14 @@ import '@vuepic/vue-datepicker/dist/main.css';
 import FooterPage from '@/components/SectionFooter.vue';
 import JobCard from '@/components/JobCardStatus.vue';
 import axios from '@/plugins/axios';
+import router from '@/router'
+const dashboard = ()=>{
+    router.push({ name: 'dashboard' })
+}
 
+const chat = () => {
+  router.push({ name: 'Chat' })
+}
 const token = localStorage.getItem('token');
 const user = localStorage.getItem('userData');
 const headers = {
@@ -71,17 +78,17 @@ onMounted(async () => {
     <SectionHeader />
     <nav class="nav">
       <ul class="nav__list">
-        <li class="nav__item link" @click="toggleNavItem">
+        <li class="nav__item link" @click="toggleNavItem" @click.prevent="dashboard">
           <div class="nav__item-container">
             <img
               class="nav__item-image"
-              :class="{ active: isActive }"
+              :class="{ active: !isActive }"
               src="../assets/images/home-icon.svg"
             />
-            <p class="nav__item-text" :class="{ active: isActive }">Inicio</p>
+            <p class="nav__item-text" :class="{ active: !isActive }">Inicio</p>
           </div>
         </li>
-        <li class="nav__item link" @click="toggleNavItem">
+        <li class="nav__item link" @click="toggleNavItem" @click.prevent="chat">
           <div class="nav__item-container">
             <img
               class="nav__item-image"
@@ -95,10 +102,10 @@ onMounted(async () => {
           <div class="nav__item-container">
             <img
               class="nav__item-image"
-              :class="{ active: !isActive }"
+              :class="{ active: isActive }"
               src="../assets/images/history-icon.svg"
             />
-            <p class="nav__item-text" :class="{ active: !isActive }">Historial</p>
+            <p class="nav__item-text" :class="{ active: isActive }">Calendario</p>
           </div>
         </li>
       </ul>

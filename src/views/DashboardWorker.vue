@@ -12,11 +12,11 @@ const headers = {
   Authorization: `Bearer ${token}`
 }
 import router from '@/router'
-const chat = () => {
-  router.push({ name: 'Chat' })
+const chatworker = () => {
+  router.push({ name: 'chatworker' })
 }
 const history = () => {
-  router.push({ name: 'History' })
+  router.push({ name: 'history' })
 }
 
 
@@ -86,7 +86,7 @@ onMounted(async () => {
             <p class="nav__item-text" :class="{ active: isActive }">Inicio</p>
           </div>
         </li>
-        <li class="nav__item link" @click="toggleNavItem" @click.prevent="chat">
+        <li class="nav__item link" @click="toggleNavItem" @click.prevent="chatworker">
           <div class="nav__item-container">
             <img
               class="nav__item-image"

@@ -61,7 +61,14 @@ const routes = [
       requireAuth: true,
     }
   },
-
+  {
+    path: '/chatworker',
+    name: 'chatworker',
+    component: ChatView,
+    meta: {
+      requireAuth: true,
+    }
+  },
   {
     path: '/history',
     name: 'history',

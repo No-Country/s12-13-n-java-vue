@@ -6,18 +6,17 @@ import { ref } from 'vue'
 import '@vuepic/vue-datepicker/dist/main.css'
 import FooterPage from '@/components/SectionFooter.vue'
 import ChatCard from '@/components/ChatCard.vue'
-import router from '@/router'
 import axios from '@/plugins/axios'
-
+import router from '@/router'
+const worker = ()=>{
+    router.push({ name: 'worker' })
+  }
+const history = () => {
+  router.push({ name: 'history' })
+}
 const token = localStorage.getItem('token')
 const headers = {
   Authorization: `Bearer ${token}`
-  }
-  const dashboard = ()=>{
-    router.push({ name: 'dashboard' })
-  }
-  const historyClient = ()=>{
-    router.push({ name: 'historyClient' })
   }
 
 
@@ -57,7 +56,7 @@ fetchUserData()
     <SectionHeader />
     <nav class="nav">
       <ul class="nav__list">
-        <li class="nav__item link" @click="toggleNavItem" @click.prevent="dashboard">
+        <li class="nav__item link" @click="toggleNavItem" @click.prevent="worker">
           <div class="nav__item-container">
             <img
               class="nav__item-image"
@@ -77,7 +76,7 @@ fetchUserData()
             <p class="nav__item-text" :class="{ active: isActive }">Chats</p>
           </div>
         </li>
-        <li class="nav__item link" @click="toggleNavItem" @click.prevent="historyClient">
+        <li class="nav__item link" @click="toggleNavItem" @click.prevent="history">
           <div class="nav__item-container">
             <img
               class="nav__item-image"

@@ -81,7 +81,7 @@
               <img src="@/assets/images/about-me/naza.png" alt="">
               <h6>Nazareno S.</h6>
               <div>
-                <span>Ui-Ux</span>
+                <span>Pm/Ui-Ux</span>
                 <v-icon name="la-linkedin" scale="1.5" />
               </div>
             </div>
