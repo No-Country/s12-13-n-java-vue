@@ -33,11 +33,20 @@ import { onMounted, ref, onUnmounted } from 'vue';
     const url = 'https://unamanoapi.onrender.com/chat-socket';
     const socket = new SockJS(url);
     stompClient.value = Stomp.over(socket)
+
    
   }
+  const onSocketMessage = (evt) =>{
+      
+    const received = JSON.parse(evt.body);
+
+  
+    messages.value.push(received)
+    }
+
     const joinRoom = (roomId) => {
       stompClient.value.connect({},()=> {
-      stompClient.value.subscribe(`/topic/${roomId}`)
+      stompClient.value.subscribe(`/topic/${roomId}`,onSocketMessage)
     })
   }
   const sendMessage = () => {
@@ -47,8 +56,7 @@ import { onMounted, ref, onUnmounted } from 'vue';
     chatRoomId : props.chatRoomId
   };
 
-  stompClient.value.send(`/app/chat/${props.roomId}`, {}, JSON.stringify(newMessage));
-  messages.value.push(newMessage); 
+  stompClient.value.send(`/app/chat/${props.chatRoomId}`, {}, JSON.stringify(newMessage));
   
 };
 
@@ -61,6 +69,7 @@ import { onMounted, ref, onUnmounted } from 'vue';
     joinRoom(props.chatRoomId)
     const handleMessageEvent = (roomId) => {
     sendMessage(roomId);
+    
   }
   document.addEventListener('send-message', handleMessageEvent);
   });

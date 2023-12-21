@@ -47,8 +47,6 @@ const onSendMessage = (roomId) => {
 
 fetchChat ()
 fetchUserData()
-
-const date = ref()
 </script>
 <template>
   <main>
