@@ -11,6 +11,14 @@ const user = localStorage.getItem('userData')
 const headers = {
   Authorization: `Bearer ${token}`
 }
+import router from '@/router'
+const chat = () => {
+  router.push({ name: 'Chat' })
+}
+const history = () => {
+  router.push({ name: 'History' })
+}
+
 
 
 const activeItems = ref([false, false, false])
@@ -78,7 +86,7 @@ onMounted(async () => {
             <p class="nav__item-text" :class="{ active: isActive }">Inicio</p>
           </div>
         </li>
-        <li class="nav__item link" @click="toggleNavItem">
+        <li class="nav__item link" @click="toggleNavItem" @click.prevent="chat">
           <div class="nav__item-container">
             <img
               class="nav__item-image"
@@ -88,7 +96,7 @@ onMounted(async () => {
             <p class="nav__item-text" :class="{ active: !isActive }">Chats</p>
           </div>
         </li>
-        <li class="nav__item link" @click="toggleNavItem">
+        <li class="nav__item link" @click="toggleNavItem" @click.prevent="history">
           <div class="nav__item-container">
             <img
               class="nav__item-image"
