@@ -1,4 +1,12 @@
-<script setup></script>
+<script setup>
+
+const props = defineProps({
+  name: String,
+  otherUsername: String,
+  id: Number
+})
+
+</script>
 
 <template>
   <p>Chats Activos</p>
@@ -8,52 +16,22 @@
   >
     <div class="container">
       <div>
-        <h3 class="card__category">Nombre Trabajador</h3>
-        <p class="card__title">Titulo de la tarea</p>
+        <h3 class="card__category">{{props.otherUsername}}</h3>
+        <p class="card__title">{{props.name}}</p>
       </div>
       <button class="unexpand-button link" @click="expand()" :class="{ hidden: !isExpanded }">
         <img src="../assets/images/unexpand-icon.svg" alt="unexpand" />
       </button>
     </div>
-
+    
     <div class="container">
       <div class="data-container" :class="{ container_expanded: isExpanded }">
         <p class="data__title">icono</p>
         <p class="data__value">08/12/2023</p>
       </div>
-      <div class="data-container" :class="{ container_expanded: isExpanded, hidden: !isExpanded }">
-        <p class="data__title">Dirección:</p>
-        <p class="data__value">Bogotá, Colombia</p>
-      </div>
-      <div class="data-container" :class="{ container_expanded: isExpanded, hidden: !isExpanded }">
-        <p class="data__title">Precio:</p>
-        <p class="data__value">30 USD</p>
-      </div>
-      <div class="description-container" :class="{ hidden: !isExpanded }">
-        <p class="data__title">Descripción:</p>
-        <p class="data__value description-text">
-          Necesito 3 sesiones semanales a domicilio durante las tardes para tratar una lesión a la
-          rodilla. Precio sugerido por sesión.
-        </p>
-      </div>
     </div>
   </section>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      isExpanded: false
-    }
-  },
-  methods: {
-    expand() {
-      this.isExpanded = !this.isExpanded
-    }
-  }
-}
-</script>
 
 <style scoped>
 h3,
@@ -65,6 +43,7 @@ p {
 .card {
   display: flex;
   min-height: 134px;
+  min-width: 343px;
   padding: 16px;
   flex-direction: column;
   align-items: flex-start;
@@ -206,6 +185,19 @@ p {
   }
   100% {
     min-height: 134px;
+  }
+}
+
+@media screen and(min-width: 768px){
+  .container{
+    font-size: 14px;
+  }
+  .nav{
+    font-size: 14px;
+  }
+
+  .popup{
+    font-size: 14px; 
   }
 }
 </style>

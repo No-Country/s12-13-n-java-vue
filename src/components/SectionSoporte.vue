@@ -128,5 +128,11 @@
   .col-sm-6 {
     align-self: center;
   }
+
+  @media screen and(min-width: 768px){
+  .conteiner{
+    font-size: 14px;
+  }
+}
 }
 </style>

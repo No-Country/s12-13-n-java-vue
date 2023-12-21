@@ -222,4 +222,21 @@
     background-color: #fff;
     transition: background-color 0.3s;
   }
+
+  @media screen and(min-width: 768px){
+  .logincontainer{
+    font-size: 14px;
+  }
+  .nav{
+    font-size: 14px;
+  }
+
+  .popup{
+    font-size: 14px; 
+  }
+
+  .class{
+    font-size:14px;
+  }
+}
 </style>

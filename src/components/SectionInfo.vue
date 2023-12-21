@@ -80,7 +80,9 @@
         height: 400px;
       }
     }
+    
+  .container{
+    font-size: 14px;
   }
-
-
+}
 </style>

@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/valid-define-emits -->
 <script setup>
 import axios from '@/plugins/axios'
 import { ref } from 'vue'
@@ -140,11 +141,7 @@ p {
   padding: 0;
 }
 
-.postulated {
-  background-color: #ccc;
-  color: #888;
-  font-size: small;
-}
+
 
 
 .eventButtonTrash {
@@ -256,7 +253,17 @@ p {
   justify-content: center;
   background: var(--blue1, #1d3d8f);
 }
-
+.postulated {
+  background-color: #ccc;
+  color: #888;
+  font-size: small;
+}
+.notpostulated{
+  background-color: #ccc;
+  color: #888;
+  font-size: small;
+  display: disabled;
+}
 
 .link {
   cursor: pointer;
@@ -358,6 +365,37 @@ p {
   }
   100% {
     opacity: 0;
+  }
+}
+
+@media screen and(min-width: 768px){
+  .card{
+    font-size: 14px;
+  }
+  .container{
+    font-size: 14px;
+  }
+
+  .data-container{
+    font-size: 14px; 
+  }
+
+  .description-container{
+    font-size: 14px;
+  }
+  .applications-button link{
+    font-size: 14px;
+  }
+
+  .container_expanded buttons-container{
+    font-size: 14px;
+  }
+  .postulation-button link{
+    font-size: 14px;
+  }
+
+  .expand-button link{
+    font-size: 14px; 
   }
 }
 </style>

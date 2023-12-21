@@ -11,10 +11,22 @@ const props = defineProps({
   currencyType: String,
   id: Number
 })
+
+const getPosts = () => {
+  router.push({
+    name: 'postulations',
+    query: {
+      category: props.category,
+      taskTitle: props.taskTitle,
+      color: props.color,
+      id: props.id
+    }
+  })
+}
 </script>
 
 <template>
-  <section
+  <sections
     class="card"
     :class="{ unexpanded: !isExpanded, expanded: isExpanded }"
     :style="{ boxShadow: `0px 5px 0px 0px ${props.color} inset` }"
@@ -73,17 +85,9 @@ const props = defineProps({
         <div class="container_expanded buttons-container" :class="{ hidden: !isExpanded }">
           <button class="edit-button link" @click="$emit('onEdit', props.id)">Editar</button>
           <!-- <button class="delete-button link" @click="deleteTask({ id })">Del</button> -->
-          <button
-            class="applications-button link"
-            @click="
-              router.push({
-                name: 'postulations',
-                query: { category: props.category, taskTitle: props.taskTitle, color: props.color }
-              })
-            "
-          >
+          <button class="applications-button link" @click="getPosts">
             <div class="users-container">
-              <span>3</span>
+              <!-- <span>3 </span> -->
               <img src="../assets/images/user-icon.svg" alt="user" class="applications-image" />
             </div>
             Postulaciones
@@ -94,7 +98,7 @@ const props = defineProps({
         Ver más
       </button>
     </div>
-  </section>
+  </sections>
 </template>
 
 <script>
@@ -296,6 +300,27 @@ p {
   }
   100% {
     opacity: 0;
+  }
+}
+
+@media screen and(min-width: 768px){
+  .card{
+    font-size: 14px;
+  }
+  .container{
+    font-size: 14px;
+  }
+
+  .data-container{
+    font-size: 14px; 
+  }
+
+  
+  .description-container{
+    font-size: 14px;
+  }
+  .applications-button link{
+    font-size: 14px;
   }
 }
 </style>

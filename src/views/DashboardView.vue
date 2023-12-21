@@ -1,5 +1,5 @@
 <script setup>
-import SectionHeader from '../components/SectionHeader.vue'
+import SectionHeader from '@/components/SectionHeader.vue'
 import { ref, onMounted, computed } from 'vue'
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
@@ -15,6 +15,9 @@ const headers = {
 import router from '@/router'
 const chat = () => {
   router.push({ name: 'Chat' })
+}
+const calendario = () => {
+  router.push({ name: 'calendario' })
 }
 
 const date = ref()
@@ -155,7 +158,7 @@ const fetchProfileAndCards = async () => {
     console.log('fetchProfileInfo.data:', fetchProfileInfo.data)
     profile.value = fetchProfileInfo.data
 
-    const fetchCards = await axios.get('task/client/', {
+    const fetchPublishedCards = await axios.get('task/client/', {
       headers,
       params: {
         id: profile.value.id_client,
@@ -163,7 +166,20 @@ const fetchProfileAndCards = async () => {
       }
     })
 
-    cards.value = fetchCards.data.content
+    console.log('fetchPostPublishedCards:', fetchPublishedCards)
+
+    const fetchProgressCards = await axios.get('task/client/', {
+      headers,
+      params: {
+        id: profile.value.id_client,
+        status: 'INPROGRESS'
+      }
+    })
+    console.log('fetchPostProgressCards:', fetchProgressCards)
+
+    cards.value = [...fetchPublishedCards.data.content, ...fetchProgressCards.data.content]
+
+    console.log('fetchPostcards.value:', cards.value)
   } catch (error) {
     console.error('Error fetching data:', error)
   }
@@ -220,14 +236,14 @@ const openDialog = () => {
             <p class="nav__item-text" :class="{ active: !isActive }">Chats</p>
           </div>
         </li>
-        <li class="nav__item link" @click="toggleNavItem">
+        <li class="nav__item link" @click="toggleNavItem" @click.prevent="calendario">
           <div class="nav__item-container">
             <img
               class="nav__item-image"
               :class="{ active: !isActive }"
               src="../assets/images/history-icon.svg"
             />
-            <p class="nav__item-text" :class="{ active: !isActive }">Historial</p>
+            <p class="nav__item-text" :class="{ active: !isActive }">Calendario</p>
           </div>
         </li>
       </ul>
@@ -573,11 +589,6 @@ li {
   width: 100%;
   display: flex;
   flex-direction: column;
-}
-
-.popup__container {
-  display: flex;
-  flex-direction: column;
   gap: 19px;
 }
 .popup__header {
@@ -777,5 +788,31 @@ li {
 
 .dialog-subtext {
   margin-bottom: 24px;
+}
+
+@media screen and(min-width: 768px){
+
+  .cards-container{
+    font-size: 14px;
+  }
+  .nav{
+    font-size: 14px;
+  }
+
+  .popup{
+    font-size: 14px; 
+  }
+
+  .modal-info{
+    font-size: 14px;
+  }
+
+  .form{
+    font-size: 14px;
+  }
+
+  .dialog{
+    font-size: 14px;
+  }
 }
 </style>
