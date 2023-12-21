@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/valid-define-emits -->
 <script setup>
 import axios from '@/plugins/axios'
 import { ref } from 'vue'
@@ -8,6 +7,7 @@ const user = localStorage.getItem('userData')
 const headers = {
   Authorization: `Bearer ${token}`
 }
+
 
 const props = defineProps({
   taskTitle: String,
@@ -19,30 +19,11 @@ const props = defineProps({
   price: String,
   currencyType: String,
   id: Number,
-  postulated: Boolean
+  PStatus:String
 })
 
 
 const emits = defineEmits()
-const postulated = ref(props.postulated)
-
-function handlePostulation() {
-  let dataUser = JSON.parse(user)
-  const worker_id = dataUser['id_worker']
-
-  axios.post(`postulations`, {
-    worker_id: worker_id,
-    task_id: props.id
-  }, {
-    headers: headers
-  }).then((response) => {
-    console.log(response)
-
-    postulated.value = true
-    // Emitir un evento al componente padre para informar sobre la acción de postulación
-    emits('postulation', props.id)
-  })
-}
 </script>
 
 
@@ -102,14 +83,7 @@ function handlePostulation() {
            {{ props.description }}
          </p>
          <div class="container_expanded buttons-container" :class="{ hidden: !isExpanded }">
-           <button
-             class="postulation-button link"
-             @click="handlePostulation"
-             :class="{ postulated: postulated, notPostulated: !postulated }"
-             :disabled="postulated"
-           >
-             {{ postulated ? 'Postulado' : 'Postular' }}
-           </button>
+            <p> {{ props.PStatus }}</p>
          </div>
        </div>
          <button class="expand-button link" :class="{ hidden: isExpanded }" @click="expand()">
@@ -141,7 +115,11 @@ p {
   padding: 0;
 }
 
-
+.postulated {
+  background-color: #ccc;
+  color: #888;
+  font-size: small;
+}
 
 
 .eventButtonTrash {
@@ -253,17 +231,7 @@ p {
   justify-content: center;
   background: var(--blue1, #1d3d8f);
 }
-.postulated {
-  background-color: #ccc;
-  color: #888;
-  font-size: small;
-}
-.notpostulated{
-  background-color: #ccc;
-  color: #888;
-  font-size: small;
-  display: disabled;
-}
+
 
 .link {
   cursor: pointer;
@@ -365,37 +333,6 @@ p {
   }
   100% {
     opacity: 0;
-  }
-}
-
-@media screen and(min-width: 768px){
-  .card{
-    font-size: 14px;
-  }
-  .container{
-    font-size: 14px;
-  }
-
-  .data-container{
-    font-size: 14px; 
-  }
-
-  .description-container{
-    font-size: 14px;
-  }
-  .applications-button link{
-    font-size: 14px;
-  }
-
-  .container_expanded buttons-container{
-    font-size: 14px;
-  }
-  .postulation-button link{
-    font-size: 14px;
-  }
-
-  .expand-button link{
-    font-size: 14px; 
   }
 }
 </style>
