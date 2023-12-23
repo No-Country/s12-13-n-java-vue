@@ -1,5 +1,5 @@
+![Screenshot 2023-12-22 203710](https://github.com/No-Country/s12-13-n-java-vue/assets/46968835/5afd4cd1-7a2a-43a6-bc23-a9b3ff309b41)
 # Una Mano - Plataforma de Apoyo para Personas Mayores
-
 
 ## Descripción del Proyecto
 
