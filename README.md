@@ -52,7 +52,7 @@
 
  ## INTEGRANTES DEL PROYECTO
 
-  ### ⚛️ Project Manager:
+  ### Project Manager:
 
 | **Scarlet Vargas**|
 |:-:|
