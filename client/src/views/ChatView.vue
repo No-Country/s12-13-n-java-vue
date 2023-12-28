@@ -297,6 +297,7 @@ li {
 .form {
   display: flex;
   flex-direction: column;
+  align-items: left;
   gap: 19px;
 }
 
