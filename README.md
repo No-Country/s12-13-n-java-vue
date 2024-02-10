@@ -52,11 +52,17 @@
 
  ## INTEGRANTES DEL PROYECTO
 
-  ### Project Manager:
+  ### Team Leader:
 
 | **Scarlet Vargas**|
 |:-:|
 | <a href="https://github.com/scarletvargas"><img src="https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/></a> <a href="https://www.linkedin.com/in/scarletvargas-systems-engineer/"><img src="https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white"/></a> |
+<hr/>
+
+  ### Project Manager:
+| **Nazareno Susunday**|
+|:-:|
+|<a href="https://www.linkedin.com/in/nazareno-susunday-990243a1/ "><img src="https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white"/>
 <hr/>
 
  ### ⚛️ Frontend:
